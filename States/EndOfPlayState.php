@@ -1,4 +1,6 @@
 <?php
+require_once("../config.php");
+
 class EndOfPlayState implements IApplicationState {
 
     const ApplicationStateType = "EndOfPlayState";

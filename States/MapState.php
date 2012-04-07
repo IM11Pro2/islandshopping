@@ -1,4 +1,6 @@
 <?php
+require_once("../config.php");
+
 class MapState implements IApplicationState {
 
     const ApplicationStateType = "MapState";

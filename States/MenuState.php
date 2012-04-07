@@ -1,4 +1,6 @@
 <?php
+require_once("../config.php");
+
 class MenuState implements IApplicationState {
     function init()
     {

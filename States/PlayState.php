@@ -1,4 +1,6 @@
 <?php
+require_once("../config.php");
+
 class PlayState implements IApplicationState {
 
     const ApplicationStateType = "PlayState";

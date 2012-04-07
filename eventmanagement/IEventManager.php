@@ -1,4 +1,6 @@
 <?php
+require_once("../config.php");
+
 interface IEventManager{
 	
 	public function addEventListener($eventListener, $eventType);
