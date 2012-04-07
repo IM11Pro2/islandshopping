@@ -1,10 +1,14 @@
 <?php
 require_once("../config.php");
+require_once("IApplicationState.php");
 
 class MenuState implements IApplicationState {
+
+    private $playerCountry;
+
     function init()
     {
-        // TODO: Implement init() method.
+
     }
 
     function endState()
@@ -15,6 +19,16 @@ class MenuState implements IApplicationState {
     function getApplicationStateType()
     {
         // TODO: Implement getApplicationStateType() method.
+    }
+
+    public function setPlayerCountry($playerCountry)
+    {
+        $this->playerCountry = $playerCountry;
+    }
+
+    public function getPlayerCountry()
+    {
+        return $this->playerCountry;
     }
 
 }
