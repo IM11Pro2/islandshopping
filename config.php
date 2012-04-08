@@ -17,6 +17,6 @@ $all_countries_array = array(0 => "EU", 1 =>"Schweiz", 2 =>"Tuerkei", 3 =>"Saudi
 //   );
 //}
 
-
+define(NUM_OF_REGIONS, 12);
 
 ?>
