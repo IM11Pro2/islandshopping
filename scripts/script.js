@@ -1,44 +1,28 @@
 $(document).ready(function(){
-    $('input:checkbox').click(function(){
+
+    function sendAjaxRequest(url, data){
+        $.ajax({
+            url: url,
+            data: data,
+            dataType: "jsonp",
+            contentType: 'application/json',
+            jsonp : "callback",
+            jsonpCallback: "jsonpcallback"
+        });
+    }
+
+    $('input:checkbox').click(function(event){
+
+        alert($(this).parent().text());
 
         if($('input:checked').length > 0){
-            $('#oida').text("on");
-            /*$.getJSON(
 
-                "./index.php",
-
-                {id : "ajaxTest"},
-
-                function(data) {
-                    alert(data);
-                    $('#oida').text(data);
-                }
-              );
-                */
-
-           /* $.getJSON("./ajax/ajaxResponse.php?callback=?", {id: "ajaxTest"},  function(data) {
-                alert(data);
-             }); */
-
-            $.ajax({
-                url: "./states/MenuState.php",
-                data: {handle: "ajaxTest"},
-                dataType: "jsonp",
-                contentType: 'application/json',
-                jsonp : "callback",
-                jsonpCallback: "jsonpcallback"
-               // success: function(data){
-                 //   alert("yess");
-                   // jsonpcallback(data);
-                //}
-            });
-
-        }
-        else{
-            $('#oida').text("off");
-            // TODO: Ajax
+            sendAjaxRequest("../states/MenuState.php", {handle: "ajaxTest"});
         }
     });
+
+
+
 });
 function jsonpcallback(data) {
     alert(data["message"]);

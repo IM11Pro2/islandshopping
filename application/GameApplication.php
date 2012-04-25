@@ -1,7 +1,8 @@
 <?php
-require_once("./states/IApplicationState.php");
-require_once("./states/MenuState.php");
-require_once("./views/MenuStateView.php");
+//require_once("./states/IApplicationState.php");
+//require_once("./states/MenuState.php");
+//require_once("./views/MenuStateView.php");
+
 class GameApplication
 {
     private $state;

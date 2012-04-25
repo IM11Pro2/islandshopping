@@ -1,6 +1,6 @@
 <?php
-require_once("../config.php");
-require_once("../states/MapState.php");
+//require_once("../config.php");
+//require_once("../states/MapState.php");
 ?>
 
 <h1>MAP STATE VIEW</h1>

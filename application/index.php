@@ -1,6 +1,8 @@
 <?php
-require_once("GameApplication.php");
-//require_once("./ajax/ajaxResponse.php");
+
+require_once("../config/config.php");
+//require_once("GameApplication.php");
+//require_once("./ajax/AjaxResponse.php");
 
 /*if(isset($_GET['id'])){
    ajaxResponse::getResponse();
@@ -16,9 +18,10 @@ require_once("GameApplication.php");
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8" />
     <title>Hallo IslandshoppAA!!</title>
-    <script type="text/javascript" src="./scripts/jquery-1.7.2.js" language="javascript" ></script>
-    <script type="text/javascript" src="./scripts/script.js" language="javascript" ></script>
+    <script type="text/javascript" src="../scripts/jquery-1.7.2.js" language="javascript" ></script>
+    <script type="text/javascript" src="../scripts/script.js" language="javascript" ></script>
 </head>
 <body>
 <h1> Hallo IslandshoppAA!! </h1>

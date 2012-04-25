@@ -1,6 +1,6 @@
 <?php
-require_once("config.php");
-require_once("./eventmanagement/IEventManager.php");
+//require_once("config.php");
+//require_once("./eventmanagement/IEventManager.php");
 
 class GameEventManager implements IEventManager{
 
@@ -33,16 +33,18 @@ class GameEventManager implements IEventManager{
     public function removeEventListener(IEventListener $eventListener, $eventType){
 
         for($i = 0; $i < count($this->listeners[$eventType]); ++$i) {
+
             if($this->listeners[$eventType][$i] === $eventListener){
                 unset($this->listeners[$eventType][$i]);
                 return;
             }
+
         }
     }
 
     public function dispatchEvent(IEvent $event){
 
-
+        echo count($this->listeners)."<br />";
         $listeners = $this->listeners[$event->getEventType()];
 
         foreach ($listeners as $listener) {

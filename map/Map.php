@@ -1,8 +1,8 @@
 <?php
 
-require_once("../config.php");
-require_once("./Region.php");
-require_once("./RegionGraph.php");
+//require_once("../config.php");
+//require_once("./Region.php");
+//require_once("./RegionGraph.php");
 
 class Map{
 

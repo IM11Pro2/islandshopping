@@ -1,15 +1,18 @@
 <?php
 
-/*require_once("./config.php");
-require_once("./states/IApplicationState.php");
-require_once("./eventmanagement/GameEventManager.php");
+require_once("../config/config.php");
+//require_once("./states/IApplicationState.php");
+//require_once("./eventmanagement/GameEventManager.php");
+/*
 require_once("./eventmanagement/IEventManager.php");
 require_once("./events/UpdateViewEvent.php");
-require_once("./ajax/ajaxResponse.php");*/
-
+require_once("./ajax/AjaxResponse.php");*/
+/*
 function __autoload($class) {
     include_once $class . ".php";
-}
+}*/
+
+
 
    // if(isset($_GET['id'])){
 /*        require_once("../config.php");
@@ -17,7 +20,7 @@ function __autoload($class) {
         require_once("../eventmanagement/GameEventManager.php");
         require_once("../eventmanagement/IEventManager.php");
         require_once("../events/UpdateViewEvent.php");
-        require_once("../ajax/ajaxResponse.php");*/
+        require_once("../ajax/AjaxResponse.php");*/
    // }
 class MenuState implements IApplicationState {
 
@@ -72,14 +75,21 @@ class MenuState implements IApplicationState {
 
 
     public static function ajaxTest(){
+
+        /*
         header("content-type: application/json");
 
         if(isset($_GET['handle'])) $id = $_GET['handle'];
 
-            $message = "You got an AJAX response via JSONP from another site!";
+        $message = "You got an AJAX response via JSONP from another site!";
 
-            $a = array('id' => $id, 'message'=>$message);
+        $a = array('id' => $id, 'message'=>$message);
         echo $_GET['callback']. '('. json_encode($a) . ')';
+
+        */
+
+        // TODO change this to useable data
+        GameEventManager::getInstance()->dispatchEvent(new UpdateViewEvent("bla"));
 
     }
 

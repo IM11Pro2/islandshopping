@@ -1,6 +1,6 @@
 <?php
-require_once("../config.php");
-require_once("IApplicationState.php");
+//require_once("../config.php");
+//require_once("IApplicationState.php");
 
 class PlayState implements IApplicationState {
 

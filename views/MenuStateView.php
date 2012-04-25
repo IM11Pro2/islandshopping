@@ -1,9 +1,9 @@
 <?php
-    require_once("config.php");
+   /* require_once("config.php");
     require_once("./states/MenuState.php");
     require_once("./events/UpdateViewEvent.php");
     require_once("./eventmanagement/IEventListener.php");
-    require_once("./eventmanagement/GameEventManager.php");
+    require_once("./eventmanagement/GameEventManager.php");*/
 /*
 function __autoload($class) {
     include_once $class . ".php";
@@ -20,7 +20,7 @@ class MenuStateView implements IEventListener {
     {
         if($event->getEventType() == UpdateViewEvent::TYPE){
 
-
+            echo "event gekommt";
 
         }
     }
@@ -28,52 +28,61 @@ class MenuStateView implements IEventListener {
     function printForm(){?>
         <form name="menuForm1" method="POST" action="/MapStateView.php">
             <h2>Welches Land m&ouml;chtest du sein ?</h2>
-            <input type="checkbox" name="testname" id="testid" />
+           <!-- <input type="checkbox" name="testname" id="testid" /> -->
             <?php
-           $status = "";
+
+            $status = "";
             $all_countries_array = getCountriesArray();
 
-            $playerCountry = $all_countries_array["EU"];
 
-           foreach($all_countries_array as $name => $country) {
+           foreach($all_countries_array as $country => $value) {
 
-               if ($playerCountry == $country) {
+               if (PLAYER_VALUE == $value) {
                 $status = 'checked="checked"';
                }
 
                ?>
                <label>
-                 <input type='radio' name='playerCountry' value="<?php echo $country ?>" <?php echo $status ?> />
-                 <?php echo $name ?>
+                 <input type='radio' name='playerCountry' value="<?php echo $value ?>" <?php echo $status ?> />
+                 <?php echo $country ?>
                </label>
                <?php
                $status = "";
            }
+
             ?>
 
-            <h2 id="oida">W&auml;hle deine Gegner</h2>
-       <?php /*
-           $checked = "unchecked";
+            <h2>W&auml;hle deine Gegner</h2>
+
+       <?php
+
 
                //If PlayerCountry is in the List of EnemyCountries, it will be deleted
-               if(in_array($playerCountry,$otherCountries)){
+               /*if(in_array($playerCountry,$otherCountries)){
                    foreach($otherCountries as $name => $search){
                        if($search == $playerCountry){
                            unset($otherCountries[$name]);
                        }
                    }
+               }*/
+
+           //$checked = "unchecked";
+           $status = "";
+           foreach($all_countries_array as $country => $value) {
+               if (PLAYER_VALUE != $value) {
+                  if(ENEMY_VALUE == $value){
+                      $status='checked="checked"';
+                  }
+                   ?>
+                  <label>
+                    <input type="checkbox" name="enemyCountries[]" value="<?php echo $value ?>" <?php echo $status ?> />
+                    <?php echo $country ?>
+                  </label>
+                  <?php
+                   $status = "";
                }
 
-
-          // $checked = "unchecked";
-           foreach($all_countries_array as $name => $country) {
-               if ($playerCountry != $country) {
-                   if(in_array($country,$otherCountries)) $checked="checked";
-
-                   echo "<input type='checkbox' name='otherCountries[]' value=$country " .$checked. ">&nbsp;$country&nbsp;&nbsp;";
-                   $checked = "unchecked";
-               }
-           } */
+           }
        ?>
            <br /><br />
        <!--    <input type="button" name="Change" value="Take changes" onclick="--><?php //echo $_SERVER['PHP_SELF']; ?><!--">-->
@@ -85,7 +94,7 @@ class MenuStateView implements IEventListener {
 /*
  <form name="menuForm1" method="POST" action="
 //echo $_SERVER['PHP_SELF']; ?>">
-action="../States/MenuState.php" -->
+action="../states/MenuState.php" -->
                                                                                   //echo $_SERVER['PHP_SELF'];
 
 
