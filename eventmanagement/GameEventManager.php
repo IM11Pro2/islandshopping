@@ -28,6 +28,8 @@ class GameEventManager implements IEventManager{
         else{
             array_push($this->listeners[$eventType], $eventListener);
         }
+
+        $_SESSION['IEventManager'] = self::$instance;
     }
 
     public function removeEventListener(IEventListener $eventListener, $eventType){

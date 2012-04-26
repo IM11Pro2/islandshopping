@@ -20,7 +20,7 @@ class MenuStateView implements IEventListener {
     {
         if($event->getEventType() == UpdateViewEvent::TYPE){
 
-            echo "event gekommt";
+            echo "event gekommt<br />";
 
         }
     }

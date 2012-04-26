@@ -1,6 +1,7 @@
 <?php
-
 require_once("../config/config.php");
+require_once("../scripts/script.php");
+session_start();
 //require_once("GameApplication.php");
 //require_once("./ajax/AjaxResponse.php");
 
@@ -21,7 +22,8 @@ require_once("../config/config.php");
     <meta charset="utf-8" />
     <title>Hallo IslandshoppAA!!</title>
     <script type="text/javascript" src="../scripts/jquery-1.7.2.js" language="javascript" ></script>
-    <script type="text/javascript" src="../scripts/script.js" language="javascript" ></script>
+    <?php printJavaScript(); ?>
+    <!--<script type="text/javascript" src="../scripts/script.js" language="javascript" ></script>-->
 </head>
 <body>
 <h1> Hallo IslandshoppAA!! </h1>

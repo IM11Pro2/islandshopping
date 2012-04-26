@@ -1,5 +1,4 @@
 <?php
-
 require_once("../config/config.php");
 //require_once("./states/IApplicationState.php");
 //require_once("./eventmanagement/GameEventManager.php");
@@ -42,6 +41,10 @@ class MenuState implements IApplicationState {
         }
 
         GameEventManager::getInstance()->dispatchEvent(new UpdateViewEvent($this));
+
+        if(isset($_SESSION['IEventManager'])){
+            echo "Session gesetzt: ";//.$_SESSION['IEventManager']."<br />";
+        }
     }
 
 
@@ -88,8 +91,21 @@ class MenuState implements IApplicationState {
 
         */
 
-        // TODO change this to useable data
-        GameEventManager::getInstance()->dispatchEvent(new UpdateViewEvent("bla"));
+        if(isset($_GET[session_name()])){
+            session_id($_GET[session_name()]);
+            echo "session id ".$_GET[session_name()];
+
+            if(isset($_SESSION['IEventManager'])){
+              // TODO change this to useable data
+              //GameEventManager::getInstance()->dispatchEvent(new UpdateViewEvent("bla"));
+                print_r($_SESSION['IEventManager']);
+
+                echo "Session Ajax gesetzt ";//.$_SESSION['IEventManager']."<br />";
+            }
+
+
+
+        }
 
     }
 
@@ -97,6 +113,7 @@ class MenuState implements IApplicationState {
 }
 
 if(isset($_GET['handle'])){
+    session_start();
     MenuState::ajaxTest();
 
 }
