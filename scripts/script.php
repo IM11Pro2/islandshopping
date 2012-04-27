@@ -1,4 +1,5 @@
 <?php
+require_once("../config/config.php");
 function printJavaScript(){
 
 ?>
@@ -9,11 +10,7 @@ $(document).ready(function(){
     function sendAjaxRequest(url, data){
         $.ajax({
             url: url,
-            data: data,
-            dataType: "jsonp",
-            contentType: 'application/json',
-            jsonp : "callback",
-            jsonpCallback: "jsonpcallback"
+            data: data
         });
     }
 
@@ -37,4 +34,9 @@ function jsonpcallback(data) {
 </script>
 <?php
 }
+
+//dataType: "jsonp",
+//contentType: 'application/json',
+//jsonp : "callback",
+//jsonpCallback: "jsonpcallback"
 ?>

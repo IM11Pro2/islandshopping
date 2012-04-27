@@ -42,9 +42,6 @@ class MenuState implements IApplicationState {
 
         GameEventManager::getInstance()->dispatchEvent(new UpdateViewEvent($this));
 
-        if(isset($_SESSION['IEventManager'])){
-            echo "Session gesetzt: ";//.$_SESSION['IEventManager']."<br />";
-        }
     }
 
 
@@ -77,11 +74,11 @@ class MenuState implements IApplicationState {
 
 
 
-    public static function ajaxTest(){
+    public static function ajaxRequest(){
+
 
         /*
-        header("content-type: application/json");
-
+        header("content-type: text/html");
         if(isset($_GET['handle'])) $id = $_GET['handle'];
 
         $message = "You got an AJAX response via JSONP from another site!";
@@ -96,15 +93,12 @@ class MenuState implements IApplicationState {
             echo "session id ".$_GET[session_name()];
 
             if(isset($_SESSION['IEventManager'])){
+
               // TODO change this to useable data
-              //GameEventManager::getInstance()->dispatchEvent(new UpdateViewEvent("bla"));
-                print_r($_SESSION['IEventManager']);
+                $eventManager = $_SESSION['IEventManager'];
+                $eventManager->dispatchEvent(new UpdateViewEvent("bla"));
 
-                echo "Session Ajax gesetzt ";//.$_SESSION['IEventManager']."<br />";
             }
-
-
-
         }
 
     }
@@ -114,7 +108,7 @@ class MenuState implements IApplicationState {
 
 if(isset($_GET['handle'])){
     session_start();
-    MenuState::ajaxTest();
+    MenuState::ajaxRequest();
 
 }
 ?>
