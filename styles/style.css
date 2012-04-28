@@ -1,0 +1,8 @@
+@font-face {
+    font-family: QlassikBold;
+    src: url(QlassikBold_TB.otf);
+}
+
+body{
+    font-family: QlassikBold;
+}

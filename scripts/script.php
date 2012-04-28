@@ -24,6 +24,16 @@ $(document).ready(function(){
         }
     });
 
+    $('input:radio').click(function(event){
+
+        alert($(this).parent().text());
+
+        if($('input:checked').length > 0){
+
+            sendAjaxRequest("../states/MenuState.php", {handle: "ajaxTest", <?php  echo session_name().': '.'"'.session_id().'"'; ?>});
+        }
+    });
+
 
 
 });
