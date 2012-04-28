@@ -112,7 +112,7 @@ class RegionGraph{
             array(66,68), // Lesbos
             array(3,10,67), // Limnos
             array(29,70), // Kefalonia
-            array(30,43), // Zakynthos
+            array(69,43), // Zakynthos
         );
 
 
