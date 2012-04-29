@@ -18,7 +18,7 @@ function getCountriesArray()
    );
 }
 
-define("NUM_OF_REGIONS", 12);
+define("NUM_OF_REGIONS", 70);
 
 function __autoload($classname) {
   static $classes = array ('AjaxResponse' => '../ajax/AjaxResponse.php',

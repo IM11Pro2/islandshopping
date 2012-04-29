@@ -95,7 +95,9 @@ class MenuState implements IApplicationState {
         */
 
         if(isset($_GET[session_name()])){
+
             session_id($_GET[session_name()]);
+
             echo "session id ".$_GET[session_name()];
 
             if(isset($_SESSION['IEventManager'])){

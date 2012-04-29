@@ -1,9 +1,5 @@
 <?php
 
-//require_once("../config.php");
-//require_once("./Region.php");
-//require_once("./RegionGraph.php");
-
 class Map{
 
     //Linked List for Regions?
@@ -32,7 +28,7 @@ class Map{
                     break;
                 }
 
-                // if the random selected player has allready its regions select the next player
+                // if the random selected player has allready its regions, select the next player
 				$playerId = ($playerId+1) % $numberOfPlayers;
 			}
         }

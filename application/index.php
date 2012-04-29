@@ -22,6 +22,7 @@ session_start();
     <meta charset="utf-8" />
     <title>Hallo IslandshoppAA!!</title>
     <script type="text/javascript" src="../scripts/jquery-1.7.2.js" language="javascript" ></script>
+    <link rel="stylesheet" type="text/css" href="../styles/style.css" />
     <?php printJavaScript(); ?>
     <!--<script type="text/javascript" src="../scripts/script.js" language="javascript" ></script>-->
 </head>
