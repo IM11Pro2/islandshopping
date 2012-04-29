@@ -91,6 +91,9 @@ class MenuStateView implements IEventListener {
     <?php
     }
 }
+
+echo"<br /><br /> Player: ";
+//echo MenuState::$getPlayerCountry;
 /*
  <form name="menuForm1" method="POST" action="
 //echo $_SERVER['PHP_SELF']; ?>">

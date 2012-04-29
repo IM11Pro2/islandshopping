@@ -35,18 +35,17 @@ class MenuState implements IApplicationState {
         $this->countryArray = getCountriesArray();
 
         foreach($this->countryArray as $country => $role) {
-                if ($role == 1) {
-                    $this->playerCountry = $this->countryArray[$country];
+                if ($role == PLAYER_VALUE) {
+                    //$this->playerCountry = $this->countryArray[$country];
+                    $this->playerCountry = $country;
                 }
         }
 
         GameEventManager::getInstance()->dispatchEvent(new UpdateViewEvent($this));
 
+        $_SESSION['state'] = $this;
+
     }
-
-
-
-
 
     function endState()
     {
@@ -58,13 +57,20 @@ class MenuState implements IApplicationState {
         // TODO: Implement getApplicationStateType() method.
     }
 
-
-
-
-
     public function setPlayerCountry($playerCountry)
     {
+        /* Runs through country array and sets old playerCountry to 0 and the new one to 1 */
+        foreach($this->countryArray as $country => $role) {
+            if ($role == PLAYER_VALUE) {
+                $this->countryArray[$country] = 0;
+            }
+            if ($country == $playerCountry) {
+                $this->countryArray[$country] = PLAYER_VALUE;
+            }
+        }
+
         $this->playerCountry = $playerCountry;
+        echo "setPlayerCountry: ". $this->playerCountry;
     }
 
     public function getPlayerCountry()
@@ -99,17 +105,23 @@ class MenuState implements IApplicationState {
                 $eventManager->dispatchEvent(new UpdateViewEvent("bla"));
 
             }
-        }
 
+            if(isset($_GET['playercountry'])){
+                $_SESSION['state']->setPlayerCountry($_GET['playercountry']);
+            }
+        }
     }
 
 
 }
 
-if(isset($_GET['handle'])){
+if(isset($_GET['handle']) || isset($_GET['playercountry'])){
     session_start();
     MenuState::ajaxRequest();
-
 }
+/*if(isset($_GET['playercountry'])){
+    session_start();
+    MenuState::setPlayerCountry($_GET['playercountry']);
+    //MenuState::ajaxRequest();
+}*/
 ?>
- 
