@@ -3,9 +3,10 @@
 //require_once("../config.php");
 //require_once("IApplicationState.php");
 
-class EndOfPlayState implements IApplicationState {
+class MapState implements IApplicationState {
 
-    const ApplicationStateType = "EndOfPlayState";
+    const ApplicationStateType = "MapState";
+    //private $map = new Map();
 
     function init()
     {

@@ -2,20 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d137d262-ddb3-4e9c-8a24-d58062ef8e57" name="Default" comment="merged script">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/styles/QlassikBold_TB.otf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/styles/style.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/states/MapState.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/states/MenuState.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/states/PreloaderState.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/index.php" afterPath="$PROJECT_DIR$/application/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/config.php" afterPath="$PROJECT_DIR$/config/config.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/map/Map.php" afterPath="$PROJECT_DIR$/map/Map.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/map/RegionGraph.php" afterPath="$PROJECT_DIR$/map/RegionGraph.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/script.php" afterPath="$PROJECT_DIR$/scripts/script.php" />
-      <change type="MODIFICATION" beforePath="C:\xampp_IM\htdocs\phpStorm_proII\workspace\islandshoppingTeam\states\EndOfPlayState.php" afterPath="$PROJECT_DIR$/states/EndOfPlayState.php" />
-      <change type="MODIFICATION" beforePath="C:\xampp_IM\htdocs\phpStorm_proII\workspace\islandshoppingTeam\states\IApplicationState.php" afterPath="$PROJECT_DIR$/states/IApplicationState.php" />
-      <change type="MODIFICATION" beforePath="C:\xampp_IM\htdocs\phpStorm_proII\workspace\islandshoppingTeam\states\MapState.php" afterPath="$PROJECT_DIR$/states/MapState.php" />
-      <change type="MODIFICATION" beforePath="C:\xampp_IM\htdocs\phpStorm_proII\workspace\islandshoppingTeam\states\MenuState.php" afterPath="$PROJECT_DIR$/states/MenuState.php" />
-      <change type="MODIFICATION" beforePath="C:\xampp_IM\htdocs\phpStorm_proII\workspace\islandshoppingTeam\states\PlayState.php" afterPath="$PROJECT_DIR$/states/PlayState.php" />
-      <change type="MODIFICATION" beforePath="C:\xampp_IM\htdocs\phpStorm_proII\workspace\islandshoppingTeam\states\PreloaderState.php" afterPath="$PROJECT_DIR$/states/PreloaderState.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/states/EndOfPlayState.php" afterPath="$PROJECT_DIR$/states/EndOfPlayState.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/states/IApplicationState.php" afterPath="$PROJECT_DIR$/states/IApplicationState.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/states/PlayState.php" afterPath="$PROJECT_DIR$/states/PlayState.php" />
     </list>
     <ignored path="islandshoppingTeam.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,15 +30,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MenuState.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/states/MenuState.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="81" column="0" selection-start="2192" selection-end="2192" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="config.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/config.php">
           <provider selected="true" editor-type-id="text-editor">
@@ -64,15 +48,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EndOfPlayState.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/states/EndOfPlayState.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="MenuStateView_BU.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/MenuStateView_BU.php">
           <provider selected="true" editor-type-id="text-editor">
@@ -85,16 +60,7 @@
       <file leaf-file-name="test.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/test.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MenuState.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="vcs://C:/xampp_IM/htdocs/phpStorm_proII/workspace/islandshoppingTeam/states/MenuState.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="40" selection-start="441" selection-end="441" vertical-scroll-proportion="0.0">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -103,16 +69,25 @@
       <file leaf-file-name="MenuStateView.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/MenuStateView.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="83" column="0" selection-start="2537" selection-end="2537" vertical-scroll-proportion="0.0">
+            <state line="83" column="0" selection-start="2612" selection-end="2612" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="script.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="script.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scripts/script.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="5" selection-start="298" selection-end="298" vertical-scroll-proportion="0.022123894">
+            <state line="14" column="5" selection-start="298" selection-end="298" vertical-scroll-proportion="-0.65384614">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EndOfPlayState.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/states/EndOfPlayState.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -162,7 +137,7 @@
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
-    <option name="height" value="1066" />
+    <option name="height" value="1176" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -190,7 +165,48 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="islandshoppingTeam">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="islandshoppingTeam">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="styles">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="islandshoppingTeam">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT=".idea">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -220,6 +236,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="islandshoppingTeam" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="islandshoppingTeam" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="styles" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -289,6 +319,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="eventmanagement" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="islandshoppingTeam" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="islandshoppingTeam" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="config" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -334,6 +378,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\xampp\htdocs\workspace\islandshoppingTeam\states" />
       <recent name="C:\xampp_IM\htdocs\phpStorm_proII\workspace\islandshoppingTeam\Views_State" />
     </key>
   </component>
@@ -406,20 +451,20 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19713657" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19646366" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32929516" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32929516" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32907662" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32907662" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18108974" sideWeight="0.8028634" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18536325" sideWeight="0.81925344" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18171807" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18074656" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -463,7 +508,7 @@
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
     <option name="CREATE_PATCH_EXPAND_DETAILS_DEFAULT" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="merged script" />
+    <option name="LAST_COMMIT_MESSAGE" value="STIRB" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -480,6 +525,8 @@
     <MESSAGE value="* IApplicationState zu jedem State hinzugefügt&#10;* config.php geändert, Array hinzugefügt&#10;* MapStateView.php + IStateView.php MenuStateView.php hinzugefügt&#10;* MenuStateView.php mit Funktionalität befüllt&#10; --&gt; SpielerLand mittels Radio Buttons auswählen,&#10; --&gt; Je nach Wahl, GegnerLänder zu Auswahl generiert&#10; --&gt; Gegner + SpielerLänder bleiben ausgewählt&#10; --&gt; Übernahme durch ButtonKlick&#10; &#10; //TODO - Logik im MenuState.php erledigen, Ländergenerierung mittles Ajax(?) lösen" />
     <MESSAGE value="ajax test bei menu state" />
     <MESSAGE value="merged script" />
+    <MESSAGE value="deleted states to solve repository problem :(" />
+    <MESSAGE value="STIRB" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -488,11 +535,6 @@
     <entry file="file://$PROJECT_DIR$/ajax/ajaxResponse.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="6" column="0" selection-start="85" selection-end="108" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/states/MapState.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/events/IEvent.php">
@@ -525,13 +567,6 @@
         <state line="17" column="17" selection-start="411" selection-end="411" vertical-scroll-proportion="0.4938704" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/states/MenuState.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="81" column="0" selection-start="2192" selection-end="2192" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/config.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="6" column="20" selection-start="281" selection-end="293" vertical-scroll-proportion="0.0" />
@@ -539,40 +574,34 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/eventmanagement/GameEventManager.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="9" selection-start="1316" selection-end="1316" vertical-scroll-proportion="0.0">
+        <state line="51" column="9" selection-start="1316" selection-end="1316" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/MenuStateView_BU.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="32" selection-start="1406" selection-end="1411" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/test.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/MenuStateView.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="83" column="0" selection-start="2612" selection-end="2612" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/script.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="5" selection-start="298" selection-end="298" vertical-scroll-proportion="-0.65384614">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/states/EndOfPlayState.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/MenuStateView_BU.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="32" selection-start="1406" selection-end="1411" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/MenuStateView.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="83" column="0" selection-start="2537" selection-end="2537" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/test.php">
-      <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/script.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="5" selection-start="298" selection-end="298" vertical-scroll-proportion="0.022123894">
           <folding />
         </state>
       </provider>
