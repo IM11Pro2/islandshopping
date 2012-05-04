@@ -42,10 +42,7 @@ class MenuStateView implements IEventListener {
                }
 
                ?>
-               <label>
-                 <input type='radio' name='playerCountry' value="<?php echo $value ?>" <?php echo $status ?> />
-                 <?php echo $country ?>
-               </label>
+               <label><input type='radio' name='playerCountry' value="<?php echo $value ?>" <?php echo $status ?> /><?php echo $country ?></label>
                <?php
                $status = "";
            }
@@ -69,22 +66,24 @@ class MenuStateView implements IEventListener {
            //$checked = "unchecked";
            $status = "";
            foreach($all_countries_array as $country => $value) {
-               if (PLAYER_VALUE != $value) {
+               //if (PLAYER_VALUE != $value) {
                   if(ENEMY_VALUE == $value){
                       $status='checked="checked"';
                   }
+
+                   if (PLAYER_VALUE == $value){
+                       $status =  $status.' disabled="disabled"';
+                   }
                    ?>
-                  <label>
-                    <input type="checkbox" name="enemyCountries[]" value="<?php echo $value ?>" <?php echo $status ?> />
-                    <?php echo $country ?>
-                  </label>
+                  <label><input type="checkbox" name="enemyCountries[]" value="<?php echo $value ?>" id="enemy_<?php echo $country ?>" <?php echo $status ?> /><?php echo $country ?></label>
                   <?php
                    $status = "";
                }
 
-           }
+           //}
        ?>
            <br /><br />
+            <div class="log"></div>
        <!--    <input type="button" name="Change" value="Take changes" onclick="--><?php //echo $_SERVER['PHP_SELF']; ?><!--">-->
            <input type="submit" name="Submit" value="Start">
        </form>

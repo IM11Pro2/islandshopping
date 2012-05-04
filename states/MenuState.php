@@ -70,7 +70,7 @@ class MenuState implements IApplicationState {
         }
 
         $this->playerCountry = $playerCountry;
-        echo "setPlayerCountry: ". $this->playerCountry;
+        echo /*"setPlayerCountry: ". */$this->playerCountry;
     }
 
     public function getPlayerCountry()
@@ -78,6 +78,14 @@ class MenuState implements IApplicationState {
         return $this->playerCountry;
     }
 
+/*    public function updateEnemyCountries()
+        {
+            foreach($this->countryArray as $country => $role) {
+                if ($role == PLAYER_VALUE) {
+                    $this->countryArray[$country] = 0;
+                }
+            }
+        }*/
 
 
     public static function ajaxRequest(){
@@ -98,7 +106,7 @@ class MenuState implements IApplicationState {
 
             session_id($_GET[session_name()]);
 
-            echo "session id ".$_GET[session_name()];
+           // echo "session id ".$_GET[session_name()];
 
             if(isset($_SESSION['IEventManager'])){
 
@@ -121,9 +129,4 @@ if(isset($_GET['handle']) || isset($_GET['playercountry'])){
     session_start();
     MenuState::ajaxRequest();
 }
-/*if(isset($_GET['playercountry'])){
-    session_start();
-    MenuState::setPlayerCountry($_GET['playercountry']);
-    //MenuState::ajaxRequest();
-}*/
 ?>

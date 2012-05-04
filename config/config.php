@@ -13,7 +13,7 @@ function getCountriesArray()
        "EU" => PLAYER_VALUE,
        "Schweiz" => ENEMY_VALUE,
        "T&uuml;rkei" => 0,
-       "Saudi Arabien" => 0,
+       "Saudi&nbsp;Arabien" => 0,
        "USA"=> 0
    );
 }
