@@ -83,7 +83,7 @@ class MenuStateView implements IEventListener {
            //}
        ?>
            <br /><br />
-            <div class="log"></div>
+            <div class="ajaxSuccess"></div>
        <!--    <input type="button" name="Change" value="Take changes" onclick="--><?php //echo $_SERVER['PHP_SELF']; ?><!--">-->
            <input type="submit" name="Submit" value="Start">
        </form>
