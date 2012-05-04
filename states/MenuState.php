@@ -1,5 +1,4 @@
 <?php
-
 require_once("../config/config.php");
 //require_once("./states/IApplicationState.php");
 //require_once("./eventmanagement/GameEventManager.php");
