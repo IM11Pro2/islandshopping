@@ -31,6 +31,8 @@ function __autoload($classname) {
 
                            'IEvent' => '../events/IEvent.php',
                            'UpdateViewEvent' => '../events/UpdateViewEvent.php',
+                           'ChangeViewEvent' => '../events/ChangeViewEvent.php',
+                           'ChangeStateEvent' => '../events/ChangeStateEvent.php',
 
                            'Map' => '../map/Map.php',
                            'Region' => '../map/Region.php',

@@ -1,7 +1,5 @@
 <?php
-//require_once("../config.php");
-//require_once("IApplicationState.php");
-
+require_once("../config/config.php");
 class MapState implements IApplicationState {
 
     const ApplicationStateType = "MapState";
@@ -9,7 +7,12 @@ class MapState implements IApplicationState {
 
     function init()
     {
-        // TODO: Implement init() method.
+        if(isset($_SESSION['IEventManager'])){
+            $_SESSION['IEventManager']->dispatchEvent(new UpdateViewEvent($this));
+        }
+        else{
+            echo "<br /> Nicht gesetzt";
+        }
     }
 
     function endState()
