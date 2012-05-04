@@ -1,4 +1,5 @@
 <?php
+
 require_once("../config/config.php");
 //require_once("./states/IApplicationState.php");
 //require_once("./eventmanagement/GameEventManager.php");
@@ -106,7 +107,7 @@ class MenuState implements IApplicationState {
 
             session_id($_GET[session_name()]);
 
-           // echo "session id ".$_GET[session_name()];
+           //  "session id ".$_GET[session_name()];
 
             if(isset($_SESSION['IEventManager'])){
 
