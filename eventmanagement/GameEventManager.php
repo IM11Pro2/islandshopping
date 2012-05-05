@@ -16,15 +16,12 @@ class GameEventManager implements IEventManager{
     }
 
     public function addEventListener(IEventListener $eventListener, $eventType){
-
         if(!isset($this->listeners[$eventType])){
             $this->listeners[$eventType] = array($eventListener);
         }
         else{
             array_push($this->listeners[$eventType], $eventListener);
         }
-
-
     }
 
     public function removeEventListener(IEventListener $eventListener, $eventType){

@@ -9,16 +9,18 @@ class MenuStateView implements IEventListener, IStateView {
 
     public function __destruct(){
         $_SESSION['IEventManager']->removeEventListener($this, UpdateViewEvent::TYPE);
+        //print_r($_SESSION);
     }
 
     function handleEvent(IEvent $event)
     {
         if($event->getEventType() == UpdateViewEvent::TYPE){
-            echo "Update View Event gekommt<br />";
+            echo "Update Menu State View Event<br />";
         }
     }
 
-    function printView(){?>
+    static function printView(){?>
+      <div id="content">
         <form name="menuForm1" method="POST">
             <h2>Welches Land m&ouml;chtest du sein ?</h2>
             <?php
@@ -62,6 +64,7 @@ class MenuStateView implements IEventListener, IStateView {
             <div class="ajaxSuccess"></div>
            <input type="button" name="Submit" value="Start">
        </form>
+      </div> <!--end #content -->
     <?php
     }
 
@@ -70,7 +73,5 @@ class MenuStateView implements IEventListener, IStateView {
         return self::ViewType;
     }
 }
-
-echo"<br /><br /> Player: ";
 ?>
 

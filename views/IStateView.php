@@ -1,6 +1,6 @@
 <?php
 interface IStateView {
-   	function printView();
+   	static function printView();
 	function getViewType();
 }
 ?>

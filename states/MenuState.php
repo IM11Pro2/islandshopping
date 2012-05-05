@@ -3,6 +3,7 @@ require_once("../config/config.php");
 class MenuState implements IApplicationState {
 
     private $playerCountry;
+    private $enemyCountries;
     private $countryArray;
 
     function __construct(){
@@ -14,22 +15,26 @@ class MenuState implements IApplicationState {
         $this->countryArray = getCountriesArray();
 
         foreach($this->countryArray as $country => $role) {
-                if ($role == PLAYER_VALUE) {
-                    $this->playerCountry = $country;
-                }
+            if ($role == PLAYER_VALUE) {
+                $this->playerCountry = $country;
+            }
+            else if ($role == ENEMY_VALUE) {
+                $this->enemyCountries[] = $country;
+            }
         }
-
-        GameEventManager::getInstance()->dispatchEvent(new UpdateViewEvent($this));
+        //GameEventManager::getInstance()->dispatchEvent(new UpdateViewEvent($this));
         $_SESSION['state'] = $this;
     }
 
     function endState()
     {
-        echo "endState()";
         $eventmanager = $_SESSION['IEventManager'];
         $eventmanager->dispatchEvent(new ChangeViewEvent(new MapStateView()));
         //next state übergeben
         $eventmanager->dispatchEvent(new ChangeStateEvent(new MapState()/*,session_id()*/));
+        $_SESSION['player'] = $this->playerCountry;
+        $_SESSION['enemies'] = $this->enemyCountries;
+        $_SESSION['countryArray'] = $this->countryArray;
     }
 
     function getApplicationStateType()
@@ -48,9 +53,24 @@ class MenuState implements IApplicationState {
                 $this->countryArray[$country] = PLAYER_VALUE;
             }
         }
-
         $this->playerCountry = $playerCountry;
-        echo "setPlayerCountry: ". $this->playerCountry;
+    }
+
+    public function setEnemyCountries($enemycountry)
+    {
+        /* Runs through country array and sets old enemies to 0 and new ones to -1 */
+        foreach($this->countryArray as $country => $role) {
+            if ($country == $enemycountry) {
+                if($this->countryArray[$country] == ENEMY_VALUE){
+                    $this->countryArray[$country] = 0;
+                    unset($this->enemyCountries[$country]);
+                }
+                else {
+                    $this->countryArray[$country] = ENEMY_VALUE;
+                    $this->enemyCountries[] = $country;
+                }
+            }
+        }
     }
 
     public function getPlayerCountry()
@@ -58,14 +78,10 @@ class MenuState implements IApplicationState {
         return $this->playerCountry;
     }
 
-/*    public function updateEnemyCountries()
-        {
-            foreach($this->countryArray as $country => $role) {
-                if ($role == PLAYER_VALUE) {
-                    $this->countryArray[$country] = 0;
-                }
-            }
-        }*/
+    public function getEnemyCountries()
+    {
+        return $this->enemyCountries;
+    }
 
     public static function ajaxRequest(){
 
@@ -78,15 +94,21 @@ class MenuState implements IApplicationState {
               // TODO change this to useable data
                 $eventManager = $_SESSION['IEventManager'];
                 $eventManager->dispatchEvent(new UpdateViewEvent("bla"));
+
+                if(isset($_GET['playercountry'])){
+                    $_SESSION['state']->setPlayerCountry($_GET['playercountry']);
+                }
+
+                if(isset($_GET['enemycountry'])){
+                    $_SESSION['state']->setEnemyCountries($_GET['enemycountry']);
+                }
+
+                else if(isset($_GET['endState'])){
+                    $_SESSION['state']->endState();
+                }
+
             }
 
-            if(isset($_GET['playercountry'])){
-                $_SESSION['state']->setPlayerCountry($_GET['playercountry']);
-            }
-
-            if(isset($_GET['endState'])){
-                $_SESSION['state']->endState();
-            }
         }
     }
 }

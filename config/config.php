@@ -1,9 +1,7 @@
 <?php
 define("SITE_TITLE", "Island(S)hopping");
-//$all_countries_array = array(0 => "EU", 1 =>"Schweiz", 2 =>"Tuerkei", 3 =>"SaudiArabien", 4 =>"USA");
 
 //Countries
-//define("COUNTRIES_ARRAY", array(0 => "EU", 1 =>"Schweiz", 2 =>"Türkei", 3 =>"Saudi Arabien", 4 =>"USA"));
 define("PLAYER_VALUE", 1);
 define("ENEMY_VALUE", -1);
 function getCountriesArray()
@@ -12,8 +10,8 @@ function getCountriesArray()
    (
        "EU" => PLAYER_VALUE,
        "Schweiz" => ENEMY_VALUE,
-       "T&uuml;rkei" => 0,
-       "Saudi&nbsp;Arabien" => 0,
+       "Tuerkei" => 0,
+       "SaudiArabien" => 0,
        "USA"=> 0
    );
 }

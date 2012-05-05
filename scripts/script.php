@@ -15,8 +15,6 @@ $(document).ready(function(){
     }
 
     $('input:checkbox[name="enemyCountries[]"]').click(function(event){
-
-       // alert($(this).parent().text());
         if($('input:checked').length > 0){
             sendAjaxRequest("../states/MenuState.php", {handle: "ajaxTest", enemycountry: $(this).parent().text(), <?php  echo session_name().': '.'"'.session_id().'"'; ?>});
         }
@@ -24,13 +22,9 @@ $(document).ready(function(){
 
 
     $('input:radio[name="playerCountry"]').click(function(event) {
-        //alert($(this).parent().text());
-
         if($('input:checked').length > 0){
             sendAjaxRequest("../states/MenuState.php", {handle: "ajaxTest", playercountry: $(this).parent().text(), <?php  echo session_name().': '.'"'.session_id().'"'; ?>});
         }
-       // disableEnemyCountry($(this).parent().text()); // soll vom server kommen
-
     });
 
     $(':button[name="Submit"]').click(function (event) {
@@ -48,9 +42,19 @@ $(document).ready(function(){
 /*            $(this).text('Triggered ajaxSuccess handler. The ajax response was:'
                                      + xhr.responseText );*/
             }
-            if(settings.url.indexOf("endState")!= -1){
-                //alert("endstate");
+            if(settings.url.indexOf("enemycountry")!= -1){
+                alert(settings.url);
             }
+            if(settings.url.indexOf("endState")!= -1){
+                //sendAjaxRequest("../views/MapStateView.php", {handle: "ajaxTest", loadSite: "printView", <?php  echo session_name().': '.'"'.session_id().'"'; ?>});
+                $("#content").load("../views/MapStateView.php");
+                return false;
+            }
+        }
+
+        else if(settings.url.indexOf("../views/MapStateView.php")!= -1){
+           /* $("#content").load("../views/MapStateView.php");
+            return false;*/
         }
     });
 
