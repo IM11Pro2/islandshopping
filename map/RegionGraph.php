@@ -42,7 +42,7 @@ class RegionGraph{
 
     public static function initRelations(){
         $lookUp = array(
-            array(1), // Evras
+            array(1,68), // Evras
             array(0,2), // Rodopol
             array(1,4,5), // Xanthi
             array(4,68), // Thasos
@@ -66,17 +66,17 @@ class RegionGraph{
             array(16,20,26,27,30,31), // Karditsa
             array(18,19,20,23,25,26), //Ioannina
             array(22,25,24), // Thesprotia
-            array(23), // Korfu
-            array(22,23,26,27), // Preveza
+            array(23,25), // Korfu
+            array(22,23,24,26,27), // Preveza
             array(20,21,22,23,25,27), // Arta
-            array(21,25,26,28,29,30,31,32,42), // Atolien
-            array(27,29), // Lefkada
+            array(21,25,26,28,29,30,31,32,42,69), // Atolien
+            array(27,29,69), // Lefkada
             array(27,28,69), // Ithaka
             array(21,27,31), // Evrytania
             array(17,21,30,32,33,34), //Fthiotida
             array(27,31,33,42), // Fokida
             array(31,32,34,36,38), // Bootien
-            array(17,31,33,35,36,65), // Euboa
+            array(17,31,33,35,36,65,66,67,68), // Euboa
             array(17,34), //Sporaden
             array(33,34,37,38,59), // Ostattika
             array(36,38,39), // Attika
@@ -96,9 +96,9 @@ class RegionGraph{
             array(50,52), // Karpathos
             array(51,53), // Rhodos
             array(52,54), // Kos
-            array(53,62,63), // Kalymnos
-            array(56,57,61,62), // Naxos
-            array(55,57,58), // Thira
+            array(53,55,56,62,63), // Kalymnos
+            array(54,56,57,61,62), // Naxos
+            array(54,55,57,58), // Thira
             array(55,56,58,60), // Paros
             array(56,57,59), // Milos
             array(36,58,60,65), // Kea
@@ -108,10 +108,10 @@ class RegionGraph{
             array(54,62,66), // Samos
             array(60,61,65), // Tinos
             array(34,59,60), // Andros
-            array(62,63,67), // Chios
-            array(66,68), // Lesbos
-            array(3,10,67), // Limnos
-            array(29,70), // Kefalonia
+            array(34,62,63,67), // Chios
+            array(34,66,68), // Lesbos
+            array(0,3,10,34,67), // Limnos
+            array(27,28,29,70), // Kefalonia
             array(69,43), // Zakynthos
         );
 
