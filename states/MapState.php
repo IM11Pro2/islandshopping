@@ -1,31 +1,31 @@
 <?php
-require_once("../config/config.php");
-class MapState implements IApplicationState {
+    require_once("../config/config.php");
+    class MapState implements IApplicationState {
 
-    const ApplicationStateType = "MapState";
-    //private $map = new Map();
+        const ApplicationStateType = "MapState";
+        private $player;
 
-    function init()
-    {
-        if(isset($_SESSION['IEventManager'])){
-            $_SESSION['IEventManager']->dispatchEvent(new UpdateViewEvent($this));
+        //private $map = new Map();
+
+        function init() {
+            if(isset($_SESSION['IEventManager'])) {
+                $_SESSION['IEventManager']->dispatchEvent(new UpdateViewEvent($this));
+            }
+            else {
+                echo "<br /> Nicht gesetzt";
+            }
+
         }
-        else{
-            echo "<br /> Nicht gesetzt";
+
+        function endState() {
+            // TODO: Implement endState() method.
         }
-    }
 
-    function endState()
-    {
-        // TODO: Implement endState() method.
-    }
+        function getApplicationStateType() {
+            return self::ApplicationStateType;
+        }
 
-    function getApplicationStateType()
-    {
-        return self::ApplicationStateType;
     }
-
-}
 
 ?>
  

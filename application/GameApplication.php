@@ -31,7 +31,7 @@ class GameApplication implements IEventListener
             //echo "3er Sessionaufruf <br />";
             //print_r($_SESSION);
             $this->view = $event->getView();
-            //$this->view->printView();
+            $this->view->printView();
         }
 
         if($event->getEventType() == ChangeStateEvent::TYPE){

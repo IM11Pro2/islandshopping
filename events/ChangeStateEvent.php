@@ -1,26 +1,25 @@
 <?php
-require_once("../config/config.php");
-class ChangeStateEvent implements IEvent
-{
+    require_once("../config/config.php");
+    class ChangeStateEvent implements IEvent {
 
-    private $state;
-   // private $sessionId;
-    const TYPE = "CHANGE_STATE";
+        private $state;
+        // private $sessionId;
+        const TYPE = "CHANGE_STATE";
 
-    public function __construct(IApplicationState $state /*, $sessionId*/){
-        $this->state = $state;
-       // $this->sessionId = $sessionId;
-    }
+        public function __construct(IApplicationState $state /*, $sessionId*/) {
+            $this->state = $state;
+            // $this->sessionId = $sessionId;
+        }
 
-    function getEventType(){
-        return self::TYPE;
-    }
+        function getEventType() {
+            return self::TYPE;
+        }
 
-    function getState(){
-        return $this->state;
-    }
+        function getState() {
+            return $this->state;
+        }
 
 /*    function getSessionId(){
         return $this->sessionId;
     }*/
-}
+    }

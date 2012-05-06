@@ -1,19 +1,18 @@
 <?php
-require_once("../config/config.php");
-class ChangeViewEvent implements IEvent
-{
-    private $view;
-    const TYPE = "CHANGE_VIEW";
+    require_once("../config/config.php");
+    class ChangeViewEvent implements IEvent {
+        private $view;
+        const TYPE = "CHANGE_VIEW";
 
-    public function __construct(IStateView $view){
-        $this->view = $view;
-    }
+        public function __construct(IStateView $view) {
+            $this->view = $view;
+        }
 
-    function getEventType(){
-        return self::TYPE;
-    }
+        function getEventType() {
+            return self::TYPE;
+        }
 
-    function getView(){
-        return $this->view;
+        function getView() {
+            return $this->view;
+        }
     }
-}

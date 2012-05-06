@@ -23,6 +23,9 @@ function __autoload($classname) {
 
                            'GameApplication' => '../application/GameApplication.php',
 
+                            'ICountry' => '../countries/ICountry.php',
+                            'Country' => '../countries/Country.php',
+
                            'GameEventManager' => '../eventmanagement/GameEventManager.php',
                            'IEventListener' => '../eventmanagement/IEventListener.php',
                            'IEventManager' => '../eventmanagement/IEventManager.php',
@@ -36,16 +39,23 @@ function __autoload($classname) {
                            'Region' => '../map/Region.php',
                            'RegionGraph' => '../map/RegionGraph.php',
 
-                           'EndOfPlayState' => '../states/EndOfPlayState.php',
-                           'IApplicationState' => '../states/IApplicationState.php',
-                           'MapState' => '../states/MapState.php',
-                           'MenuState' => '../states/MenuState.php',
-                           'PlayState' => '../states/PlayState.php',
-                           'PreloaderState' => '../states/PreloaderState.php',
+                            'IPayment' => '../payments/IPayment.php',
 
-                           'IStateView' => '../views/IStateView.php',
-                           'MapStateView' => '../views/MapStateView.php',
-                           'MenuStateView' => '../views/MenuStateView.php'
+                            'IPlayer' => '../players/IPlayer.php',
+                            'HumanPlayer' => '../players/HumanPlayer.php',
+                            'ArtificialIntelligence' => '../players/ArtificialIntelligence.php',
+
+                            'EndOfPlayState' => '../states/EndOfPlayState.php',
+                            'IApplicationState' => '../states/IApplicationState.php',
+                            'MapState' => '../states/MapState.php',
+                            'MenuState' => '../states/MenuState.php',
+                            'PlayState' => '../states/PlayState.php',
+                            'PreloaderState' => '../states/PreloaderState.php',
+
+                            'IStateView' => '../views/IStateView.php',
+                            'MapStateView' => '../views/MapStateView.php',
+                            'MenuStateView' => '../views/MenuStateView.php'
+
 
                             );
 

@@ -43,12 +43,12 @@ $(document).ready(function(){
                                      + xhr.responseText );*/
             }
             if(settings.url.indexOf("enemycountry")!= -1){
-                alert(settings.url);
+                //alert(settings.url);
             }
             if(settings.url.indexOf("endState")!= -1){
                 //sendAjaxRequest("../views/MapStateView.php", {handle: "ajaxTest", loadSite: "printView", <?php  echo session_name().': '.'"'.session_id().'"'; ?>});
-                $("#content").load("../views/MapStateView.php");
-                return false;
+                //$("#content").load("../views/MapStateView.php");
+                //return false;
             }
         }
 

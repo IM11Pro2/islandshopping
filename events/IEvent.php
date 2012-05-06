@@ -1,5 +1,6 @@
 <?php
-	interface IEvent{
-		function getEventType();
-	}
+    interface IEvent {
+        function getEventType();
+    }
+
 ?>

@@ -1,120 +1,136 @@
 <?php
-require_once("../config/config.php");
-class MenuState implements IApplicationState {
+    require_once("../config/config.php");
+    class MenuState implements IApplicationState {
 
-    private $playerCountry;
-    private $enemyCountries;
-    private $countryArray;
+        private $playerCountry;
+        private $enemyCountries;
+        private $countryArray;
 
-    function __construct(){
+        function __construct() {
 
-    }
-
-    function init()
-    {
-        $this->countryArray = getCountriesArray();
-
-        foreach($this->countryArray as $country => $role) {
-            if ($role == PLAYER_VALUE) {
-                $this->playerCountry = $country;
-            }
-            else if ($role == ENEMY_VALUE) {
-                $this->enemyCountries[] = $country;
-            }
         }
-        //GameEventManager::getInstance()->dispatchEvent(new UpdateViewEvent($this));
-        $_SESSION['state'] = $this;
-    }
 
-    function endState()
-    {
-        $eventmanager = $_SESSION['IEventManager'];
-        $eventmanager->dispatchEvent(new ChangeViewEvent(new MapStateView()));
-        //next state übergeben
-        $eventmanager->dispatchEvent(new ChangeStateEvent(new MapState()/*,session_id()*/));
-        $_SESSION['player'] = $this->playerCountry;
-        $_SESSION['enemies'] = $this->enemyCountries;
-        $_SESSION['countryArray'] = $this->countryArray;
-    }
+        function init() {
+            $this->countryArray = getCountriesArray();
 
-    function getApplicationStateType()
-    {
-        // TODO: Implement getApplicationStateType() method.
-    }
-
-    public function setPlayerCountry($playerCountry)
-    {
-        /* Runs through country array and sets old playerCountry to 0 and the new one to 1 */
-        foreach($this->countryArray as $country => $role) {
-            if ($role == PLAYER_VALUE) {
-                $this->countryArray[$country] = 0;
-            }
-            if ($country == $playerCountry) {
-                $this->countryArray[$country] = PLAYER_VALUE;
-            }
-        }
-        $this->playerCountry = $playerCountry;
-    }
-
-    public function setEnemyCountries($enemycountry)
-    {
-        /* Runs through country array and sets old enemies to 0 and new ones to -1 */
-        foreach($this->countryArray as $country => $role) {
-            if ($country == $enemycountry) {
-                if($this->countryArray[$country] == ENEMY_VALUE){
-                    $this->countryArray[$country] = 0;
-                    unset($this->enemyCountries[$country]);
+            foreach($this->countryArray as $country => $role) {
+                if($role == PLAYER_VALUE) {
+                    $this->playerCountry = $country;
                 }
-                else {
-                    $this->countryArray[$country] = ENEMY_VALUE;
+                else if($role == ENEMY_VALUE) {
                     $this->enemyCountries[] = $country;
                 }
             }
+            //GameEventManager::getInstance()->dispatchEvent(new UpdateViewEvent($this));
+            $_SESSION['state'] = $this;
         }
-    }
 
-    public function getPlayerCountry()
-    {
-        return $this->playerCountry;
-    }
+        function endState() {
+            $eventmanager = $_SESSION['IEventManager'];
+            $eventmanager->dispatchEvent(new ChangeViewEvent(new MapStateView()));
+            //next state übergeben
+            $eventmanager->dispatchEvent(new ChangeStateEvent(new MapState() /*,session_id()*/));
+            $_SESSION['player'] = $this->playerCountry;
+            $_SESSION['enemies'] = $this->enemyCountries;
+            $_SESSION['countryArray'] = $this->countryArray;
 
-    public function getEnemyCountries()
-    {
-        return $this->enemyCountries;
-    }
+            $this->createPlayer();
+            $this->createEnemyPlayers();
+        }
 
-    public static function ajaxRequest(){
+        //create HumanPlayer
+        function createPlayer() {
+            $playerCountry = new Country();
+            $playerCountry->setName($this->playerCountry);
+            $player = new HumanPlayer();
+            $player->setCountry($playerCountry);
+        }
 
-        if(isset($_GET[session_name()])){
+        //create ArtificialIntelligence
+        function createEnemyPlayers() {
+            foreach($this->enemyCountries as $enemyC) {
+                $enemyCountry = new Country();
+                $enemyCountry->setName($enemyC);
+                $enemy = new ArtificialIntelligence();
+                $enemy->setCountry($enemyCountry);
+            }
+        }
 
-            session_id($_GET[session_name()]);
+        function getApplicationStateType() {
+            // TODO: Implement getApplicationStateType() method.
+        }
 
-            if(isset($_SESSION['IEventManager'])){
-
-              // TODO change this to useable data
-                $eventManager = $_SESSION['IEventManager'];
-                $eventManager->dispatchEvent(new UpdateViewEvent("bla"));
-
-                if(isset($_GET['playercountry'])){
-                    $_SESSION['state']->setPlayerCountry($_GET['playercountry']);
+        public function setPlayerCountry($playerCountry) {
+            /* Runs through country array and sets old playerCountry to 0 and the new one to 1 */
+            foreach($this->countryArray as $country => $role) {
+                if($role == PLAYER_VALUE) {
+                    $this->countryArray[$country] = 0;
                 }
-
-                if(isset($_GET['enemycountry'])){
-                    $_SESSION['state']->setEnemyCountries($_GET['enemycountry']);
+                if($country == $playerCountry) {
+                    $this->countryArray[$country] = PLAYER_VALUE;
                 }
+            }
+            $this->playerCountry = $playerCountry;
+        }
 
-                else if(isset($_GET['endState'])){
-                    $_SESSION['state']->endState();
+        public function setEnemyCountries($enemycountry) {
+            /* Runs through country array and sets old enemies to 0 and new ones to -1 */
+            foreach($this->countryArray as $country => $role) {
+                if($country == $enemycountry) {
+                    if($this->countryArray[$country] == ENEMY_VALUE) {
+                        $this->countryArray[$country] = 0;
+
+                        $key = array_search($country, $this->enemyCountries);
+                        unset ($this->enemyCountries[$key]);
+                    }
+                    else {
+                        $this->countryArray[$country] = ENEMY_VALUE;
+                        $this->enemyCountries[] = $country;
+                    }
+                }
+            }
+        }
+
+        public function getPlayerCountry() {
+            return $this->playerCountry;
+        }
+
+        public function getEnemyCountries() {
+            return $this->enemyCountries;
+        }
+
+        public static function ajaxRequest() {
+
+            if(isset($_GET[session_name()])) {
+
+                session_id($_GET[session_name()]);
+
+                if(isset($_SESSION['IEventManager'])) {
+
+                    // TODO change this to useable data
+                    $eventManager = $_SESSION['IEventManager'];
+                    $eventManager->dispatchEvent(new UpdateViewEvent("bla"));
+
+                    if(isset($_GET['playercountry'])) {
+                        $_SESSION['state']->setPlayerCountry($_GET['playercountry']);
+                    }
+
+                    if(isset($_GET['enemycountry'])) {
+                        $_SESSION['state']->setEnemyCountries($_GET['enemycountry']);
+                    }
+
+                    else if(isset($_GET['endState'])) {
+                        $_SESSION['state']->endState();
+                    }
+
                 }
 
             }
-
         }
     }
-}
 
-if(isset($_GET['handle']) || isset($_GET['playercountry'])){
-    session_start();
-    MenuState::ajaxRequest();
-}
+    if(isset($_GET['handle']) || isset($_GET['playercountry'])) {
+        session_start();
+        MenuState::ajaxRequest();
+    }
 ?>
