@@ -1,9 +1,6 @@
 <?php
-//require_once("config.php");
+    interface IEvent {
+        function getEventType();
+    }
 
-	interface IEvent{
-		
-		function getEventType();
-		
-	}
 ?>

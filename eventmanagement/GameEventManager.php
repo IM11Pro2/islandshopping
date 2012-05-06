@@ -1,7 +1,5 @@
 <?php
 require_once("../config/config.php");
-//require_once("./eventmanagement/IEventManager.php");
-
 class GameEventManager implements IEventManager{
 
     private static $instance = null;
@@ -9,27 +7,21 @@ class GameEventManager implements IEventManager{
 
     private function __construct(){}
 
-
     public static function getInstance(){
         if(self::$instance == null){
             self::$instance = new GameEventManager();
         }
-
+        $_SESSION['IEventManager'] = self::$instance;
         return self::$instance;
     }
 
     public function addEventListener(IEventListener $eventListener, $eventType){
-
         if(!isset($this->listeners[$eventType])){
-
-
             $this->listeners[$eventType] = array($eventListener);
         }
         else{
             array_push($this->listeners[$eventType], $eventListener);
         }
-
-        $_SESSION['IEventManager'] = self::$instance;
     }
 
     public function removeEventListener(IEventListener $eventListener, $eventType){
@@ -40,7 +32,6 @@ class GameEventManager implements IEventManager{
                 unset($this->listeners[$eventType][$i]);
                 return;
             }
-
         }
     }
 

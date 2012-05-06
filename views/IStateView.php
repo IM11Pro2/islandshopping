@@ -1,4 +1,8 @@
 <?php
-//require_once("../config.php");
+    interface IStateView {
+        static function printView();
+
+        function getViewType();
+    }
 
 ?>

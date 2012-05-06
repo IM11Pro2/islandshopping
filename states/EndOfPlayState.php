@@ -1,27 +1,24 @@
 <?php
-//require_once("../config.php");
-//require_once("IApplicationState.php");
+    //require_once("../config.php");
+    //require_once("IApplicationState.php");
 
-class EndOfPlayState implements IApplicationState {
+    class EndOfPlayState implements IApplicationState {
 
-    const ApplicationStateType = "EndOfPlayState";
+        const ApplicationStateType = "EndOfPlayState";
 
-    function init()
-    {
-        // TODO: Implement init() method.
+        function init() {
+            // TODO: Implement init() method.
+        }
+
+        function endState() {
+            // TODO: Implement endState() method.
+        }
+
+        function getApplicationStateType() {
+            return self::ApplicationStateType;
+        }
+
     }
-
-    function endState()
-    {
-        // TODO: Implement endState() method.
-    }
-
-    function getApplicationStateType()
-    {
-        return self::ApplicationStateType;
-    }
-
-}
 
 ?>
  
