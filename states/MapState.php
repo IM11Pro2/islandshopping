@@ -11,7 +11,7 @@
             $this->playerList = $_SESSION['activePlayers'];
             $this->map = new Map($this->playerList);
             $this->map->randomizeRegions();
-            
+
             $_SESSION['state'] = $this;
         }
 
@@ -39,8 +39,13 @@
                     //$eventManager->dispatchEvent(new UpdateViewEvent("bla"));
 
                     if(isset($_GET['endState'])) {
-                        echo "da";
-                        $_SESSION['state']->endState();
+                        echo $_GET['endState'];
+                        if($_GET['endState'] == "Map") {
+                            $_SESSION['state']->endState();
+                        }
+                        else{
+                            echo "waweaw";
+                        }
                     }
 
                 }

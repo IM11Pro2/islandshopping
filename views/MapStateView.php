@@ -26,7 +26,7 @@
             <!-- Load svg -->
             <?php require_once("../views/islandViews/islandMapView.svg") ?>
 
-            <div class="ajaxSuccess"></div>
+           <!-- <div class="ajaxSuccess"></div>-->
             <input type="button" name="MapSubmit" value="Start">
 
         <?php

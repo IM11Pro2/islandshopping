@@ -28,18 +28,17 @@ $(document).ready(function(){
     });
 
     $(':button[name="MenuSubmit"]').click(function (event) {
-        //alert("Menu click");
-        sendAjaxRequest("../states/MenuState.php", {handle: "ajaxRequest", endState: "endState", <?php  echo session_name().': '.'"'.session_id().'"'; ?>});
+        sendAjaxRequest("../states/MenuState.php", {handle: "ajaxRequest", endState: "Menu", <?php  echo session_name().': '.'"'.session_id().'"'; ?>});
     });
 
-     // insert class description to the svgs
-    $('body').on('click', 'g[id^="region"]', function(){
-    	alert("region clicked");
+
+    $('body').on('click',':button[name="MapSubmit"]',function (event) {
+        sendAjaxRequest("../states/MapState.php", {handle: "ajaxRequest", endState: "Map", <?php  echo session_name().': '.'"'.session_id().'"'; ?>});
     });
-    
-    $(':button[name="MapSubmit"]').on('click',function (event) {
-       // alert("Map click");
-        sendAjaxRequest("../states/MapState.php", {handle: "ajaxRequest", endState: "endState", <?php  echo session_name().': '.'"'.session_id().'"'; ?>});
+
+    // insert class description to the svgs
+    $('body').on('click', 'g[id^="region"]', function(){
+        alert("region clicked");
     });
 
     $('.ajaxSuccess').ajaxSuccess(function(e, xhr, settings) {
@@ -53,18 +52,10 @@ $(document).ready(function(){
 /*            $(this).text('Triggered ajaxSuccess handler. The ajax response was:'
                                      + xhr.responseText );*/
             }
-            if(settings.url.indexOf("enemycountry")!= -1){
-                //alert(settings.url);
-            }
-            if(settings.url.indexOf("endState")!= -1){
-                $('#content').html(xhr.responseText);
-
-            }
         }
-
-        else if(settings.url.indexOf("../views/MapStateView.php")!= -1){
-           /* $("#content").load("../views/MapStateView.php");
-            return false;*/
+        if(settings.url.indexOf("endState")!= -1){
+            alert(settings.url);
+            $('#content').html(xhr.responseText);
         }
     });
 
@@ -86,8 +77,4 @@ function jsonpcallback(data) {
 <?php
 }
 
-//dataType: "jsonp",
-//contentType: 'application/json',
-//jsonp : "callback",
-//jsonpCallback: "jsonpcallback"
 ?>

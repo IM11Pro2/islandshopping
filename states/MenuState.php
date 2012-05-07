@@ -36,7 +36,7 @@
             $this->createPlayer();
             $this->createEnemyPlayers();
 
-                        //$eventmanager = $_SESSION['IEventManager'];
+            //$eventmanager = $_SESSION['IEventManager'];
             GameEventManager::getInstance()->dispatchEvent(new ChangeViewEvent(new MapStateView()));
             //next state übergeben
             GameEventManager::getInstance()->dispatchEvent(new ChangeStateEvent(new MapState() /*,session_id()*/));
@@ -145,7 +145,9 @@
                     }
 
                     if(isset($_GET['endState'])) {
-                        $_SESSION['state']->endState();
+                        if($_GET['endState'] == "Menu") {
+                            $_SESSION['state']->endState();
+                        }
                     }
 
                 }
@@ -154,7 +156,7 @@
         }
     }
 
-    if(isset($_GET['handle'])/* || isset($_GET['playercountry'])*/) {
+    if(isset($_GET['handle'])) {
         session_start();
         MenuState::ajaxRequest();
     }
