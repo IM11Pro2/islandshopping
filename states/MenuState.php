@@ -33,52 +33,11 @@
             $_SESSION['countryArray'] = $this->countryArray;
 
             $_SESSION['activePlayers'] = array();
-            $this->createPlayer();
-            $this->createEnemyPlayers();
 
             //$eventmanager = $_SESSION['IEventManager'];
             GameEventManager::getInstance()->dispatchEvent(new ChangeViewEvent(new MapStateView()));
             //next state übergeben
             GameEventManager::getInstance()->dispatchEvent(new ChangeStateEvent(new MapState() /*,session_id()*/));
-        }
-
-        //create HumanPlayer
-        function createPlayer() {
-            $player = new HumanPlayer();
-            $playerCountry = new Country();
-            $playerPayment = new Payment();
-
-            $playerCountry->setName($this->playerCountry);
-            $playerCountry->setColor($player->getPlayerId());
-
-            $playerPayment->setCurrency($playerCountry->getName());
-            $playerPayment->setCurrencyTranslation($playerCountry->getName());
-
-            $playerCountry->setPayment($playerPayment);
-
-            $player->setCountry($playerCountry);
-            array_push($_SESSION['activePlayers'], $player);
-        }
-
-        //create ArtificialIntelligence
-        function createEnemyPlayers() {
-
-            foreach($this->enemyCountries as $enemyC) {
-                $enemy = new ArtificialIntelligence();
-                $enemyCountry = new Country();
-                $enemyPayment = new Payment();
-
-                $enemyCountry->setName($enemyC);
-                $enemyCountry->setColor($enemy->getPlayerId());
-
-                $enemyPayment->setCurrency($enemyCountry->getName());
-                $enemyPayment->setCurrencyTranslation($enemyCountry->getName());
-
-                $enemyCountry->setPayment($enemyPayment);
-
-                $enemy->setCountry($enemyCountry);
-                array_push($_SESSION['activePlayers'], $enemy);
-            }
         }
 
         function getApplicationStateType() {
