@@ -8,9 +8,9 @@
 
         function setValue(float $value);
 
-        function setCurrency($currency);
+        function setCurrency($countryName);
 
-        function setCurrencyTranslation(float $currencyTranslation);
+        function setCurrencyTranslation($countryName);
 
         function isBuyable(IPayment $otherPayment);
     }

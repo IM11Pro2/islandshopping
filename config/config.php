@@ -12,13 +12,13 @@
                      "USA"          => 0);
     }
 
-    function getPayments() {
+    function getCurrencies() {
         return array( //1. Stelle, Währung, 2.Stelle Wechselkurs
-            "EU"           => array("Euro", 1),
-            "Schweiz"      => array("Franken", 1),
-            "Tuerkei"      => array("Lira", 1),
-            "SaudiArabien" => array("Rial", 1),
-            "USA"          => array("Dollar", 1));
+            "EU"           => array("Euro", 1.1),
+            "Schweiz"      => array("Franken", 2.2),
+            "Tuerkei"      => array("Lira", 3.3),
+            "SaudiArabien" => array("Rial", 4.4),
+            "USA"          => array("Dollar", 5.5));
     }
 
     function getColorArray() {

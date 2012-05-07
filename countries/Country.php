@@ -23,7 +23,6 @@
         }
 
         public function setColor($playerId) {
-            print_r($this->colors);
             $this->color = $this->colors[$playerId];
         }
 

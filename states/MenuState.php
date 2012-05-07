@@ -46,8 +46,16 @@
         function createPlayer() {
             $player = new HumanPlayer();
             $playerCountry = new Country();
+            $playerPayment = new Payment();
+
             $playerCountry->setName($this->playerCountry);
             $playerCountry->setColor($player->getPlayerId());
+
+            $playerPayment->setCurrency($playerCountry->getName());
+            $playerPayment->setCurrencyTranslation($playerCountry->getName());
+
+            $playerCountry->setPayment($playerPayment);
+
             $player->setCountry($playerCountry);
             array_push($_SESSION['activePlayers'], $player);
         }
@@ -58,8 +66,16 @@
             foreach($this->enemyCountries as $enemyC) {
                 $enemy = new ArtificialIntelligence();
                 $enemyCountry = new Country();
+                $enemyPayment = new Payment();
+
                 $enemyCountry->setName($enemyC);
                 $enemyCountry->setColor($enemy->getPlayerId());
+
+                $enemyPayment->setCurrency($enemyCountry->getName());
+                $enemyPayment->setCurrencyTranslation($enemyCountry->getName());
+
+                $enemyCountry->setPayment($enemyPayment);
+
                 $enemy->setCountry($enemyCountry);
                 array_push($_SESSION['activePlayers'], $enemy);
             }
@@ -75,7 +91,7 @@
                 if($role == PLAYER_VALUE) {
                     $this->countryArray[$country] = 0;
                 }
-                if($country == $playerCountry) {
+                if($country == trim($playerCountry)) {
                     $this->countryArray[$country] = PLAYER_VALUE;
                 }
             }
@@ -85,7 +101,7 @@
         public function setEnemyCountries($enemycountry) {
             /* Runs through country array and sets old enemies to 0 and new ones to -1 */
             foreach($this->countryArray as $country => $role) {
-                if($country == $enemycountry) {
+                if($country == trim($enemycountry)) {
                     if($this->countryArray[$country] == ENEMY_VALUE) {
                         $this->countryArray[$country] = 0;
 
