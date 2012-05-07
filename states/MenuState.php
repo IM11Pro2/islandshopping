@@ -116,14 +116,6 @@
             }
         }
 
-        public function getPlayerCountry() {
-            return $this->playerCountry;
-        }
-
-        public function getEnemyCountries() {
-            return $this->enemyCountries;
-        }
-
         public static function ajaxRequest() {
 
             if(isset($_GET[session_name()])) {

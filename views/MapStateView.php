@@ -62,15 +62,4 @@
     }
 
 ?>
-<?php
-    //$_SESSION['state']->printView();
-    //MapStateView::printView();
-    //$_SESSION['state']->getPlayerCountry();
-
-?>
-
-<?php
-
-
-?>
 
