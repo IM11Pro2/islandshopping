@@ -8,7 +8,7 @@
 
         function setValue(float $value);
 
-        function setCurrency(string $currency);
+        function setCurrency($currency);
 
         function setCurrencyTranslation(float $currencyTranslation);
 

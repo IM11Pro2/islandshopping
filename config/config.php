@@ -40,6 +40,7 @@ function __autoload($classname) {
                            'RegionGraph' => '../map/RegionGraph.php',
 
                             'IPayment' => '../payments/IPayment.php',
+                            'Payment' => '../payments/Payment.php',
 
                             'IPlayer' => '../players/IPlayer.php',
                             'HumanPlayer' => '../players/HumanPlayer.php',
