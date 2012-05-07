@@ -8,13 +8,13 @@
         //private $map = new Map();
 
         function init() {
-            if(isset($_SESSION['IEventManager'])) {
+            /*if(isset($_SESSION['IEventManager'])) {
                 $_SESSION['IEventManager']->dispatchEvent(new UpdateViewEvent($this));
             }
             else {
                 echo "<br /> Nicht gesetzt";
             }
-
+            */
         }
 
         function endState() {

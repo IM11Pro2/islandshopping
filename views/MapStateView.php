@@ -5,9 +5,9 @@
         const ViewType = "MapStateView";
 
         public function __construct() {
-            $_SESSION['IEventManager']->addEventListener($this, UpdateViewEvent::TYPE);
+            //$_SESSION['IEventManager']->addEventListener($this, UpdateViewEvent::TYPE);
 
-            $_SESSION['state'] = $this;
+            //$_SESSION['state'] = $this;
         }
 
         function handleEvent(IEvent $event) {
@@ -18,13 +18,16 @@
             }
         }
 
-        static function printView() {
+        function printView() {
             ?>
-        <div id="content">
+
 
             <h1>MAP STATE VIEW</h1>
-            test test
-        </div> <!-- end #content-->
+
+            <object data="../views/islandViews/islandMapView.svg" type="image/svg+xml"
+                    width="1000" height="861.79346">
+
+            </object>
 
         <?php
         }
@@ -38,13 +41,13 @@
             if(isset($_GET[session_name()])) {
 
                 session_id($_GET[session_name()]);
-
+                /*
                 if(isset($_SESSION['IEventManager'])) {
 
                     // TODO change this to useable data
                     $eventManager = $_SESSION['IEventManager'];
                     $eventManager->dispatchEvent(new UpdateViewEvent("bla"));
-                }
+                }*/
 
                 if(isset($_GET['loadSite'])) {
                     //$_SESSION['state']->printView();

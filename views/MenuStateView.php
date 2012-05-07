@@ -1,24 +1,21 @@
 <?php
-    class MenuStateView implements IEventListener, IStateView {
+    class MenuStateView implements /*IEventListener,*/ IStateView {
 
         const ViewType = "MenuStateView";
 
         public function __construct() {
-            GameEventManager::getInstance()->addEventListener($this, UpdateViewEvent::TYPE);
+            //GameEventManager::getInstance()->addEventListener($this, UpdateViewEvent::TYPE);
+            $_SESSION['view'] = $this;
         }
 
-        public function __destruct() {
-            $_SESSION['IEventManager']->removeEventListener($this, UpdateViewEvent::TYPE);
-            //print_r($_SESSION);
-        }
-
+/*
         function handleEvent(IEvent $event) {
             if($event->getEventType() == UpdateViewEvent::TYPE) {
-                echo "Update Menu State View Event<br />";
+                //echo "Update Menu State View Event<br />";
             }
         }
-
-        static function printView() {
+*/
+        function printView() {
             ?>
         <div id="content">
             <form name="menuForm1" method="POST">

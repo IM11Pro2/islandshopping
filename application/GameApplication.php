@@ -5,17 +5,16 @@ class GameApplication implements IEventListener
     private $view;
 
     function __construct(){
-        $_SESSION['IEventManager'] = GameEventManager::getInstance();
-        $_SESSION['IEventManager']->addEventListener($this, ChangeStateEvent::TYPE);
-        $_SESSION['IEventManager']->addEventListener($this, ChangeViewEvent::TYPE);
 
-        //beim 1. mal ausführen
+        GameEventManager::getInstance()->addEventListener($this, ChangeStateEvent::TYPE);
+        GameEventManager::getInstance()->addEventListener($this, ChangeViewEvent::TYPE);
+
+
         $this->state = new MenuState();
 
         $this->view = new MenuStateView();
-        $_SESSION['view'] = $this->view;
-        //echo "1er Sessionaufruf <br />";
-        //print_r($_SESSION);
+
+
         $this->state->init();
         $this->view->printView();
     }
@@ -24,10 +23,11 @@ class GameApplication implements IEventListener
     {
 
         if($event->getEventType() == ChangeViewEvent::TYPE){
-            echo "Change View Event<br />";
+            //GameEventManager::getInstance()->removeEventListener($this->view, UpdateViewEvent::TYPE);
+            //echo "Change View Event<br />";
             //echo "2er Sessionaufruf <br />";
             //print_r($_SESSION);
-            unset($this->view);
+            //unset($this->view);
             //echo "3er Sessionaufruf <br />";
             //print_r($_SESSION);
             $this->view = $event->getView();

@@ -21,21 +21,23 @@
                     $this->enemyCountries[] = $country;
                 }
             }
-            //GameEventManager::getInstance()->dispatchEvent(new UpdateViewEvent($this));
+
             $_SESSION['state'] = $this;
         }
 
         function endState() {
-            $eventmanager = $_SESSION['IEventManager'];
-            $eventmanager->dispatchEvent(new ChangeViewEvent(new MapStateView()));
-            //next state übergeben
-            $eventmanager->dispatchEvent(new ChangeStateEvent(new MapState() /*,session_id()*/));
+
             $_SESSION['player'] = $this->playerCountry;
             $_SESSION['enemies'] = $this->enemyCountries;
             $_SESSION['countryArray'] = $this->countryArray;
 
             $this->createPlayer();
             $this->createEnemyPlayers();
+
+                        //$eventmanager = $_SESSION['IEventManager'];
+            GameEventManager::getInstance()->dispatchEvent(new ChangeViewEvent(new MapStateView()));
+            //next state übergeben
+            GameEventManager::getInstance()->dispatchEvent(new ChangeStateEvent(new MapState() /*,session_id()*/));
         }
 
         //create HumanPlayer
@@ -109,7 +111,7 @@
 
                     // TODO change this to useable data
                     $eventManager = $_SESSION['IEventManager'];
-                    $eventManager->dispatchEvent(new UpdateViewEvent("bla"));
+                    //$eventManager->dispatchEvent(new UpdateViewEvent("bla"));
 
                     if(isset($_GET['playercountry'])) {
                         $_SESSION['state']->setPlayerCountry($_GET['playercountry']);
@@ -119,7 +121,7 @@
                         $_SESSION['state']->setEnemyCountries($_GET['enemycountry']);
                     }
 
-                    else if(isset($_GET['endState'])) {
+                    if(isset($_GET['endState'])) {
                         $_SESSION['state']->endState();
                     }
 
@@ -129,7 +131,7 @@
         }
     }
 
-    if(isset($_GET['handle']) || isset($_GET['playercountry'])) {
+    if(isset($_GET['handle'])/* || isset($_GET['playercountry'])*/) {
         session_start();
         MenuState::ajaxRequest();
     }
