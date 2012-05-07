@@ -26,7 +26,7 @@
     }
 
 
-    define("NUM_OF_REGIONS", 70);
+    define("NUM_OF_REGIONS", 71);
 
     function __autoload($classname) {
         static $classes = array('AjaxResponse'           => '../ajax/AjaxResponse.php',

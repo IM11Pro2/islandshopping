@@ -3,18 +3,15 @@
     class MapState implements IApplicationState {
 
         const ApplicationStateType = "MapState";
-        private $player;
+        private $playerList;
 
-        //private $map = new Map();
+        private $map;
 
         function init() {
-            /*if(isset($_SESSION['IEventManager'])) {
-                $_SESSION['IEventManager']->dispatchEvent(new UpdateViewEvent($this));
-            }
-            else {
-                echo "<br /> Nicht gesetzt";
-            }
-            */
+            $this->playerList = $_SESSION['activePlayers'];
+            $this->map = new Map($this->playerList);
+            $this->map->randomizeRegions();
+
         }
 
         function endState() {

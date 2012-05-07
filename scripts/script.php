@@ -31,6 +31,12 @@ $(document).ready(function(){
         sendAjaxRequest("../states/MenuState.php", {handle: "ajaxRequest", endState: "endState", <?php  echo session_name().': '.'"'.session_id().'"'; ?>});
     });
 
+
+    // insert class description to the svgs
+    $('body').on('click', 'g[id^="region"]', function(){
+    	alert("region clicked");
+    });
+
     $('.ajaxSuccess').ajaxSuccess(function(e, xhr, settings) {
         if(settings.url.indexOf("../states/MenuState.php")!= -1){
             if(settings.url.indexOf("playercountry")!= -1){

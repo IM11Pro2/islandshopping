@@ -4,11 +4,14 @@
 
         //Linked List for Regions?
         private $regions;
+        private $regionGraph;
         private $playerList;
 
         public function __construct($playerList) {
             $this->playerList = $playerList;
             $this->regions = array();
+            $this->regionGraph = new RegionGraph();
+            $this->regionGraph->generateGraph();
         }
 
         public function randomizeRegions() {
@@ -24,7 +27,9 @@
                     $regionsOfPlayer = $this->getRegionsOfPlayer($playerId);
 
                     if($regionsOfPlayer < $regionsPerPlayer) {
-                        array_push($this->regions, new Region($this->playerList[$playerId]));
+                        $region = new Region($this->playerList[$playerId]);
+                        $region->initNeighbourRegions($this->regionGraph->getNode($region->getRegionId()));
+                        array_push($this->regions, $region);
                         break;
                     }
 
@@ -37,7 +42,9 @@
 
                 $restRegions = NUM_OF_REGIONS - ($numberOfPlayers * $regionsPerPlayer);
                 for($i = 0; $i < $restRegions; ++$i) {
-                    array_push($this->regions, new Region($this->playerList[$i]));
+                    $region = new Region($this->playerList[$playerId]);
+                    $region->initNeighbourRegions($this->regionGraph->getNode($region->getRegionId()));
+                    array_push($this->regions, $region);
                 }
             }
         }
