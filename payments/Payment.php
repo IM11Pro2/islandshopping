@@ -30,7 +30,7 @@
             $this->currencyTranslation = $currencyTranslation;
         }
 
-        public function isBuyable(IPayment $payment) {
+        public function isBuyable(IPayment $otherPayment) {
             return $this->isBuyable;
         }
     }

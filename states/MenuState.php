@@ -42,18 +42,20 @@
 
         //create HumanPlayer
         function createPlayer() {
+            $player = new HumanPlayer();
             $playerCountry = new Country();
             $playerCountry->setName($this->playerCountry);
-            $player = new HumanPlayer();
+            $playerCountry->setColor($player->getPlayerId());
             $player->setCountry($playerCountry);
         }
 
         //create ArtificialIntelligence
         function createEnemyPlayers() {
             foreach($this->enemyCountries as $enemyC) {
+                $enemy = new ArtificialIntelligence();
                 $enemyCountry = new Country();
                 $enemyCountry->setName($enemyC);
-                $enemy = new ArtificialIntelligence();
+                $enemyCountry->setColor($enemy->getPlayerId());
                 $enemy->setCountry($enemyCountry);
             }
         }
