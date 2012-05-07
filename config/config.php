@@ -55,7 +55,9 @@ function __autoload($classname) {
 
                             'IStateView' => '../views/IStateView.php',
                             'MapStateView' => '../views/MapStateView.php',
-                            'MenuStateView' => '../views/MenuStateView.php'
+                            'MenuStateView' => '../views/MenuStateView.php',
+
+                             'islandMapView' => '../views/islandViews/islandMapView.sgv'
 
 
                             );

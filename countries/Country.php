@@ -6,7 +6,7 @@
         private $payment;
 
         function __construct() {
-            echo "im country __construct";
+           // echo "im country __construct";
             // TODO: Implement __construct() method.
         }
 

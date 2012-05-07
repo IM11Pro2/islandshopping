@@ -8,28 +8,29 @@ class GameEventManager implements IEventManager{
     private function __construct(){}
 
     public static function getInstance(){
-        if(self::$instance == null){
+        if(self::$instance == null && !isset($_SESSION['IEventManager'])){
             self::$instance = new GameEventManager();
+            $_SESSION['IEventManager'] = self::$instance;
         }
-        $_SESSION['IEventManager'] = self::$instance;
+        self::$instance = $_SESSION['IEventManager'];
         return self::$instance;
     }
 
     public function addEventListener(IEventListener $eventListener, $eventType){
-        if(!isset($this->listeners[$eventType])){
-            $this->listeners[$eventType] = array($eventListener);
+        if(!isset(GameEventManager::getInstance()->listeners[$eventType])){
+            GameEventManager::getInstance()->listeners[$eventType] = array($eventListener);
         }
         else{
-            array_push($this->listeners[$eventType], $eventListener);
+            array_push(GameEventManager::getInstance()->listeners[$eventType], $eventListener);
         }
     }
 
     public function removeEventListener(IEventListener $eventListener, $eventType){
 
-        for($i = 0; $i < count($this->listeners[$eventType]); ++$i) {
+        for($i = 0; $i < count(GameEventManager::getInstance()->listeners[$eventType]); ++$i) {
 
-            if($this->listeners[$eventType][$i] === $eventListener){
-                unset($this->listeners[$eventType][$i]);
+            if(GameEventManager::getInstance()->listeners[$eventType][$i] === $eventListener){
+                unset(GameEventManager::getInstance()->listeners[$eventType][$i]);
                 return;
             }
         }
@@ -37,7 +38,7 @@ class GameEventManager implements IEventManager{
 
     public function dispatchEvent(IEvent $event){
 
-        $listeners = $this->listeners[$event->getEventType()];
+        $listeners = GameEventManager::getInstance()->listeners[$event->getEventType()];
 
         foreach ($listeners as $listener) {
             $listener->handleEvent($event);

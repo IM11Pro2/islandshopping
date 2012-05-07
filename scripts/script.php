@@ -4,7 +4,7 @@ function printJavaScript(){
 
 ?>
 
-<script type="text/javascript" charset="utf-8" language="JavaScript">
+<script type="text/javascript">
 $(document).ready(function(){
 
     function sendAjaxRequest(url, data){
@@ -16,19 +16,19 @@ $(document).ready(function(){
 
     $('input:checkbox[name="enemyCountries[]"]').click(function(event){
         if($('input:checked').length > 0){
-            sendAjaxRequest("../states/MenuState.php", {handle: "ajaxTest", enemycountry: $(this).parent().text(), <?php  echo session_name().': '.'"'.session_id().'"'; ?>});
+            sendAjaxRequest("../states/MenuState.php", {handle: "ajaxRequest", enemycountry: $(this).parent().text(), <?php  echo session_name().': '.'"'.session_id().'"'; ?>});
         }
     });
 
 
     $('input:radio[name="playerCountry"]').click(function(event) {
         if($('input:checked').length > 0){
-            sendAjaxRequest("../states/MenuState.php", {handle: "ajaxTest", playercountry: $(this).parent().text(), <?php  echo session_name().': '.'"'.session_id().'"'; ?>});
+            sendAjaxRequest("../states/MenuState.php", {handle: "ajaxRequest", playercountry: $(this).parent().text(), <?php  echo session_name().': '.'"'.session_id().'"'; ?>});
         }
     });
 
     $(':button[name="Submit"]').click(function (event) {
-        sendAjaxRequest("../states/MenuState.php", {handle: "ajaxTest", endState: "endState", <?php  echo session_name().': '.'"'.session_id().'"'; ?>});
+        sendAjaxRequest("../states/MenuState.php", {handle: "ajaxRequest", endState: "endState", <?php  echo session_name().': '.'"'.session_id().'"'; ?>});
     });
 
     $('.ajaxSuccess').ajaxSuccess(function(e, xhr, settings) {
@@ -46,9 +46,8 @@ $(document).ready(function(){
                 //alert(settings.url);
             }
             if(settings.url.indexOf("endState")!= -1){
-                //sendAjaxRequest("../views/MapStateView.php", {handle: "ajaxTest", loadSite: "printView", <?php  echo session_name().': '.'"'.session_id().'"'; ?>});
-                //$("#content").load("../views/MapStateView.php");
-                //return false;
+                $('#content').html(xhr.responseText);
+
             }
         }
 
