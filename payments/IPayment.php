@@ -12,5 +12,5 @@
 
         function setCurrencyTranslation(float $currencyTranslation);
 
-        function isBuyable(IPayment $payment);
+        function isBuyable(IPayment $otherPayment);
     }

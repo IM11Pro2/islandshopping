@@ -2,12 +2,12 @@
     class Country implements ICountry {
 
         private $name;
-        private $color;
         private $payment;
+        private $color;
+        private $colors;
 
         function __construct() {
-           // echo "im country __construct";
-            // TODO: Implement __construct() method.
+            $this->colors = getColorArray();
         }
 
         function __destruct() {
@@ -22,8 +22,9 @@
             return $this->name;
         }
 
-        public function setColor($color) {
-            $this->color = $color;
+        public function setColor($playerId) {
+            print_r($this->colors);
+            $this->color = $this->colors[$playerId];
         }
 
         public function getColor() {
