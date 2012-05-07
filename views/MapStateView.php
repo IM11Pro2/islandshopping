@@ -29,6 +29,9 @@
 
             </object>
 
+            <div class="ajaxSuccess"></div>
+            <input type="button" name="MapSubmit" value="Start">
+
         <?php
         }
 

@@ -29,45 +29,48 @@
     define("NUM_OF_REGIONS", 70);
 
     function __autoload($classname) {
-        static $classes = array('AjaxResponse'           => '../ajax/AjaxResponse.php',
+        static $classes = array('AjaxResponse'                => '../ajax/AjaxResponse.php',
 
-                                'GameApplication'        => '../application/GameApplication.php',
+                                'GameApplication'             => '../application/GameApplication.php',
 
-                                'ICountry'               => '../countries/ICountry.php',
-                                'Country'                => '../countries/Country.php',
+                                'ICountry'                    => '../countries/ICountry.php',
+                                'Country'                     => '../countries/Country.php',
 
-                                'GameEventManager'       => '../eventmanagement/GameEventManager.php',
-                                'IEventListener'         => '../eventmanagement/IEventListener.php',
-                                'IEventManager'          => '../eventmanagement/IEventManager.php',
+                                'GameEventManager'            => '../eventmanagement/GameEventManager.php',
+                                'IEventListener'              => '../eventmanagement/IEventListener.php',
+                                'IEventManager'               => '../eventmanagement/IEventManager.php',
 
-                                'IEvent'                 => '../events/IEvent.php',
-                                'UpdateViewEvent'        => '../events/UpdateViewEvent.php',
-                                'ChangeViewEvent'        => '../events/ChangeViewEvent.php',
-                                'ChangeStateEvent'       => '../events/ChangeStateEvent.php',
+                                'IEvent'                      => '../events/IEvent.php',
+                                'UpdateViewEvent'             => '../events/UpdateViewEvent.php',
+                                'ChangeViewEvent'             => '../events/ChangeViewEvent.php',
+                                'ChangeStateEvent'            => '../events/ChangeStateEvent.php',
 
-                                'Map'                    => '../map/Map.php',
-                                'Region'                 => '../map/Region.php',
-                                'RegionGraph'            => '../map/RegionGraph.php',
+                                'Map'                         => '../map/Map.php',
+                                'Region'                      => '../map/Region.php',
+                                'RegionGraph'                 => '../map/RegionGraph.php',
 
-                                'IPayment'               => '../payments/IPayment.php',
-                                'Payment'                => '../payments/Payment.php',
+                                'IPayment'                    => '../payments/IPayment.php',
+                                'Payment'                     => '../payments/Payment.php',
 
-                                'IPlayer'                => '../players/IPlayer.php',
-                                'HumanPlayer'            => '../players/HumanPlayer.php',
-                                'ArtificialIntelligence' => '../players/ArtificialIntelligence.php',
+                                'IPlayer'                     => '../players/IPlayer.php',
+                                'HumanPlayer'                 => '../players/HumanPlayer.php',
+                                'ArtificialIntelligence'      => '../players/ArtificialIntelligence.php',
 
-                                'EndOfPlayState'         => '../states/EndOfPlayState.php',
-                                'IApplicationState'      => '../states/IApplicationState.php',
-                                'MapState'               => '../states/MapState.php',
-                                'MenuState'              => '../states/MenuState.php',
-                                'PlayState'              => '../states/PlayState.php',
-                                'PreloaderState'         => '../states/PreloaderState.php',
+                                'EndOfPlayState'              => '../states/EndOfPlayState.php',
+                                'IApplicationState'           => '../states/IApplicationState.php',
+                                'MapState'                    => '../states/MapState.php',
+                                'MenuState'                   => '../states/MenuState.php',
+                                'PlayState'                   => '../states/PlayState.php',
+                                'PreloaderState'              => '../states/PreloaderState.php',
 
-                                'IStateView'             => '../views/IStateView.php',
-                                'MapStateView'           => '../views/MapStateView.php',
-                                'MenuStateView'          => '../views/MenuStateView.php',
+                                'IStateView'                  => '../views/IStateView.php',
+                                'MapStateView'                => '../views/MapStateView.php',
+                                'MenuStateView'               => '../views/MenuStateView.php',
+                                'PlayStateView'               => '../views/PlayStateView.php',
+                                'EndOfPlayStateView'          => '../views/EndOfPlayStateView.php',
+                                'PreloaderStateView'          => '../views/PreloaderStateView.php',
 
-                                'islandMapView'          => '../views/islandViews/islandMapView.sgv'
+                                'islandMapView'               => '../views/islandViews/islandMapView.sgv'
 
 
         );

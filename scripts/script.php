@@ -27,8 +27,14 @@ $(document).ready(function(){
         }
     });
 
-    $(':button[name="Submit"]').click(function (event) {
+    $(':button[name="MenuSubmit"]').click(function (event) {
+        //alert("Menu click");
         sendAjaxRequest("../states/MenuState.php", {handle: "ajaxRequest", endState: "endState", <?php  echo session_name().': '.'"'.session_id().'"'; ?>});
+    });
+
+    $(':button[name="MapSubmit"]').on('click',function (event) {
+       // alert("Map click");
+        sendAjaxRequest("../states/MapState.php", {handle: "ajaxRequest", endState: "endState", <?php  echo session_name().': '.'"'.session_id().'"'; ?>});
     });
 
     $('.ajaxSuccess').ajaxSuccess(function(e, xhr, settings) {
@@ -45,15 +51,10 @@ $(document).ready(function(){
             if(settings.url.indexOf("enemycountry")!= -1){
                 //alert(settings.url);
             }
-            if(settings.url.indexOf("endState")!= -1){
-                $('#content').html(xhr.responseText);
-
-            }
         }
-
-        else if(settings.url.indexOf("../views/MapStateView.php")!= -1){
-           /* $("#content").load("../views/MapStateView.php");
-            return false;*/
+        if(settings.url.indexOf("endState")!= -1){
+            //alert("success");
+            $('#content').html(xhr.responseText);
         }
     });
 

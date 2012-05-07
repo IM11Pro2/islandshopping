@@ -90,7 +90,7 @@
                     $this->countryArray[$country] = PLAYER_VALUE;
                 }
             }
-            $this->playerCountry = $playerCountry;
+            $this->playerCountry = trim($playerCountry);
         }
 
         public function setEnemyCountries($enemycountry) {

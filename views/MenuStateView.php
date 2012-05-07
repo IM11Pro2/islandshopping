@@ -60,10 +60,10 @@
                 ?>
                 <br/><br/>
 
-                <div class="ajaxSuccess"></div>
-                <input type="button" name="Submit" value="Start">
+                <input type="button" name="MenuSubmit" value="Start">
             </form>
         </div> <!--end #content -->
+        <div class="ajaxSuccess"></div>
         <?php
         }
 
