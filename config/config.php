@@ -12,7 +12,7 @@
                      "USA"          => 0);
     }
 
-    function getPayments() {
+    function getCurrencies() {
         return array( //1. Stelle, Währung, 2.Stelle Wechselkurs
             "EU"           => array("Euro", 1.1),
             "Schweiz"      => array("Franken", 2.2),
