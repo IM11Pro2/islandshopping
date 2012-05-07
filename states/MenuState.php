@@ -50,6 +50,9 @@
             $playerCountry->setColor($player->getPlayerId());
 
             $playerPayment->setCurrency($playerCountry->getName());
+            $playerPayment->setCurrencyTranslation($playerCountry->getName());
+
+            $playerCountry->setPayment($playerPayment);
 
             $player->setCountry($playerCountry);
         }
@@ -65,6 +68,9 @@
                 $enemyCountry->setColor($enemy->getPlayerId());
 
                 $enemyPayment->setCurrency($enemyCountry->getName());
+                $enemyPayment->setCurrencyTranslation($enemyCountry->getName());
+
+                $enemyCountry->setPayment($enemyPayment);
 
                 $enemy->setCountry($enemyCountry);
             }

@@ -31,8 +31,8 @@
             $this->currency = $this->countryPayments[$countryName][0];
         }
 
-        public function setCurrencyTranslation(float $currencyTranslation) {
-            $this->currencyTranslation = $currencyTranslation;
+        public function setCurrencyTranslation($countryName) {
+            $this->currencyTranslation = $this->countryPayments[$countryName][1];
         }
 
         public function isBuyable(IPayment $otherPayment) {

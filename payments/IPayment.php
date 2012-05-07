@@ -10,7 +10,7 @@
 
         function setCurrency($countryName);
 
-        function setCurrencyTranslation(float $currencyTranslation);
+        function setCurrencyTranslation($countryName);
 
         function isBuyable(IPayment $otherPayment);
     }
