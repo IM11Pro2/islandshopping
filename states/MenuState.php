@@ -44,8 +44,13 @@
         function createPlayer() {
             $player = new HumanPlayer();
             $playerCountry = new Country();
+            $playerPayment = new Payment();
+
             $playerCountry->setName($this->playerCountry);
             $playerCountry->setColor($player->getPlayerId());
+
+            $playerPayment->setCurrency($playerCountry->getName());
+
             $player->setCountry($playerCountry);
         }
 
@@ -54,8 +59,13 @@
             foreach($this->enemyCountries as $enemyC) {
                 $enemy = new ArtificialIntelligence();
                 $enemyCountry = new Country();
+                $enemyPayment = new Payment();
+
                 $enemyCountry->setName($enemyC);
                 $enemyCountry->setColor($enemy->getPlayerId());
+
+                $enemyPayment->setCurrency($enemyCountry->getName());
+
                 $enemy->setCountry($enemyCountry);
             }
         }

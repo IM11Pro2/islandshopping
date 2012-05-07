@@ -5,6 +5,11 @@
         private $currency;
         private $currencyTranslation;
         private $isBuyable;
+        private $countryPayments;
+
+        public function __construct(){
+            $this->countryPayments = getPayments();
+        }
 
         public function getValue() {
             return $this->value;
@@ -22,8 +27,8 @@
             $this->value = $value;
         }
 
-        public function setCurrency($currency) {
-            $this->currency = $currency;
+        public function setCurrency($countryName) {
+            $this->currency = $this->countryPayments[$countryName][0];
         }
 
         public function setCurrencyTranslation(float $currencyTranslation) {
