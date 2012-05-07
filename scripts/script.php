@@ -32,6 +32,11 @@ $(document).ready(function(){
         sendAjaxRequest("../states/MenuState.php", {handle: "ajaxRequest", endState: "endState", <?php  echo session_name().': '.'"'.session_id().'"'; ?>});
     });
 
+     // insert class description to the svgs
+    $('body').on('click', 'g[id^="region"]', function(){
+    	alert("region clicked");
+    });
+    
     $(':button[name="MapSubmit"]').on('click',function (event) {
        // alert("Map click");
         sendAjaxRequest("../states/MapState.php", {handle: "ajaxRequest", endState: "endState", <?php  echo session_name().': '.'"'.session_id().'"'; ?>});
@@ -51,10 +56,15 @@ $(document).ready(function(){
             if(settings.url.indexOf("enemycountry")!= -1){
                 //alert(settings.url);
             }
+            if(settings.url.indexOf("endState")!= -1){
+                $('#content').html(xhr.responseText);
+
+            }
         }
-        if(settings.url.indexOf("endState")!= -1){
-            //alert("success");
-            $('#content').html(xhr.responseText);
+
+        else if(settings.url.indexOf("../views/MapStateView.php")!= -1){
+           /* $("#content").load("../views/MapStateView.php");
+            return false;*/
         }
     });
 

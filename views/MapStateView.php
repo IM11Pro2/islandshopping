@@ -23,11 +23,8 @@
 
 
             <h1>MAP STATE VIEW</h1>
-
-            <object data="../views/islandViews/islandMapView.svg" type="image/svg+xml"
-                    width="1000" height="861.79346">
-
-            </object>
+            <!-- Load svg -->
+            <?php require_once("../views/islandViews/islandMapView.svg") ?>
 
             <div class="ajaxSuccess"></div>
             <input type="button" name="MapSubmit" value="Start">

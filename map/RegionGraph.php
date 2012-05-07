@@ -19,7 +19,7 @@ class RegionGraph{
 
         // generate all the nodes
         for($i = 0; $i < NUM_OF_REGIONS; ++$i){
-            array_push($this->graphNodes, new GraphNode($i, self::$relations[$i]));
+            array_push($this->graphNodes, new GraphNode($i));
         }
 
 
@@ -39,6 +39,9 @@ class RegionGraph{
 
     }
 
+    public function getNode($regionId){
+        return $this->graphNodes[$regionId];
+    }
 
     public static function initRelations(){
         $lookUp = array(

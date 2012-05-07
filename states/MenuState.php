@@ -27,10 +27,12 @@
 
         function endState() {
 
+            // edit die drei session eintraege hab ich noch nicht gebraucht
             $_SESSION['player'] = $this->playerCountry;
             $_SESSION['enemies'] = $this->enemyCountries;
             $_SESSION['countryArray'] = $this->countryArray;
 
+            $_SESSION['activePlayers'] = array();
             $this->createPlayer();
             $this->createEnemyPlayers();
 
@@ -55,10 +57,12 @@
             $playerCountry->setPayment($playerPayment);
 
             $player->setCountry($playerCountry);
+            array_push($_SESSION['activePlayers'], $player);
         }
 
         //create ArtificialIntelligence
         function createEnemyPlayers() {
+
             foreach($this->enemyCountries as $enemyC) {
                 $enemy = new ArtificialIntelligence();
                 $enemyCountry = new Country();
@@ -73,6 +77,7 @@
                 $enemyCountry->setPayment($enemyPayment);
 
                 $enemy->setCountry($enemyCountry);
+                array_push($_SESSION['activePlayers'], $enemy);
             }
         }
 
