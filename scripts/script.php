@@ -54,7 +54,7 @@ $(document).ready(function(){
             }
         }
         if(settings.url.indexOf("endState")!= -1){
-            alert(settings.url);
+            //alert(settings.url);
             $('#content').html(xhr.responseText);
         }
     });

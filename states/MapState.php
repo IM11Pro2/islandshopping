@@ -70,6 +70,10 @@
 
         public static function ajaxRequest() {
 
+            if(!isset($_SESSION)){
+                session_start();
+            }
+
             if(isset($_GET[session_name()])) {
 
                 session_id($_GET[session_name()]);
@@ -81,12 +85,8 @@
                     //$eventManager->dispatchEvent(new UpdateViewEvent("bla"));
 
                     if(isset($_GET['endState'])) {
-                        echo $_GET['endState'];
                         if($_GET['endState'] == "Map") {
                             $_SESSION['state']->endState();
-                        }
-                        else{
-                            echo "waweaw";
                         }
                     }
 
@@ -98,6 +98,7 @@
     }
 
     if(isset($_GET['handle'])) {
+
         MapState::ajaxRequest();
     }
 
