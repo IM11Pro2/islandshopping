@@ -13,7 +13,8 @@
 
         <h1>PLAY STATE VIEW</h1>
 
-        <input type="button" name="MapSubmit" value="Start">
+
+        <input type="button" name="PlaySubmit" value="Start">
 
         <?php
         }
