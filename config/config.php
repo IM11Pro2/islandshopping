@@ -33,6 +33,12 @@
 
                                 'GameApplication'             => '../application/GameApplication.php',
 
+                                'Bank'                        => '../bank/Bank.php',
+                                'IBankState'                  => '../bank/IBankState.php',
+                                'PayOffState'                 => '../bank/PayOffState.php',
+                                'DepositState'                => '../bank/DepositState.php',
+                                'AttackState'                 => '../bank/AttackState.php',
+
                                 'ICountry'                    => '../countries/ICountry.php',
                                 'Country'                     => '../countries/Country.php',
 
@@ -70,8 +76,8 @@
                                 'EndOfPlayStateView'          => '../views/EndOfPlayStateView.php',
                                 'PreloaderStateView'          => '../views/PreloaderStateView.php',
 
-                                'DummyView'                   => '../views/islandViews/DummyView.php'
-
+                                'DummyView'                   => '../views/islandViews/DummyView.php',
+                                'BankView'                    => '../views/bank/BankView.php',
 
         );
 

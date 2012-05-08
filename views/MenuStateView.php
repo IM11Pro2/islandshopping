@@ -1,5 +1,6 @@
 <?php
-    class MenuStateView implements /*IEventListener,*/ IStateView {
+    class MenuStateView implements /*IEventListener,*/
+        IStateView {
 
         const ViewType = "MenuStateView";
 
@@ -17,53 +18,58 @@
 */
         function printView() {
             ?>
-        <div id="content">
-            <form name="menuForm1" method="POST">
-                <h2>Welches Land m&ouml;chtest du sein ?</h2>
-                <?php
-
-                $status = "";
-                $all_countries_array = getCountriesArray();
-
-                foreach($all_countries_array as $country => $value) {
-
-                    if(PLAYER_VALUE == $value) {
-                        $status = 'checked="checked"';
-                    }
-
-                    ?>
-                    <label><input type='radio' name='playerCountry' value="<?php echo $value ?>" <?php echo $status ?> /><?php echo $country ?></label>
+        <div id="container">
+            <div id="content">
+                <form name="menuForm1" method="POST">
+                    <h2>Welches Land m&ouml;chtest du sein ?</h2>
                     <?php
+
                     $status = "";
-                }
-                ?>
+                    $all_countries_array = getCountriesArray();
 
-                <h2>W&auml;hle deine Gegner</h2>
+                    foreach($all_countries_array as $country => $value) {
 
-                <?php
+                        if(PLAYER_VALUE == $value) {
+                            $status = 'checked="checked"';
+                        }
 
-                $status = "";
-                foreach($all_countries_array as $country => $value) {
-                    if(ENEMY_VALUE == $value) {
-                        $status = 'checked="checked"';
-                    }
-
-                    if(PLAYER_VALUE == $value) {
-                        $status = $status . ' disabled="disabled"';
+                        ?>
+                        <label><input type='radio' name='playerCountry'
+                                      value="<?php echo $value ?>" <?php echo $status ?> /><?php echo $country ?>
+                        </label>
+                        <?php
+                        $status = "";
                     }
                     ?>
-                    <label><input type="checkbox" name="enemyCountries[]"
-                                  value="<?php echo $value ?>"
-                                  id="enemy_<?php echo $country ?>" <?php echo $status ?> /><?php echo $country ?></label>                  <?php
+
+                    <h2>W&auml;hle deine Gegner</h2>
+
+                    <?php
+
                     $status = "";
-                }
-                ?>
-                <br/><br/>
+                    foreach($all_countries_array as $country => $value) {
+                        if(ENEMY_VALUE == $value) {
+                            $status = 'checked="checked"';
+                        }
 
-                <input type="button" name="MenuSubmit" value="Start">
-            </form>
-        </div> <!--end #content -->
+                        if(PLAYER_VALUE == $value) {
+                            $status = $status . ' disabled="disabled"';
+                        }
+                        ?>
+                        <label><input type="checkbox" name="enemyCountries[]"
+                                      value="<?php echo $value ?>"
+                                      id="enemy_<?php echo $country ?>" <?php echo $status ?> /><?php echo $country ?>
+                        </label>                  <?php
+                        $status = "";
+                    }
+                    ?>
+                    <br/><br/>
 
+                    <input type="button" name="MenuSubmit" value="Start">
+                </form>
+            </div>
+            <!--end #content -->
+        </div><!-- end #container-->
         <?php
         }
 

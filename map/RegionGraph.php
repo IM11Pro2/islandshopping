@@ -1,50 +1,49 @@
 <?php
 
-class RegionGraph{
+    class RegionGraph {
 
-    private static $relations;
+        private static $relations;
 
-    private $graphNodes;
+        private $graphNodes;
 
-    public function __construct(){
-        $this->graphNodes = array();
+        public function __construct() {
+            $this->graphNodes = array();
 
-    }
-
-    public function generateGraph(){
-        if(!isset(self::$relations)){
-            self::$relations = self::initRelations();
         }
 
+        public function generateGraph() {
+            if(!isset(self::$relations)) {
+                self::$relations = self::initRelations();
+            }
 
-        // generate all the nodes
-        for($i = 0; $i < NUM_OF_REGIONS; ++$i){
-            array_push($this->graphNodes, new GraphNode($i));
-        }
+            // generate all the nodes
+            for($i = 0; $i < NUM_OF_REGIONS; ++$i) {
+                    array_push($this->graphNodes, new GraphNode($i));
+            }
 
 
-        // connect nodes together
-        for($i = 0; $i < NUM_OF_REGIONS; ++$i){
-            $actualNode = $this->graphNodes[$i];    // get the node with the id $i
+            // connect nodes together
+            for($i = 0; $i < NUM_OF_REGIONS; ++$i) {
+                $actualNode = $this->graphNodes[$i]; // get the node with the id $i
 
-            $neighbours = self::$relations[$i];  // get the array with the neighbour ids
+                $neighbours = self::$relations[$i]; // get the array with the neighbour ids
 
-            for($j = 0; $j < count($neighbours); ++$j){
+                for($j = 0; $j < count($neighbours); ++$j) {
 
-                $actualNode->addAsNeighbour($this->graphNodes[$j]);
+                    $actualNode->addAsNeighbour($this->graphNodes[$j]);
+
+                }
 
             }
 
         }
 
-    }
+        public function getNode($regionId) {
+            return $this->graphNodes[$regionId];
+        }
 
-    public function getNode($regionId){
-        return $this->graphNodes[$regionId];
-    }
-
-    public static function initRelations(){
-        $lookUp = array(/*
+        public static function initRelations() {
+            $lookUp = array( /*
             array(1,68), // Evras
             array(0,2), // Rodopol
             array(1,4,5), // Xanthi
@@ -116,47 +115,36 @@ class RegionGraph{
             array(0,3,10,34,67), // Limnos
             array(27,28,29,70), // Kefalonia
             array(69,43), // Zakynthos*/
-            array(2,3),
-            array(4,5,6,7),
-            array(0,3,5),
-            array(0,2,4,5),
-            array(1,3,5),
-            array(1,2,3,4),
-            array(1,7,8),
-            array(1,6,8),
-            array(6,7,9),
-            array(8,10),
-            array(9,11),
-            array(10)
-        );
+                array(2, 3), array(4, 5, 6, 7), array(0, 3, 5), array(0, 2, 4, 5), array(1, 3, 5), array(1, 2, 3, 4), array(1, 7, 8), array(1, 6, 8), array(6, 7, 9), array(8, 10), array(9, 11), array(10));
 
 
-        return $lookUp;
-    }
-}
-
-class GraphNode{
-
-    private $id;
-    private $neighbours;
-
-
-    public function __construct($id){
-        $this->$id = $id;
-        $this->neighbours = array();
+            return $lookUp;
+        }
     }
 
-    public function getId(){
-        return $this->id;
+    class GraphNode {
+
+        private $id;
+        private $neighbours;
+
+
+        public function __construct($id) {
+            $this->$id = $id;
+            $this->neighbours = array();
+        }
+
+        public function getId() {
+            return $this->id;
+        }
+
+        public function getNeighbours() {
+            return $this->neighbours;
+        }
+
+        public function addAsNeighbour(GraphNode $node) {
+            array_push($this->neighbours, $node);
+        }
+
     }
 
-    public function getNeighbours(){
-        return $this->neighbours;
-    }
-
-    public function addAsNeighbour(GraphNode $node){
-        array_push($this->neighbours, $node);
-    }
-
-}
 ?>

@@ -23,11 +23,15 @@
 
 
             <h1>MAP STATE VIEW</h1>
+
+        <div class="mapView">
             <!-- Load svg -->
             <?php
                 $dummyView = new DummyView();
                 $dummyView->printDummyMap();
             ?>
+
+        </div><!--end .mapView-->
 
             <input type="button" name="MapSubmit" value="Start">
 
