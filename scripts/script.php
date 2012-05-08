@@ -36,10 +36,25 @@ $(document).ready(function(){
         sendAjaxRequest("../states/MapState.php", {handle: "ajaxRequest", endState: "Map", <?php  echo session_name().': '.'"'.session_id().'"'; ?>});
     });
 
-    // insert class description to the svgs
-    $('body').on('click', '.region', function(){
-        alert("region clicked");
-    });
+
+    function activateRegions(){
+        $('body').on('click', '.region', function(){
+
+            paper.forEach(function (el) {
+                el.attr({ stroke: "blue" });
+            });
+
+            /*var id = $(this).attr('id');
+
+            paper.getElementByPoint(mouseX, mouseY).attr({stroke: "green"});
+            */
+        });
+    }
+
+    function deactivateRegions(){
+        $('body').off('click', '.region');
+    }
+
 
     $('.ajaxSuccess').ajaxSuccess(function(e, xhr, settings) {
         if(settings.url.indexOf("../states/MenuState.php")!= -1){
@@ -58,20 +73,33 @@ $(document).ready(function(){
             $('#content').html(xhr.responseText);
 
             // TODO unterscheiden zu welchem state gewechselt wird
+            if(hasParamValue(settings.url,"endState","Menu")){
+                deactivateRegions();
 
-            // befuellen der regionen mit raphael
-           drawRegions();
+            }
+
+            if(hasParamValue(settings.url,"endState","Map")){
+                activateRegions();
+            }
         }
     });
 
-    function drawRegions(){
+    function hasParamValue(url, param, value){
+        url = $.trim(url);
+        param = $.trim(param);
+        value = $.trim(value);
 
+        param = param.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
 
-        paper.circle(700,700,100);
+        var regexS = "[\\?&]"+param+"=([^&#]*)";
+        var regex = new RegExp( regexS );
+        var results = regex.exec(url);
 
-
+        if(results[1] == value){
+            return true;
+        }
+        return false;
     }
-
 
 
 });
@@ -92,8 +120,4 @@ function jsonpcallback(data) {
 <?php
 }
 
-//dataType: "jsonp",
-//contentType: 'application/json',
-//jsonp : "callback",
-//jsonpCallback: "jsonpcallback"
 ?>

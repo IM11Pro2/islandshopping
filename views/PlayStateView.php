@@ -17,11 +17,12 @@
             <div class="mapView">
 
                 <!-- Load svg -->
+                <div id="canvas">
                 <?php
                 $dummyView = new DummyView();
                 $dummyView->printDummyMap();
                 ?>
-
+                </div>
 
             </div><!--end .mapView-->
 
