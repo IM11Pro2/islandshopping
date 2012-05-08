@@ -28,6 +28,7 @@
 
             $playerPayment->setCurrency($playerCountry->getName());
             $playerPayment->setCurrencyTranslation($playerCountry->getName());
+            $playerPayment->setValue(START_CAPITAL_COUNTRY);
 
             $playerCountry->setPayment($playerPayment);
 
@@ -48,6 +49,7 @@
 
                 $enemyPayment->setCurrency($enemyCountry->getName());
                 $enemyPayment->setCurrencyTranslation($enemyCountry->getName());
+                $enemyPayment->setValue(START_CAPITAL_COUNTRY);
 
                 $enemyCountry->setPayment($enemyPayment);
 

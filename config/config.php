@@ -12,6 +12,7 @@
                      "USA"          => 0);
     }
 
+    // Currencies
     function getCurrencies() {
         return array( //1. Stelle, Währung, 2.Stelle Wechselkurs
             "EU"           => array("Euro", 1.1),
@@ -21,17 +22,31 @@
             "USA"          => array("Dollar", 5.5));
     }
 
+    //Colors
     function getColorArray() {
         return array("#FF0000", "#00FF00", "#0000FF", "#FFFF00 ", "#A901DB");
     }
 
-
+    //Number of Regions
     define("NUM_OF_REGIONS", 12);
 
+    //Amount of StartMoney per Country
+    define("START_CAPITAL_COUNTRY", 1000.0);
+
+    //Basic Capital per Region
+    define("BASIC_CAPITAL_REGION", 50.0);
+
+    //Autoload
     function __autoload($classname) {
         static $classes = array('AjaxResponse'                => '../ajax/AjaxResponse.php',
 
                                 'GameApplication'             => '../application/GameApplication.php',
+
+                                'Bank'                        => '../bank/Bank.php',
+                                'IBankState'                  => '../bank/IBankState.php',
+                                'PayOffState'                 => '../bank/PayOffState.php',
+                                'DepositState'                => '../bank/DepositState.php',
+                                'AttackState'                 => '../bank/AttackState.php',
 
                                 'ICountry'                    => '../countries/ICountry.php',
                                 'Country'                     => '../countries/Country.php',
@@ -70,8 +85,8 @@
                                 'EndOfPlayStateView'          => '../views/EndOfPlayStateView.php',
                                 'PreloaderStateView'          => '../views/PreloaderStateView.php',
 
-                                'DummyView'               => '../views/islandViews/DummyView.php'
-
+                                'DummyView'                   => '../views/islandViews/DummyView.php',
+                                'BankView'                    => '../views/bank/BankView.php',
 
         );
 

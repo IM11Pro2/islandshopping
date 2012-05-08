@@ -6,3 +6,39 @@
 body{
     font-family: QlassikBold;
 }
+
+.right{
+    float: right;
+}
+
+.left{
+    float: left;
+}
+
+.clear{
+    clear:both;
+}
+
+#container {
+  width: 986px;
+  margin: 20px auto 50px auto;
+  /*padding: 15px;*/
+  background-color: #FFFFFF;
+  border: solid 1px black;
+  position: relative;
+  /*top: -254px;*/
+  /*border: none;*/
+  border-color: lightgrey;
+}
+
+.mapView {
+    width: 700px;
+    border-style:solid;
+    border-width:1px;
+}
+
+.bankView {
+    width: 280px;
+    border-style:solid;
+    border-width:1px;
+}

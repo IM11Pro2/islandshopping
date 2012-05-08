@@ -23,7 +23,7 @@
             return $this->currencyTranslation;
         }
 
-        public function setValue(float $value) {
+        public function setValue($value) { //float
             $this->value = $value;
         }
 

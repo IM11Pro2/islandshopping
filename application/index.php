@@ -14,7 +14,7 @@ session_start();
     <?php printJavaScript(); ?>
 </head>
 <body>
-<h1> Hallo IslandshoppAA!! </h1>
+<h2> Hallo IslandshoppAA!! </h2>
 <?php
 $gameApp = new GameApplication();
 ?>
