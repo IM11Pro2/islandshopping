@@ -22,7 +22,11 @@
         }
 
         public function getPlayerId(){
+            return $this->playerId;
+        }
 
+        public function getColor(){
+            return $this->color;
         }
 
         public function getRegionId(){

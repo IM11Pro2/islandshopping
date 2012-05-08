@@ -63,7 +63,7 @@
                 <input type="button" name="MenuSubmit" value="Start">
             </form>
         </div> <!--end #content -->
-        <div class="ajaxSuccess"></div>
+
         <?php
         }
 

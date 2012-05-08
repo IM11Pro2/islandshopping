@@ -44,7 +44,7 @@ class RegionGraph{
     }
 
     public static function initRelations(){
-        $lookUp = array(
+        $lookUp = array(/*
             array(1,68), // Evras
             array(0,2), // Rodopol
             array(1,4,5), // Xanthi
@@ -115,7 +115,19 @@ class RegionGraph{
             array(34,66,68), // Lesbos
             array(0,3,10,34,67), // Limnos
             array(27,28,29,70), // Kefalonia
-            array(69,43), // Zakynthos
+            array(69,43), // Zakynthos*/
+            array(2,3),
+            array(4,5,6,7),
+            array(0,3,5),
+            array(0,2,4,5),
+            array(1,3,5),
+            array(1,2,3,4),
+            array(1,7,8),
+            array(1,6,8),
+            array(6,7,9),
+            array(8,10),
+            array(9,11),
+            array(10)
         );
 
 

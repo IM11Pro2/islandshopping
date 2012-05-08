@@ -26,7 +26,7 @@
     }
 
 
-    define("NUM_OF_REGIONS", 71);
+    define("NUM_OF_REGIONS", 12);
 
     function __autoload($classname) {
         static $classes = array('AjaxResponse'                => '../ajax/AjaxResponse.php',
@@ -70,7 +70,7 @@
                                 'EndOfPlayStateView'          => '../views/EndOfPlayStateView.php',
                                 'PreloaderStateView'          => '../views/PreloaderStateView.php',
 
-                                'islandMapView'               => '../views/islandViews/islandMapView.sgv'
+                                'DummyView'               => '../views/islandViews/DummyView.php'
 
 
         );

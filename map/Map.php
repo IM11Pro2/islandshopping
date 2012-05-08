@@ -61,6 +61,10 @@
 
             return $regionsOfPlayer;
         }
+
+        public function getRegions(){
+            return $this->regions;
+        }
     }
 
 ?>

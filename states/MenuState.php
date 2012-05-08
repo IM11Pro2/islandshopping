@@ -36,10 +36,11 @@
             $this->createPlayer();
             $this->createEnemyPlayers();
 
+            //next state übergeben
+                        GameEventManager::getInstance()->dispatchEvent(new ChangeStateEvent(new MapState() /*,session_id()*/));
                         //$eventmanager = $_SESSION['IEventManager'];
             GameEventManager::getInstance()->dispatchEvent(new ChangeViewEvent(new MapStateView()));
-            //next state übergeben
-            GameEventManager::getInstance()->dispatchEvent(new ChangeStateEvent(new MapState() /*,session_id()*/));
+
         }
 
         //create HumanPlayer
