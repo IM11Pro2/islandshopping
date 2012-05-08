@@ -70,7 +70,7 @@
                                 'EndOfPlayStateView'          => '../views/EndOfPlayStateView.php',
                                 'PreloaderStateView'          => '../views/PreloaderStateView.php',
 
-                                'DummyView'               => '../views/islandViews/DummyView.php'
+                                'DummyView'                   => '../views/islandViews/DummyView.php'
 
 
         );
