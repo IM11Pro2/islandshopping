@@ -7,25 +7,61 @@
 
         public function printDummyMap(){
             $regions = $_SESSION['map']->getRegions();
+
             ?>
-        <svg version="1.1" baseProfile="full" width="800" height="800">
+        <script type="text/javascript">
+        var paper = Raphael('canvas',800,800);
 
-            <circle id="region0" class="region" cx="100" cy="100" r="20" fill="<?php echo $regions[0]->getColor(); ?>" />
-            <circle id="region1" class="region" cx="200" cy="390" r="30" fill="<?php echo $regions[1]->getColor(); ?>"/>
-            <circle id="region2" class="region" cx="100" cy="200" r="40" fill="<?php echo $regions[2]->getColor(); ?>"/>
-            <circle id="region3" class="region" cx="200" cy="200" r="50" fill="<?php echo $regions[3]->getColor(); ?>"/>
-            <circle id="region4" class="region" cx="200" cy="300" r="30" fill="<?php echo $regions[4]->getColor(); ?>"/>
-            <circle id="region5" class="region" cx="150" cy="300" r="20" fill="<?php echo $regions[5]->getColor(); ?>"/>
-            <circle id="region6" class="region" cx="230" cy="450" r="30" fill="<?php echo $regions[6]->getColor(); ?>"/>
-            <circle id="region7" class="region" cx="300" cy="400" r="40" fill="<?php echo $regions[7]->getColor(); ?>"/>
-            <circle id="region8" class="region" cx="300" cy="500" r="50" fill="<?php echo $regions[8]->getColor(); ?>"/>
-            <circle id="region9" class="region" cx="400" cy="500" r="20" fill="<?php echo $regions[9]->getColor(); ?>"/>
-            <circle id="region10" class="region" cx="400" cy="600" r="30" fill="<?php echo $regions[10]->getColor(); ?>"/>
-            <circle id="region11" class="region" cx="400" cy="700" r="40" fill="<?php echo $regions[11]->getColor(); ?>"/>
+        var circle;
+        circle = paper.circle(100,100,20).attr('fill', "<?php echo $regions[0]->getColor(); ?>");
+            circle.node.setAttribute('id', '<?php echo "region".$regions[0]->getRegionId(); ?>');
+            circle.node.setAttribute('class', 'region');
 
-        </svg>
+        circle = paper.circle(200,390,30).attr('fill', "<?php echo $regions[1]->getColor(); ?>");
+                circle.node.setAttribute('id', '<?php echo "region".$regions[1]->getRegionId(); ?>');
+                circle.node.setAttribute('class', 'region');
 
+        circle = paper.circle(100,200,40).attr('fill', "<?php echo $regions[2]->getColor(); ?>");
+                circle.node.setAttribute('id', '<?php echo "region".$regions[2]->getRegionId(); ?>');
+                circle.node.setAttribute('class', 'region');
+
+        circle = paper.circle(200,200,50).attr('fill', "<?php echo $regions[3]->getColor(); ?>");
+                circle.node.setAttribute('id', '<?php echo "region".$regions[3]->getRegionId(); ?>');
+                circle.node.setAttribute('class', 'region');
+
+        circle = paper.circle(200,300,30).attr('fill', "<?php echo $regions[4]->getColor(); ?>");
+                circle.node.setAttribute('id', '<?php echo "region".$regions[4]->getRegionId(); ?>');
+                circle.node.setAttribute('class', 'region');
+
+        circle = paper.circle(150,300,20).attr('fill', "<?php echo $regions[5]->getColor(); ?>");
+                circle.node.setAttribute('id', '<?php echo "region".$regions[5]->getRegionId(); ?>');
+                circle.node.setAttribute('class', 'region');
+
+        circle = paper.circle(230,450,30).attr('fill', "<?php echo $regions[6]->getColor(); ?>");
+                circle.node.setAttribute('id', '<?php echo "region".$regions[6]->getRegionId(); ?>');
+                circle.node.setAttribute('class', 'region');
+
+        circle = paper.circle(300,400,40).attr('fill', "<?php echo $regions[7]->getColor(); ?>");
+                circle.node.setAttribute('id', '<?php echo "region".$regions[7]->getRegionId(); ?>');
+                circle.node.setAttribute('class', 'region');
+
+        circle = paper.circle(300,500,50).attr('fill', "<?php echo $regions[8]->getColor(); ?>");
+                circle.node.setAttribute('id', '<?php echo "region".$regions[8]->getRegionId(); ?>');
+                circle.node.setAttribute('class', 'region');
+
+        circle = paper.circle(400,500,20).attr('fill', "<?php echo $regions[9]->getColor(); ?>");
+                circle.node.setAttribute('id', '<?php echo "region".$regions[9]->getRegionId(); ?>');
+                circle.node.setAttribute('class', 'region');
+
+        circle = paper.circle(400,600,30).attr('fill', "<?php echo $regions[10]->getColor(); ?>");
+                circle.node.setAttribute('id', '<?php echo "region".$regions[10]->getRegionId(); ?>');
+                circle.node.setAttribute('class', 'region');
+
+        circle = paper.circle(400,700,40).attr('fill', "<?php echo $regions[11]->getColor(); ?>");
+                circle.node.setAttribute('id', '<?php echo "region".$regions[11]->getRegionId(); ?>');
+                circle.node.setAttribute('class', 'region');
+
+        </script>
     <?php }
-        //TODO ?default farben verwenden und dann mittels raphael nach erfolgtem request farben setzen
     }
 ?>

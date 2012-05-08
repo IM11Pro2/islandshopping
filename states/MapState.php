@@ -57,7 +57,6 @@
         }
 
         function endState() {
-            echo "hallo";
             GameEventManager::getInstance()->dispatchEvent(new ChangeViewEvent(new PlayStateView()));
             //next state übergeben
             GameEventManager::getInstance()->dispatchEvent(new ChangeStateEvent(new PlayState() /*,session_id()*/));

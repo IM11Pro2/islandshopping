@@ -57,18 +57,22 @@ $(document).ready(function(){
             //alert(settings.url);
             $('#content').html(xhr.responseText);
 
-            // TODO unterscheiden zu welcehm state gewecheslt wird
+            // TODO unterscheiden zu welchem state gewechselt wird
 
             // befuellen der regionen mit raphael
-           // drawRegions();
+           drawRegions();
         }
     });
 
     function drawRegions(){
-        var paper = Raphael(0,0,800,800);
-        var circle = paper.circle(400,400,30);
-        circle.attr('fill', 'red');
+
+
+        paper.circle(700,700,100);
+
+
     }
+
+
 
 });
 
