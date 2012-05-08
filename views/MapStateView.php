@@ -24,9 +24,12 @@
 
             <h1>MAP STATE VIEW</h1>
             <!-- Load svg -->
-            <?php require_once("../views/islandViews/islandMapView.svg") ?>
+            <?php
+                $dummyView = new DummyView();
+                $dummyView->printDummyMap();
+            ?>
 
-           <!-- <div class="ajaxSuccess"></div>-->
+            <!-- <div class="ajaxSuccess"></div> -->
             <input type="button" name="MapSubmit" value="Start">
 
         <?php
@@ -60,6 +63,17 @@
     if(isset($_GET['handle']) || isset($_GET['loadPage'])) {
         MapStateView::ajaxRequest();
     }
+
+?>
+<?php
+    //$_SESSION['state']->printView();
+    //MapStateView::printView();
+    //$_SESSION['state']->getPlayerCountry();
+
+?>
+
+<?php
+
 
 ?>
 

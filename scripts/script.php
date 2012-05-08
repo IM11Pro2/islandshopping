@@ -37,7 +37,7 @@ $(document).ready(function(){
     });
 
     // insert class description to the svgs
-    $('body').on('click', 'g[id^="region"]', function(){
+    $('body').on('click', '.region', function(){
         alert("region clicked");
     });
 
@@ -77,4 +77,8 @@ function jsonpcallback(data) {
 <?php
 }
 
+//dataType: "jsonp",
+//contentType: 'application/json',
+//jsonp : "callback",
+//jsonpCallback: "jsonpcallback"
 ?>

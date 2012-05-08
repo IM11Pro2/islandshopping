@@ -18,6 +18,6 @@ session_start();
 <?php
 $gameApp = new GameApplication();
 ?>
-
+<div class="ajaxSuccess"></div>
 </body>
 </html>

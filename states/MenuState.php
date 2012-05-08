@@ -34,10 +34,11 @@
 
             $_SESSION['activePlayers'] = array();
 
-            //$eventmanager = $_SESSION['IEventManager'];
-            GameEventManager::getInstance()->dispatchEvent(new ChangeViewEvent(new MapStateView()));
             //next state übergeben
             GameEventManager::getInstance()->dispatchEvent(new ChangeStateEvent(new MapState() /*,session_id()*/));
+            //$eventmanager = $_SESSION['IEventManager'];
+            GameEventManager::getInstance()->dispatchEvent(new ChangeViewEvent(new MapStateView()));
+
         }
 
         function getApplicationStateType() {
@@ -73,6 +74,14 @@
                     }
                 }
             }
+        }
+
+        public function getPlayerCountry() {
+            return $this->playerCountry;
+        }
+
+        public function getEnemyCountries() {
+            return $this->enemyCountries;
         }
 
         public static function ajaxRequest() {
