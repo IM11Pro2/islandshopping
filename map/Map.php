@@ -12,6 +12,7 @@
             $this->regions = array();
             $this->regionGraph = new RegionGraph();
             $this->regionGraph->generateGraph();
+            $_SESSION['map'] = $this;
         }
 
         public function randomizeRegions() {
@@ -41,10 +42,12 @@
             if(($numberOfPlayers * $regionsPerPlayer) < NUM_OF_REGIONS) {
 
                 $restRegions = NUM_OF_REGIONS - ($numberOfPlayers * $regionsPerPlayer);
+                $playerId = mt_rand(0,($numberOfPlayers-1));
                 for($i = 0; $i < $restRegions; ++$i) {
                     $region = new Region($this->playerList[$playerId]);
                     $region->initNeighbourRegions($this->regionGraph->getNode($region->getRegionId()));
                     array_push($this->regions, $region);
+                    $playerId++;
                 }
             }
         }

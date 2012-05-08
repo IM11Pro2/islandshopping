@@ -56,8 +56,19 @@ $(document).ready(function(){
         if(settings.url.indexOf("endState")!= -1){
             //alert(settings.url);
             $('#content').html(xhr.responseText);
+
+            // TODO unterscheiden zu welcehm state gewecheslt wird
+
+            // befuellen der regionen mit raphael
+           // drawRegions();
         }
     });
+
+    function drawRegions(){
+        var paper = Raphael(0,0,800,800);
+        var circle = paper.circle(400,400,30);
+        circle.attr('fill', 'red');
+    }
 
 });
 
