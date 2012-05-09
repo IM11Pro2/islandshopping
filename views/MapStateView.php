@@ -35,6 +35,7 @@
         </div><!--end .mapView-->
 
             <input type="button" name="MapSubmit" value="Start">
+            <input type="button" name="MapRandom" value="Nächste Map">
 
         <?php
         }
