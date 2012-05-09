@@ -25,7 +25,7 @@
 
         public static function ajaxRequest() {
 
-            if(!isset($_SESSION)){
+            if(!isset($_SESSION)) {
                 session_start();
             }
 
@@ -33,7 +33,7 @@
 
                 session_id($_GET[session_name()]);
 
-                if(isset($_GET['getNeigbours'])){
+                if(isset($_GET['getNeigbours'])) {
 
                     header('Content-type: application/json');
 
@@ -44,9 +44,26 @@
 
                     $neighbours = $regions[$regionId]->getNeighbours();
 
-                    echo json_encode(array("activeRegion"=>$regionId ,"neighbours"=>$neighbours));
+                    echo json_encode(array("activeRegion"=> $regionId,
+                                           "neighbours"  => $neighbours));
                 }
 
+                if(isset($_GET['getCountry'])) {
+
+                    header('Content-type: application/json');
+
+                    $regionId = trim($_GET['getCountry']);
+
+                    $map = $_SESSION['map'];
+                    $regions = $map->getRegions();
+
+                    $country = $regions[$regionId]->getCountry();
+
+                    echo json_encode(array("activeRegion"=> $regionId,
+                                           "country"     => array("name"    => $country->getName(),
+                                                                  //"payment" => $country->getPayment(),
+                                                                  "currency"=> $country->getPayment()->getCurrency())));
+                }
             }
         }
     }

@@ -33,7 +33,7 @@
     //Amount of StartMoney per Country
     define("START_CAPITAL_COUNTRY", 1000.0);
 
-    //Basic Capital per Region
+    //Basic Capital per Region == Grundkapital
     define("BASIC_CAPITAL_REGION", 50.0);
 
     //Autoload
