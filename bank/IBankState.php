@@ -1,7 +1,7 @@
 <?php
     interface IBankState  {
-        function depositMoney();
-        function payOffMoney();
+        function depositMoney(Payment $capital);
+        function payOffMoney(Payment $capital);
         function chargeInterest();
         //function addInterest();
 

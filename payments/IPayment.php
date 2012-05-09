@@ -6,7 +6,9 @@
 
         function getCurrencyTranslation();
 
-        function setValue($value); //float
+        function setValue($value);
+
+        function addValue($value);
 
         function setCurrency($countryName);
 

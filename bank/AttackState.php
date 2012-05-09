@@ -1,12 +1,11 @@
 <?php
     class AttackState implements IBankState{
 
-        public function depositMoney() {
-            // TODO: Implement depositMoney() method.
+        public function depositMoney(Payment $capital) {
         }
 
-        public function payOffMoney() {
-            // TODO: Implement payOffMoney() method.
+        public function payOffMoney(Payment $capital) {
+            return 0;
         }
 
         private function chargeInterest() {
