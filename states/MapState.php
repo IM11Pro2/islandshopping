@@ -101,7 +101,7 @@
 
     }
 
-    if(isset($_GET['handle'])) {
+    if(isset($_GET['handle']) && trim($_GET['handle']) == "MapState") {
 
         MapState::ajaxRequest();
     }

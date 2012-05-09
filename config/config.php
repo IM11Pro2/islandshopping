@@ -63,6 +63,7 @@
                                 'Map'                         => '../map/Map.php',
                                 'Region'                      => '../map/Region.php',
                                 'RegionGraph'                 => '../map/RegionGraph.php',
+                                'GraphNode'                 => '../map/RegionGraph.php',
 
                                 'IPayment'                    => '../payments/IPayment.php',
                                 'Payment'                     => '../payments/Payment.php',

@@ -7,33 +7,42 @@ function printJavaScript(){
 <script type="text/javascript">
 $(document).ready(function(){
 
-    function sendAjaxRequest(url, data){
+    function sendAjaxRequest(url, data, getAsJSON){
+        var type;
+
+        if(getAsJSON){
+            type = "json";
+        }
+        else{
+            type = "html";
+        }
         $.ajax({
             url: url,
-            data: data
+            data: data,
+            dataType: type
         });
     }
 
     $('input:checkbox[name="enemyCountries[]"]').click(function(event){
         if($('input:checked').length > 0){
-            sendAjaxRequest("../states/MenuState.php", {handle: "ajaxRequest", enemycountry: $(this).parent().text(), <?php  echo session_name().': '.'"'.session_id().'"'; ?>});
+            sendAjaxRequest("../states/MenuState.php", {handle: "MenuState", enemycountry: $(this).parent().text(), <?php  echo session_name().': '.'"'.session_id().'"'; ?>}, false);
         }
     });
 
 
     $('input:radio[name="playerCountry"]').click(function(event) {
         if($('input:checked').length > 0){
-            sendAjaxRequest("../states/MenuState.php", {handle: "ajaxRequest", playercountry: $(this).parent().text(), <?php  echo session_name().': '.'"'.session_id().'"'; ?>});
+            sendAjaxRequest("../states/MenuState.php", {handle: "MenuState", playercountry: $(this).parent().text(), <?php  echo session_name().': '.'"'.session_id().'"'; ?>}, false);
         }
     });
 
     $(':button[name="MenuSubmit"]').click(function (event) {
-        sendAjaxRequest("../states/MenuState.php", {handle: "ajaxRequest", endState: "Menu", <?php  echo session_name().': '.'"'.session_id().'"'; ?>});
+        sendAjaxRequest("../states/MenuState.php", {handle: "MenuState", endState: "Menu", <?php  echo session_name().': '.'"'.session_id().'"'; ?>}, false);
     });
 
 
     $('body').on('click',':button[name="MapSubmit"]',function (event) {
-        sendAjaxRequest("../states/MapState.php", {handle: "ajaxRequest", endState: "Map", <?php  echo session_name().': '.'"'.session_id().'"'; ?>});
+        sendAjaxRequest("../states/MapState.php", {handle: "MapState", endState: "Map", <?php  echo session_name().': '.'"'.session_id().'"'; ?>}, false);
     });
 
 
@@ -42,8 +51,11 @@ $(document).ready(function(){
             el.attr('stroke-width', 1);
         });
         this.attr('stroke-width', 3);
+        var regionId = $(this.node).data('region');
 
+        sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getNeigbours: regionId , <?php  echo session_name().': '.'"'.session_id().'"'; ?>},true);
     }
+
 
     function activateRegions(){
         paper.forEach(function (el) {
@@ -59,6 +71,26 @@ $(document).ready(function(){
         });
     }
 
+    function highlightNeighbourRegions(regions){
+
+
+        paper.forEach(function (el) {
+            el.attr('fill-opacity', 0.3);
+
+            for(var i = 0; i < regions.neighbours.length; i++){
+
+                if($(el.node).data("region") == regions.neighbours[i] || $(el.node).data("region") == regions.activeRegion){
+                    el.attr('fill-opacity', 1);
+                }
+
+            }
+
+
+        });
+
+
+
+    }
 
     $('.ajaxSuccess').ajaxSuccess(function(e, xhr, settings) {
         if(settings.url.indexOf("../states/MenuState.php")!= -1){
@@ -76,7 +108,6 @@ $(document).ready(function(){
             //alert(settings.url);
             $('#content').html(xhr.responseText);
 
-            // TODO unterscheiden zu welchem state gewechselt wird
             if(hasParamValue(settings.url,"endState","Menu")){
                 deactivateRegions();
 
@@ -85,6 +116,11 @@ $(document).ready(function(){
             if(hasParamValue(settings.url,"endState","Map")){
                 activateRegions();
             }
+        }
+        if(settings.url.indexOf("getNeigbours")!= -1){
+
+            var regions = $.parseJSON(xhr.responseText);
+            highlightNeighbourRegions(regions);
         }
     });
 

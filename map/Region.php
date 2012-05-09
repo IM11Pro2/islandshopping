@@ -18,7 +18,10 @@
         }
 
         public function initNeighbourRegions($node){
-            $this->neighbours = $node->getNeighbours();
+            //$this->neighbours = $node->getNeighbours();
+            foreach($node->getNeighbours() as $node){
+                array_push($this->neighbours, $node->getId());
+            }
         }
 
         public function getPlayerId(){
@@ -31,6 +34,10 @@
 
         public function getRegionId(){
             return $this->regionId;
+        }
+
+        public function getNeighbours(){
+            return $this->neighbours;
         }
 
         public static function resetRegionId() {

@@ -116,7 +116,7 @@
         }
     }
 
-    if(isset($_GET['handle'])) {
+    if(isset($_GET['handle']) && trim($_GET['handle']) == "MenuState") {
         session_start();
         MenuState::ajaxRequest();
     }
