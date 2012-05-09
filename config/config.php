@@ -15,7 +15,7 @@
     // Currencies
     function getCurrencies() {
         return array( //1. Stelle, Währung, 2.Stelle Wechselkurs
-            "EU"           => array("Euro", 1.1),
+            "EU"           => array("Euro", 1),
             "Schweiz"      => array("Franken", 2.2),
             "Tuerkei"      => array("Lira", 3.3),
             "SaudiArabien" => array("Rial", 4.4),
