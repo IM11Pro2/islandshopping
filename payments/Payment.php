@@ -24,11 +24,15 @@
         }
 
         public function setValue($value) { //float
-                    $this->value = $value;
+                $this->value = $value;
         }
 
         public function addValue($value) {
-                    $this->value += $value;
+                $this->value += $value;
+        }
+
+        public function reduceValue($value) {
+                $this->value -= $value;
         }
 
         public function setCurrency($countryName) {

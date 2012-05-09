@@ -1,11 +1,11 @@
 <?php
     class PayOffState implements IBankState{
 
-        public function depositMoney(Payment $capital){
+        public function depositMoney(IPayment $capital){
             $capital->addValue(BASIC_CAPITAL_REGION);
         }
 
-        public function payOffMoney(Payment $capital) {
+        public function payOffMoney(IPayment $capital) {
 
             if(($capital->getValue() - BASIC_CAPITAL_REGION) > 0){
                 return BASIC_CAPITAL_REGION;
@@ -16,7 +16,7 @@
 
         }
 
-        private function chargeInterest() {
+        public function chargeInterest() {
             // TODO: Implement chargeInterest() method.
         }
     }

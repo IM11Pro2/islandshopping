@@ -10,6 +10,8 @@
 
         function addValue($value);
 
+        function reduceValue($value);
+
         function setCurrency($countryName);
 
         function setCurrencyTranslation($countryName);

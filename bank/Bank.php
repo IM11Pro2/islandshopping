@@ -12,12 +12,12 @@
         private $bankState;
         private $bankStateList;
 
-        function __construct($country) {
+        function __construct(ICountry $country, $initState) {
 
             $this->capital = $country->getPayment();
             $this->capital->setValue(START_CAPITAL_COUNTRY);
 
-            $this->basicCapitalRegion = BASIC_CAPITAL_REGION;
+            //$this->basicCapitalRegion = BASIC_CAPITAL_REGION;
 
 
 
@@ -28,7 +28,7 @@
 
             );
 
-            $this->bankState = $this->bankStateList[self::PAY_OFF];
+            $this->bankState = $this->bankStateList[$initState];
 
         }
 
