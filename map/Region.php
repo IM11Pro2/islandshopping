@@ -20,7 +20,6 @@
         }
 
         public function initNeighbourRegions($node){
-            //$this->neighbours = $node->getNeighbours();
             foreach($node->getNeighbours() as $node){
                 array_push($this->neighbours, $node->getId());
             }

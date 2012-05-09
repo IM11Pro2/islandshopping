@@ -1,15 +1,15 @@
 <?php
     require_once("../config/config.php");
-    //require_once("IApplicationState.php");
 
     class PlayState implements IApplicationState {
 
         const ApplicationStateType = "PlayState";
 
-        //private $bank = new Bank();
+        private $bank;
 
         function init() {
-            // TODO: Implement init() method.
+            $playerList = $_SESSION['activePlayers'];
+            $this->bank = new Bank($playerList[0]->getCountry(), Bank::ATTACK);
         }
 
         function endState() {
