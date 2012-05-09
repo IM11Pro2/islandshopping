@@ -16,6 +16,8 @@
         }
 
         public function randomizeRegions() {
+            Region::resetRegionId();
+            $this->regions = array();
             $numberOfPlayers = count($this->playerList);
             $regionsPerPlayer = floor(NUM_OF_REGIONS / $numberOfPlayers);
 

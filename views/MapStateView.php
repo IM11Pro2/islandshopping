@@ -5,7 +5,7 @@
         const ViewType = "MapStateView";
 
         public function __construct() {
-            //$_SESSION['IEventManager']->addEventListener($this, UpdateViewEvent::TYPE);
+            GameEventManager::getInstance()->addEventListener($this, UpdateViewEvent::TYPE);
 
             //$_SESSION['state'] = $this;
         }
@@ -14,7 +14,7 @@
             if($event->getEventType() == UpdateViewEvent::TYPE) {
 
                 //echo "Update Map State View Event<br />";
-                //$this->printView();
+                $this->printView();
             }
         }
 

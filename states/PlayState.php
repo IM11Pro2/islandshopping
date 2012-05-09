@@ -34,11 +34,14 @@
                 session_id($_GET[session_name()]);
 
                 if(isset($_GET['getNeigbours'])){
+
                     header('Content-type: application/json');
+
                     $regionId = trim($_GET['getNeigbours']);
 
                     $map = $_SESSION['map'];
                     $regions = $map->getRegions();
+
                     $neighbours = $regions[$regionId]->getNeighbours();
 
                     echo json_encode(array("activeRegion"=>$regionId ,"neighbours"=>$neighbours));

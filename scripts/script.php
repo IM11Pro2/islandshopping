@@ -45,12 +45,18 @@ $(document).ready(function(){
         sendAjaxRequest("../states/MapState.php", {handle: "MapState", endState: "Map", <?php  echo session_name().': '.'"'.session_id().'"'; ?>}, false);
     });
 
+    $('body').on('click',':button[name="MapRandom"]',function (event) {
+        sendAjaxRequest("../states/MapState.php", {handle: "MapState", randomizeMap: "randomizeMap", <?php  echo session_name().': '.'"'.session_id().'"'; ?>}, false);
+    });
+
 
     function activeElementHandler(){
         paper.forEach(function (el) {
             el.attr('stroke-width', 1);
         });
+
         this.attr('stroke-width', 3);
+
         var regionId = $(this.node).data('region');
 
         sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getNeigbours: regionId , <?php  echo session_name().': '.'"'.session_id().'"'; ?>},true);
@@ -116,6 +122,9 @@ $(document).ready(function(){
             if(hasParamValue(settings.url,"endState","Map")){
                 activateRegions();
             }
+        }
+        if(settings.url.indexOf("randomizeMap")!= -1){
+            $('#content').html(xhr.responseText);
         }
         if(settings.url.indexOf("getNeigbours")!= -1){
 

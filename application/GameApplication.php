@@ -21,8 +21,7 @@ class GameApplication implements IEventListener
     {
 
         if($event->getEventType() == ChangeViewEvent::TYPE){
-            //GameEventManager::getInstance()->removeEventListener($this->view, UpdateViewEvent::TYPE);
-;
+            GameEventManager::getInstance()->removeEventListener($this->view, UpdateViewEvent::TYPE);
             $this->view = $event->getView();
             $this->view->printView();
         }

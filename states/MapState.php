@@ -58,8 +58,9 @@
             }
         }
 
-        function rearrangeMap() {
-
+        function randomizeMap() {
+            $this->map->randomizeRegions();
+            GameEventManager::getInstance()->dispatchEvent(new UpdateViewEvent());
         }
 
         function endState() {
@@ -94,6 +95,10 @@
                         }
                     }
 
+                    if(isset($_GET['randomizeMap'])){
+                        $_SESSION['state']->randomizeMap();
+                    }
+
                 }
 
             }
@@ -102,7 +107,6 @@
     }
 
     if(isset($_GET['handle']) && trim($_GET['handle']) == "MapState") {
-
         MapState::ajaxRequest();
     }
 
