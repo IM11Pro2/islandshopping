@@ -15,11 +15,11 @@
     // Currencies
     function getCurrencies() {
         return array( //1. Stelle, Währung, 2.Stelle Wechselkurs
-            "EU"           => array("Euro", 1),
-            "Schweiz"      => array("Franken", 2.2),
-            "Tuerkei"      => array("Lira", 3.3),
-            "SaudiArabien" => array("Rial", 4.4),
-            "USA"          => array("Dollar", 5.5));
+            "EU"           => array("Euro", 1.0),
+            "Schweiz"      => array("Franken", 1.20),
+            "Tuerkei"      => array("Lira", 2.30),
+            "SaudiArabien" => array("Riyal", 4.88),
+            "USA"          => array("Dollar", 1.30));
     }
 
     //Colors
