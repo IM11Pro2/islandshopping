@@ -58,6 +58,10 @@
             }
         }
 
+        function rearrangeMap() {
+
+        }
+
         function endState() {
             GameEventManager::getInstance()->dispatchEvent(new ChangeViewEvent(new PlayStateView()));
             //next state übergeben
