@@ -37,22 +37,26 @@ $(document).ready(function(){
     });
 
 
-    function activateRegions(){
-        $('body').on('click', '.region', function(){
-
-            paper.forEach(function (el) {
-                el.attr({ stroke: "blue" });
-            });
-
-            /*var id = $(this).attr('id');
-
-            paper.getElementByPoint(mouseX, mouseY).attr({stroke: "green"});
-            */
+    function activeElementHandler(){
+        paper.forEach(function (el) {
+            el.attr('stroke-width', 1);
         });
+        this.attr('stroke-width', 3);
+
+    }
+
+    function activateRegions(){
+        paper.forEach(function (el) {
+            el.click(activeElementHandler);
+
+        });
+
     }
 
     function deactivateRegions(){
-        $('body').off('click', '.region');
+        paper.forEach(function (el) {
+            el.unclick(activeElementHandler);
+        });
     }
 
 
