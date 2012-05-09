@@ -62,6 +62,15 @@ $(document).ready(function(){
         sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getNeigbours: regionId , <?php  echo session_name().': '.'"'.session_id().'"'; ?>},true);
     }
 
+    function resetElements(event){
+        event.stopPropagation();
+        if(event.target == paper.canvas){
+            paper.forEach(function(el){
+                el.attr('stroke-width',1).attr('fill-opacity', 1);
+            });
+        }
+
+    }
 
     function activateRegions(){
         paper.forEach(function (el) {
@@ -69,16 +78,19 @@ $(document).ready(function(){
 
         });
 
+        $(paper.canvas).on('click',resetElements);
+
     }
 
     function deactivateRegions(){
         paper.forEach(function (el) {
             el.unclick(activeElementHandler);
         });
+
+        $(paper.canvas).off('click',resetElements);
     }
 
     function highlightNeighbourRegions(regions){
-
 
         paper.forEach(function (el) {
             el.attr('fill-opacity', 0.3);
@@ -88,10 +100,7 @@ $(document).ready(function(){
                 if($(el.node).data("region") == regions.neighbours[i] || $(el.node).data("region") == regions.activeRegion){
                     el.attr('fill-opacity', 1);
                 }
-
             }
-
-
         });
 
 
