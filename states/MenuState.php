@@ -27,10 +27,9 @@
 
         function endState() {
 
-            // edit die drei session eintraege hab ich noch nicht gebraucht
             $_SESSION['player'] = $this->playerCountry;
             $_SESSION['enemies'] = $this->enemyCountries;
-            $_SESSION['countryArray'] = $this->countryArray;
+            //$_SESSION['countryArray'] = $this->countryArray;
 
             $_SESSION['activePlayers'] = array();
 
