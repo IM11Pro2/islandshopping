@@ -10,7 +10,10 @@
             $value = $playersArray[0]->getCountry()->getPayment()->getValue();
             $currency = $playersArray[0]->getCountry()->getPayment()->getCurrency();
             $translation = $playersArray[0]->getCountry()->getPayment()->getCurrencyTranslation();
-            echo $name . ":  " . $value * $translation . " " . $currency;
+            $color = $playersArray[0]->getCountry()->getColor();
+            ?>
+            <?php
+            echo "<font color='".$color."'>" . $name . "</font>:  " . $value * $translation . " " . $currency;
 
             ?>
         <h3>Kapital der Gegner</h3>
@@ -20,8 +23,9 @@
                 $enemyValue = $playersArray[$i]->getCountry()->getPayment()->getValue();
                 $enemyCurrency[$i] = $playersArray[$i]->getCountry()->getPayment()->getCurrency();
                 $enemyTranslation[$i] = $playersArray[$i]->getCountry()->getPayment()->getCurrencyTranslation();
+                $enemyColor[$i] = $playersArray[$i]->getCountry()->getCOlor();
 
-                echo $enemyName . ":  " . $enemyValue * $enemyTranslation[$i] . " " . $enemyCurrency[$i] . "<br />";
+                echo "<font color='".$enemyColor[$i]."'>". $enemyName . "</font>:  " . $enemyValue * $enemyTranslation[$i] . " " . $enemyCurrency[$i] . "<br />";
             }
             ?>
         <h3>Wechselkurse</h3>
