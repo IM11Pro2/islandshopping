@@ -67,6 +67,7 @@
 
         if(isset($_GET['bankstate'])){
             $_SESSION['bank']->setState($_GET['bankstate']);
+            echo $_SESSION['bank']->payOff();
         }
     }
 
