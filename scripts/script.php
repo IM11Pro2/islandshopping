@@ -121,11 +121,11 @@ $(document).ready(function(){
         });
     }
 
-    function setBasicCapital(country) {
+    function addBasicCapitalToRegion(payment) {
         paper.forEach(function (el) {
-            if($(el.node).data("text") == country.activeRegion){
+            if($(el.node).data("text") == payment.activeRegion){
                 //alert(country.country.name);
-                var value = country.country.value;
+                var value = payment.payment.value;
                 el.attr('text', value);
             }
         });
@@ -165,8 +165,8 @@ $(document).ready(function(){
             highlightNeighbourRegions(regions);
         }
         if(settings.url.indexOf("getCountry")!= -1){
-            var country = $.parseJSON(xhr.responseText);
-            setBasicCapital(country);
+            var payment = $.parseJSON(xhr.responseText);
+            addBasicCapitalToRegion(payment);
         }
     });
 
