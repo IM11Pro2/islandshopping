@@ -64,7 +64,7 @@
                     $paymentValue = $regions[$regionId]->getPayment()->getValue() * $regions[$regionId]->getPayment()->getCurrencyTranslation();
 
                     echo json_encode(array("activeRegion"=> $regionId,
-                                           "country"     => array("value"    => $paymentValue,
+                                           "payment"     => array("value"    => $paymentValue,
                                                                   "currency" => $country->getPayment()->getCurrency())));
 
                 }
