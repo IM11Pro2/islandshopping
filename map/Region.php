@@ -15,8 +15,13 @@
             $this->regionId = self::$ID++;
             $this->playerId = $player->getPlayerId();
             $this->color = $player->getCountry()->getColor();
-            $this->payment = $player->getCountry()->getPayment();
+            $this->payment = new Payment();
             $this->country = $player->getCountry();
+
+            $this->payment->setCurrency($this->country->getName());
+            $this->payment->setCurrencyTranslation($this->country->getName());
+
+            $this->payment->setValue(BASIC_CAPITAL_REGION);
         }
 
         public function initNeighbourRegions($node){
@@ -43,6 +48,10 @@
 
         public function getCountry(){
             return $this->country;
+        }
+
+        public function getPayment(){
+            return $this->payment;
         }
 
         public static function resetRegionId() {

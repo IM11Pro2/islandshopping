@@ -4,7 +4,6 @@
         private $value;
         private $currency;
         private $currencyTranslation;
-        private $isBuyable;
         private $countryCurrencies;
 
         public function __construct(){
@@ -43,7 +42,11 @@
             $this->currencyTranslation = $this->countryCurrencies[$countryName][1];
         }
 
-        public function isBuyable(IPayment $otherPayment) {
-            return $this->isBuyable;
+        public function isBuyable(IPayment $enemyPayment) {
+            /* grundwert noch zu subtrahieren und gewährleisten,
+            dass sich min der grundbetrag auch auf übernommener region befindet
+            (spekulationszufallswert beachten)
+            */
+            return ($this->value < $enemyPayment->getValue());
         }
     }
