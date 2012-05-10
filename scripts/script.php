@@ -57,16 +57,19 @@ $(document).ready(function(){
 
 
     function activeElementHandler(){
-        paper.forEach(function (el) {
-            el.attr('stroke-width', 1);
-        });
+        if($(this.node).attr('class')=="regionOfPlayer0"){
 
-        this.attr('stroke-width', 3);
+            paper.forEach(function (el) {
+                el.attr('stroke-width', 1);
+            });
 
-        var regionId = $(this.node).data('region');
+            this.attr('stroke-width', 3);
 
-        //sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getNeigbours: regionId, <?php  echo session_name().': '.'"'.session_id().'"'; ?>},true);
-        sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getCountry: regionId, <?php  echo session_name().': '.'"'.session_id().'"'; ?>},true);
+            var regionId = $(this.node).data('region');
+
+            //sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getNeigbours: regionId, <?php  echo session_name().': '.'"'.session_id().'"'; ?>},true);
+            sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getCountry: regionId, <?php  echo session_name().': '.'"'.session_id().'"'; ?>},true);
+        }
     }
 
     function resetElements(event){
