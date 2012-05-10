@@ -46,17 +46,17 @@
         <br/>
         <form>
                     <label>
-                    <input type="radio" name="bankstate" value="<?php echo Bank::PAY_OFF ?>">
+                    <input type="radio" name="bankstate" value="<?php echo Bank::PAY_OFF ?>" <?php echo ($_SESSION['bank']->getState() == Bank::PAY_OFF) ? "checked=checked" :"" ?>>
                     PayOff</input>
                     </label>
 
                     <label>
-                    <input type="radio" name="bankstate" value="<?php echo Bank::DEPOSIT ?>">
+                    <input type="radio" name="bankstate" value="<?php echo Bank::DEPOSIT ?>" <?php echo ($_SESSION['bank']->getState() == Bank::DEPOSIT) ? "checked=checked" :"" ?>>
                     Deposite</input>
                     </label>
 
                     <label>
-                    <input type="radio" name="bankstate" value="<?php echo Bank::ATTACK ?>">
+                    <input type="radio" name="bankstate" value="<?php echo Bank::ATTACK ?>" <?php echo ($_SESSION['bank']->getState() == Bank::ATTACK) ? "checked=checked" :"" ?>>
                     Attack</input>
                     </label>
                 </form>

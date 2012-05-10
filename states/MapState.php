@@ -64,9 +64,9 @@
         }
 
         function endState() {
-            GameEventManager::getInstance()->dispatchEvent(new ChangeViewEvent(new PlayStateView()));
             //next state übergeben
             GameEventManager::getInstance()->dispatchEvent(new ChangeStateEvent(new PlayState() /*,session_id()*/));
+            GameEventManager::getInstance()->dispatchEvent(new ChangeViewEvent(new PlayStateView()));
         }
 
         function getApplicationStateType() {

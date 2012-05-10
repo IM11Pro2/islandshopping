@@ -12,6 +12,7 @@
 
         private $bankState;
         private $bankStateList;
+        private $type;
 
         function __construct(ICountry $country, $initState) {
 
@@ -28,17 +29,18 @@
                 self::DEPOSIT => new DepositState(),
 
             );
-
+            $this->type = $initState;
             $this->bankState = $this->bankStateList[$initState];
             $_SESSION['bank'] = $this;
         }
 
         public function setState($state){
+            $this->type = $state;
             $this->bankState = $this->bankStateList[$state];
         }
 
         public function getState(){
-            return $this->bankState;
+            return $this->type;
         }
 
         public function deposit(){
