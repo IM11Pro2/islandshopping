@@ -54,6 +54,14 @@
         public function chargeInterest(){
             $this->bankState->chargeInterest();
         }
+
+        public function getPlainCapital(){
+            return $this->capital->getValue();
+        }
+
+        public function getCapital(){
+            return $this->capital->getValue() * $this->capital->getCurrencyTranslation();
+        }
     }
 
     if(isset($_GET['handle']) && trim($_GET['handle']) == "bank"){
@@ -69,7 +77,6 @@
 
         if(isset($_GET['bankstate'])){
             $_SESSION['bank']->setState($_GET['bankstate']);
-            echo $_SESSION['bank']->payOff();
         }
     }
 

@@ -7,7 +7,8 @@
 
         public function payOffMoney(IPayment $capital) {
 
-            if(($capital->getValue() - BASIC_CAPITAL_REGION) > 0){
+            if(($capital->getValue() - BASIC_CAPITAL_REGION) >= 0){
+                $capital->reduceValue(BASIC_CAPITAL_REGION);
                 return BASIC_CAPITAL_REGION;
             }
             else{
