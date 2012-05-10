@@ -6,7 +6,7 @@
         }
 
         public function payOffMoney(IPayment $capital) {
-            return 0;
+            return 10;
         }
 
         public function chargeInterest() {

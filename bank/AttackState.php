@@ -2,13 +2,15 @@
     class AttackState implements IBankState{
 
         public function depositMoney(IPayment $capital) {
+            // do nothing: bank is inactive
         }
 
         public function payOffMoney(IPayment $capital) {
+            // do nothing: bank is inactive
             return 0;
         }
 
         public function chargeInterest() {
-            // TODO: Implement chargeInterest() method.
+            // do nothing: bank is inactive
         }
     }

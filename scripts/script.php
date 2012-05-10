@@ -36,6 +36,12 @@ $(document).ready(function(){
         }
     });
 
+    $('body').on('click','input:radio[name="bankstate"]', function(event) {
+        if($('input:checked').length > 0){
+            sendAjaxRequest("../bank/Bank.php", {handle: "bank", bankstate: $.trim($(this).val()) , <?php  echo session_name().': '.'"'.session_id().'"'; ?>}, false);
+        }
+    });
+
     $(':button[name="MenuSubmit"]').click(function (event) {
         sendAjaxRequest("../states/MenuState.php", {handle: "MenuState", endState: "Menu", <?php  echo session_name().': '.'"'.session_id().'"'; ?>}, false);
     });

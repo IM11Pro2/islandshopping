@@ -10,7 +10,7 @@
 
             ?>
         <script type="text/javascript">
-        var paper = Raphael('canvas',800,800);
+        var paper = Raphael('canvas',700,800);
 
         var circle;
         circle = paper.circle(100,100,20).attr('fill', "<?php echo $regions[0]->getColor(); ?>");

@@ -1,4 +1,5 @@
 <?php
+    require_once('../config/config.php');
     class Bank {
 
 
@@ -29,11 +30,15 @@
             );
 
             $this->bankState = $this->bankStateList[$initState];
-
+            $_SESSION['bank'] = $this;
         }
 
         public function setState($state){
             $this->bankState = $this->bankStateList[$state];
+        }
+
+        public function getState(){
+            return $this->bankState;
         }
 
         public function deposit(){
@@ -47,6 +52,22 @@
         public function chargeInterest(){
             $this->bankState->chargeInterest();
         }
-
-
     }
+
+    if(isset($_GET['handle']) && trim($_GET['handle']) == "bank"){
+
+        if(!isset($_SESSION)) {
+            session_start();
+        }
+
+        if(isset($_GET[session_name()])) {
+
+            session_id($_GET[session_name()]);
+        }
+
+        if(isset($_GET['bankstate'])){
+            $_SESSION['bank']->setState($_GET['bankstate']);
+        }
+    }
+
+?>

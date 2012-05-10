@@ -43,6 +43,23 @@
             ?>
         </div>
         <div class="clear"></div>
+        <br/>
+        <form>
+                    <label>
+                    <input type="radio" name="bankstate" value="<?php echo Bank::PAY_OFF ?>">
+                    PayOff</input>
+                    </label>
+
+                    <label>
+                    <input type="radio" name="bankstate" value="<?php echo Bank::DEPOSIT ?>">
+                    Deposite</input>
+                    </label>
+
+                    <label>
+                    <input type="radio" name="bankstate" value="<?php echo Bank::ATTACK ?>">
+                    Attack</input>
+                    </label>
+                </form>
         <?php
         }
     }
