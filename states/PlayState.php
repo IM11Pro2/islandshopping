@@ -59,8 +59,11 @@
 
                     $country = $regions[$regionId]->getCountry();
 
+                    $regions[$regionId]->getPayment()->addValue(BASIC_CAPITAL_REGION);
+                    $paymentValue = $regions[$regionId]->getPayment()->getValue() *  $regions[$regionId]->getPayment()->getCurrencyTranslation();
+
                     echo json_encode(array("activeRegion"=> $regionId,
-                                           "country"     => array("name"    => $country->getName(),
+                                           "country"     => array("value"    => $paymentValue,
                                                                   //"payment" => $country->getPayment(),
                                                                   "currency"=> $country->getPayment()->getCurrency())));
                 }

@@ -65,7 +65,7 @@ $(document).ready(function(){
 
         var regionId = $(this.node).data('region');
 
-        sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getNeigbours: regionId , <?php  echo session_name().': '.'"'.session_id().'"'; ?>},true);
+        //sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getNeigbours: regionId, <?php  echo session_name().': '.'"'.session_id().'"'; ?>},true);
         sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getCountry: regionId, <?php  echo session_name().': '.'"'.session_id().'"'; ?>},true);
     }
 
@@ -81,7 +81,15 @@ $(document).ready(function(){
 
     function activateRegions(){
         paper.forEach(function (el) {
+
             el.click(activeElementHandler);
+
+            //wär schön, geht aber leider nicht
+/*          var value =  $(el.node).data('value');
+            alert(el.node);
+            alert(value);
+            el.attr('text', value);*/
+
         });
 
         $(paper.canvas).on('click',resetElements);
@@ -105,23 +113,17 @@ $(document).ready(function(){
 
                 if($(el.node).data("region") == regions.neighbours[i] || $(el.node).data("region") == regions.activeRegion){
                     el.attr('fill-opacity', 1);
-
                 }
-               /* if($(el.node).data("text") == regions.activeRegion){
-                                    el.attr('text', 'hallo2');}*/
             }
         });
     }
 
-/*    function setBasicCapital(el) {
-            el.attr('text', '100');
-    }*/
     function setBasicCapital(country) {
         paper.forEach(function (el) {
             if($(el.node).data("text") == country.activeRegion){
                 //alert(country.country.name);
-                var currency = country.country.currency;
-                el.attr('text', currency);
+                var value = country.country.value;
+                el.attr('text', value);
             }
         });
     }
@@ -163,6 +165,11 @@ $(document).ready(function(){
             var country = $.parseJSON(xhr.responseText);
             setBasicCapital(country);
         }
+    });
+
+    $('.ajaxSuccess').ajaxError(function(e, xhr, settings, error) {
+        alert("error: " + error);
+
     });
 
     function hasParamValue(url, param, value){
