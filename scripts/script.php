@@ -64,11 +64,20 @@ $(document).ready(function(){
             });
 
             this.attr('stroke-width', 3);
-
             var regionId = $(this.node).data('region');
+            if($('input:radio[name="bankstate"]:checked').val() == "<?php echo Bank::PAY_OFF ?>" ){
 
-            //sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getNeigbours: regionId, <?php  echo session_name().': '.'"'.session_id().'"'; ?>},true);
-            sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getCountry: regionId, <?php  echo session_name().': '.'"'.session_id().'"'; ?>},true);
+                sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getCountry: regionId, <?php  echo session_name().': '.'"'.session_id().'"'; ?>},true);
+            }
+            else if($('input:radio[name="bankstate"]:checked').val() == "<?php echo Bank::DEPOSIT ?>"){
+                alert("deposit");
+            }
+            else if($('input:radio[name="bankstate"]:checked').val() == "<?php echo Bank::ATTACK ?>"){
+                sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getNeigbours: regionId, <?php  echo session_name().': '.'"'.session_id().'"'; ?>},true);
+            }
+
+
+
         }
     }
 
@@ -124,9 +133,9 @@ $(document).ready(function(){
     function addBasicCapitalToRegion(payment) {
         paper.forEach(function (el) {
             if($(el.node).data("text") == payment.activeRegion){
-                //alert(country.country.name);
                 var value = payment.payment.value;
                 el.attr('text', value);
+                $('#ownCapital').text(payment.bankCapital);
             }
         });
     }
