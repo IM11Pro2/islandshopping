@@ -78,12 +78,12 @@ $(document).ready(function(){
             }
         }
         else if(activeRegion == true){
-                        for(var i = 0; i < activeNeighbours.length; i++) {
-                            if ($(this.node).data("region") == activeNeighbours[i]){
-                                    alert("ANGRIFF");
-                            }
-                        }
-                    }
+            for(var i = 0; i < activeNeighbours.length; i++) {
+                if ($(this.node).data("region") == activeNeighbours[i]){
+                        alert("ANGRIFF");
+                }
+            }
+        }
     }
 
     function resetElements(event){
@@ -92,7 +92,11 @@ $(document).ready(function(){
             paper.forEach(function(el){
                 el.attr('stroke-width',1).attr('fill-opacity', 1);
             });
+
+            activeRegion = false;
         }
+
+
 
     }
 
@@ -123,6 +127,7 @@ $(document).ready(function(){
 
     function highlightNeighbourRegions(regions){
 
+        activeNeighbours = new Array();
         paper.forEach(function (el) {
             el.attr('fill-opacity', 0.3);
 
@@ -130,6 +135,9 @@ $(document).ready(function(){
 
                 if($(el.node).data("region") == regions.neighbours[i] || $(el.node).data("region") == regions.activeRegion){
                     el.attr('fill-opacity', 1);
+                    if($(el.node).data("region") != regions.activeRegion){
+                        activeNeighbours.push($(el.node).data("region"));
+                    }
                 }
             }
         });
