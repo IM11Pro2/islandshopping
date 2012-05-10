@@ -107,17 +107,10 @@ $(document).ready(function(){
 
                 if($(el.node).data("region") == regions.neighbours[i] || $(el.node).data("region") == regions.activeRegion){
                     el.attr('fill-opacity', 1);
-
                 }
-               /* if($(el.node).data("text") == regions.activeRegion){
-                                    el.attr('text', 'hallo2');}*/
             }
         });
     }
-
-/*    function setBasicCapital(el) {
-            el.attr('text', '100');
-    }*/
 
     function setBasicCapital(country) {
         paper.forEach(function (el) {
