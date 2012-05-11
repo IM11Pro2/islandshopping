@@ -3,6 +3,7 @@
 
         public function depositMoney(IPayment $capital) {
             // do nothing: bank is inactive
+            return 0;
         }
 
         public function payOffMoney(IPayment $capital) {

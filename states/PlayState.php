@@ -57,10 +57,17 @@
                     $map = $_SESSION['map'];
                     $regions = $map->getRegions();
 
+                    if(trim($_GET['bankstate']) == Bank::PAY_OFF) {
+
+                        $_SESSION['bank']->payOff($regions[$regionId]->getPayment());
+
+                    }
+                    else if(trim($_GET['bankstate']) == Bank::DEPOSIT) {
+
+                        $_SESSION['bank']->deposit($regions[$regionId]->getPayment());
+                    }
+
                     $country = $regions[$regionId]->getCountry();
-
-                    $regions[$regionId]->getPayment()->addValue($_SESSION['bank']->payOff());
-
                     $paymentValue = $regions[$regionId]->getPayment()->getValue() * $regions[$regionId]->getPayment()->getCurrencyTranslation();
 
                     $bankCapital = $_SESSION['bank']->getCapital();
