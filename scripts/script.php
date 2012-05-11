@@ -105,12 +105,8 @@ $(document).ready(function(){
         paper.forEach(function (el) {
 
             el.click(activeElementHandler);
-
-            //wär schön, geht aber leider nicht
-/*          var value =  $(el.node).data('value');
-            alert(el.node);
-            alert(value);
-            el.attr('text', value);*/
+            var value =  el.data('value');
+            el.attr('text', value);
 
         });
 
