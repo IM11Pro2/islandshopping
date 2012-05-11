@@ -43,12 +43,17 @@
             return $this->type;
         }
 
-        public function deposit(){
-            $this->bankState->depositMoney($this->capital);
+        public function deposit(IPayment $entryPayment){
+
+            if(($entryPayment->getValue()-BASIC_CAPITAL_REGION) >= BASIC_CAPITAL_REGION){
+                $entryPayment->reduceValue($this->bankState->depositMoney($this->capital));
+            }
+
         }
 
-        public function payOff(){
-            return $this->bankState->payOffMoney($this->capital);
+        public function payOff(IPayment $entryPayment){
+
+            $entryPayment->addValue($this->bankState->payOffMoney($this->capital));
         }
 
         public function chargeInterest(){

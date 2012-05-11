@@ -3,6 +3,7 @@
 
         public function depositMoney(IPayment $capital) {
             $capital->addValue(BASIC_CAPITAL_REGION);
+            return BASIC_CAPITAL_REGION;
         }
 
         public function payOffMoney(IPayment $capital) {

@@ -2,7 +2,7 @@
     class PayOffState implements IBankState{
 
         public function depositMoney(IPayment $capital){
-            $capital->addValue(BASIC_CAPITAL_REGION);
+            return 0;
         }
 
         public function payOffMoney(IPayment $capital) {
