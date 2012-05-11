@@ -58,14 +58,14 @@ $(document).ready(function(){
 
 
     function activeElementHandler(){
-        if($(this.node).attr('class')=="regionOfPlayer0"){
+        if(this.data('regionOfPlayer') == 0){
 
             paper.forEach(function (el) {
                 el.attr('stroke-width', 1);
             });
 
             this.attr('stroke-width', 3);
-            var regionId = $(this.node).data('region');
+            var regionId = this.data('region');
 
             if($('input:radio[name="bankstate"]:checked').val() == "<?php echo Bank::PAY_OFF ?>" ){
                 sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getCountry: regionId, bankstate: "<?php echo Bank::PAY_OFF ?>", <?php  echo session_name().': '.'"'.session_id().'"'; ?>},true);
@@ -80,7 +80,7 @@ $(document).ready(function(){
         }
         else if(activeRegion == true){
             for(var i = 0; i < activeNeighbours.length; i++) {
-                if ($(this.node).data("region") == activeNeighbours[i]){
+                if (this.data("region") == activeNeighbours[i]){
                         alert("ANGRIFF");
                 }
             }
@@ -134,10 +134,10 @@ $(document).ready(function(){
 
             for(var i = 0; i < regions.neighbours.length; i++){
 
-                if($(el.node).data("region") == regions.neighbours[i] || $(el.node).data("region") == regions.activeRegion){
+                if(el.data("region") == regions.neighbours[i] || el.data("region") == regions.activeRegion){
                     el.attr('fill-opacity', 1);
-                    if($(el.node).data("region") != regions.activeRegion){
-                        activeNeighbours.push($(el.node).data("region"));
+                    if(el.data("region") != regions.activeRegion){
+                        activeNeighbours.push(el.data("region"));
                     }
                 }
             }
@@ -146,7 +146,7 @@ $(document).ready(function(){
 
     function addBasicCapitalToRegion(payment) {
         paper.forEach(function (el) {
-            if($(el.node).data("text") == payment.activeRegion){
+            if(el.data("text") == payment.activeRegion){
                 var value = payment.payment.value;
                 el.attr('text', value);
                 $('#ownCapital').text(payment.bankCapital);
