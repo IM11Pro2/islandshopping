@@ -37,6 +37,7 @@ $(document).ready(function(){
     });
 
     $('body').on('click','input:radio[name="bankstate"]', function(event) {
+        resetElements(event);
         if($('input:checked').length > 0){
             sendAjaxRequest("../bank/Bank.php", {handle: "bank", bankstate: $.trim($(this).val()) , <?php  echo session_name().': '.'"'.session_id().'"'; ?>}, false);
         }
@@ -67,11 +68,9 @@ $(document).ready(function(){
             var regionId = $(this.node).data('region');
 
             if($('input:radio[name="bankstate"]:checked').val() == "<?php echo Bank::PAY_OFF ?>" ){
-                activeRegion = false;
                 sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getCountry: regionId, <?php  echo session_name().': '.'"'.session_id().'"'; ?>},true);
             }
             else if($('input:radio[name="bankstate"]:checked').val() == "<?php echo Bank::DEPOSIT ?>"){
-                activeRegion = false;
                 alert("deposit");
             }
             else if($('input:radio[name="bankstate"]:checked').val() == "<?php echo Bank::ATTACK ?>"){
@@ -90,7 +89,7 @@ $(document).ready(function(){
 
     function resetElements(event){
         event.stopPropagation();
-        if(event.target == paper.canvas){
+        if(event.target == paper.canvas || event.target.nodeName == "INPUT"){
             paper.forEach(function(el){
                 el.attr('stroke-width',1).attr('fill-opacity', 1);
             });
