@@ -66,18 +66,24 @@ $(document).ready(function(){
             this.attr('stroke-width', 3);
             var regionId = $(this.node).data('region');
             if($('input:radio[name="bankstate"]:checked').val() == "<?php echo Bank::PAY_OFF ?>" ){
-
+                activeRegion = false;
                 sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getCountry: regionId, bankstate: "<?php echo Bank::PAY_OFF ?>", <?php  echo session_name().': '.'"'.session_id().'"'; ?>},true);
             }
             else if($('input:radio[name="bankstate"]:checked').val() == "<?php echo Bank::DEPOSIT ?>"){
+                activeRegion = false;
                 sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getCountry: regionId, bankstate: "<?php echo Bank::DEPOSIT ?>",  <?php  echo session_name().': '.'"'.session_id().'"'; ?>},true);
             }
             else if($('input:radio[name="bankstate"]:checked').val() == "<?php echo Bank::ATTACK ?>"){
+                activeRegion = true;
                 sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getNeigbours: regionId, <?php  echo session_name().': '.'"'.session_id().'"'; ?>},true);
             }
-
-
-
+        }
+        else if(activeRegion == true){
+            for(var i = 0; i < activeNeighbours.length; i++) {
+                if ($(this.node).data("region") == activeNeighbours[i]){
+                        alert("ANGRIFF");
+                }
+            }
         }
     }
 
@@ -87,7 +93,11 @@ $(document).ready(function(){
             paper.forEach(function(el){
                 el.attr('stroke-width',1).attr('fill-opacity', 1);
             });
+
+            activeRegion = false;
         }
+
+
 
     }
 
@@ -118,6 +128,7 @@ $(document).ready(function(){
 
     function highlightNeighbourRegions(regions){
 
+        activeNeighbours = new Array();
         paper.forEach(function (el) {
             el.attr('fill-opacity', 0.3);
 
@@ -125,6 +136,9 @@ $(document).ready(function(){
 
                 if($(el.node).data("region") == regions.neighbours[i] || $(el.node).data("region") == regions.activeRegion){
                     el.attr('fill-opacity', 1);
+                    if($(el.node).data("region") != regions.activeRegion){
+                        activeNeighbours.push($(el.node).data("region"));
+                    }
                 }
             }
         });
