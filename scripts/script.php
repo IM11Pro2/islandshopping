@@ -66,7 +66,7 @@ $(document).ready(function(){
 
             this.attr('stroke-width', 3);
             var regionId = this.data('region');
-
+            activeRegionId = regionId;
             if($('input:radio[name="bankstate"]:checked').val() == "<?php echo Bank::PAY_OFF ?>" ){
                 sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getCountry: regionId, bankstate: "<?php echo Bank::PAY_OFF ?>", <?php  echo session_name().': '.'"'.session_id().'"'; ?>},true);
             }
@@ -81,7 +81,9 @@ $(document).ready(function(){
         else if(activeRegion == true){
             for(var i = 0; i < activeNeighbours.length; i++) {
                 if (this.data("region") == activeNeighbours[i]){
-                        alert("ANGRIFF");
+                    sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", region: activeRegionId ,enemy: this.data("region"), <?php  echo session_name().': '.'"'.session_id().'"'; ?>},true);
+                    alert("ANGRIFF");
+
                 }
             }
         }
@@ -150,6 +152,27 @@ $(document).ready(function(){
         });
     }
 
+    function updateMap(regionInfo){
+        if(regionInfo.activeRegion.hasWon){
+
+            paper.forEach(function(el){
+
+                if(el.data('region') == regionInfo.enemyRegion.regionId){
+                    el.data('regionOfPlayer', regionInfo.enemyRegion.regionOfPlayer);
+                    el.attr('fill', regionInfo.enemyRegion.countryColor);
+                }
+
+                if(el.data('text') == regionInfo.enemyRegion.regionId){
+                    el.attr('text', regionInfo.enemyRegion.paymentValue * regionInfo.enemyRegion.currencyTranslation)
+                }
+
+                if(el.data('text') == regionInfo.activeRegion.regionId){
+                    el.attr('text', regionInfo.activeRegion.paymentValue * regionInfo.activeRegion.currencyTranslation)
+                }
+
+            });
+        }
+    }
 
     $('.ajaxSuccess').ajaxSuccess(function(e, xhr, settings) {
         if(settings.url.indexOf("../states/MenuState.php")!= -1){
@@ -187,6 +210,12 @@ $(document).ready(function(){
             var payment = $.parseJSON(xhr.responseText);
             addBasicCapitalToRegion(payment);
         }
+
+        if(settings.url.indexOf("region")!= -1 && settings.url.indexOf("enemy")!= -1){
+            var regionInfo = $.parseJSON(xhr.responseText);
+            updateMap(regionInfo);
+        }
+
     });
 
     $('.ajaxSuccess').ajaxError(function(e, xhr, settings, error) {
@@ -212,6 +241,8 @@ $(document).ready(function(){
     }
 
 
+
+
 });
 
 function disableEnemyCountry($playerCountry){
@@ -221,6 +252,7 @@ function disableEnemyCountry($playerCountry){
     $("#enemy_"+$playerCountry).attr("disabled",true);
     $("#enemy_"+$playerCountry).attr("checked",false);
 }
+
 
 function jsonpcallback(data) {
     alert(data["message"]);

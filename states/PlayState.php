@@ -78,6 +78,45 @@
                                            "bankCapital" => $bankCapital));
 
                 }
+
+                if(isset($_GET['region']) && isset($_GET['enemy'])){
+                    header('Content-type: application/json');
+
+                    $regionId = trim($_GET['region']);
+                    $enemyId = trim($_GET['enemy']);
+
+                    $map = $_SESSION['map'];
+                    $regions = $map->getRegions();
+
+                    $activeRegion = $regions[$regionId];
+                    $activePayment = $activeRegion->getPayment();
+
+                    $enemyRegion = $regions[$enemyId];
+                    $enemyPayment = $enemyRegion->getPayment();
+
+                    $hasPlayerWon = $activePayment->isBuyable($enemyPayment);
+
+                    if($hasPlayerWon){
+                        //  basis value muss noch abgezogen werden
+                        $activeRegion->occupyRegion($enemyRegion);
+                        $hallo = json_encode( array("activeRegion" => array("hasWon"=> $hasPlayerWon,
+                                                                            "paymentValue" => $activePayment->getValue(),
+                                                                            "currencyTranslation" => $activePayment->getCurrencyTranslation(),
+                                                                            "regionId" => $regionId),
+                                                "enemyRegion" => array(
+                                                    "regionId" => $enemyId,
+                                                    "regionOfPlayer" => $enemyRegion->getPlayerId(),
+                                                    "countryColor" => $enemyRegion->getColor(),
+                                                    "paymentValue" => $enemyPayment->getValue(),
+                                                    "currencyTranslation" => $enemyPayment->getCurrencyTranslation())
+                                                ));
+
+                        echo $hallo;
+                    }
+                    else{
+                        echo json_encode( array("activeRegion" => array("hasWon"=> $hasPlayerWon)));
+                    }
+                }
             }
         }
     }

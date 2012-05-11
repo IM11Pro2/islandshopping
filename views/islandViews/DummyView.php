@@ -58,9 +58,6 @@
                     circle.data('region', <?php echo $regions[$i]->getRegionId(); ?>);
                     circle.data('regionOfPlayer', <?php echo $regions[$i]->getPlayerId(); ?>);
 
-                    //circle.node.setAttribute('data-region', '<?php /*echo $regions[$i]->getRegionId();*/ ?>');
-                    //circle.node.setAttribute('data-value','<?php /*echo $region->getPayment()->getValue();*/ ?>');
-                    //circle.node.setAttribute('class', 'regionOfPlayer' +<?php /*echo $regions[$i]->getPlayerId();*/ ?>);
 
                     text = paper.text(  <?php echo $this->coordinates[$i]['x']?>,
                                         <?php echo $this->coordinates[$i]['y']?>,

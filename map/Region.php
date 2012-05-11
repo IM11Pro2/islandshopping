@@ -34,8 +34,16 @@
             return $this->playerId;
         }
 
+        public function setPlayerId($id){
+            $this->playerId = $id;
+        }
+
         public function getColor(){
             return $this->color;
+        }
+
+        public function setColor($color){
+            $this->color = $color;
         }
 
         public function getRegionId(){
@@ -50,8 +58,27 @@
             return $this->country;
         }
 
+        public function setCountry(ICountry $country){
+            $this->country = $country;
+        }
+
         public function getPayment(){
             return $this->payment;
+        }
+
+        public function occupyRegion(Region $enemyRegion){
+            $enemyRegion->setPlayerId($this->playerId);
+            $enemyRegion->setCountry($this->country);
+            $enemyRegion->setColor($this->color);
+
+            $enemyRegion->getPayment()->setValue(($this->payment->getValue() - BASIC_CAPITAL_REGION));
+
+            $this->payment->setValue(BASIC_CAPITAL_REGION);
+
+            $enemyRegion->getPayment()->setCurrency($this->country->getName());
+            $enemyRegion->getPayment()->setCurrencyTranslation($this->country->getName());
+
+
         }
 
         public static function resetRegionId() {
