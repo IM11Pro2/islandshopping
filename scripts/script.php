@@ -196,6 +196,8 @@ $(document).ready(function(){
                 }
 
             });
+
+            $('#'+regionInfo.enemyBank.bankName+'Bank').text(regionInfo.enemyBank.bankCapital);
         }
     }
 

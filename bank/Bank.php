@@ -31,7 +31,6 @@
             );
             $this->type = $initState;
             $this->bankState = $this->bankStateList[$initState];
-            $_SESSION['bank'] = $this;
         }
 
         public function setState($state){
@@ -48,8 +47,12 @@
             if(($entryPayment->getValue()-BASIC_CAPITAL_REGION) >= BASIC_CAPITAL_REGION){
                 $entryPayment->reduceValue($this->bankState->depositMoney($this->capital));
             }
-
         }
+
+        public function placeMoney($price){
+            $this->capital->addValue($price);
+        }
+
 
         public function payOff(IPayment $entryPayment){
 
@@ -81,7 +84,7 @@
         }
 
         if(isset($_GET['bankstate'])){
-            $_SESSION['bank']->setState($_GET['bankstate']);
+            $_SESSION['listOfBanks'][0]->setState($_GET['bankstate']);
         }
     }
 

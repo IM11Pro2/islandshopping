@@ -5,11 +5,19 @@
 
         const ApplicationStateType = "PlayState";
 
-        private $bank;
+        private $listOfBanks;
 
         function init() {
             $playerList = $_SESSION['activePlayers'];
-            $this->bank = new Bank($playerList[0]->getCountry(), Bank::ATTACK);
+            $this->listOfBanks = array();
+            for($i = 0; $i < count($playerList); $i++){
+
+                array_push($this->listOfBanks, new Bank($playerList[$i]->getCountry(), Bank::PAY_OFF));
+
+            }
+
+            $_SESSION['listOfBanks'] = $this->listOfBanks;
+
         }
 
         function endState() {
@@ -59,18 +67,18 @@
 
                     if(trim($_GET['bankstate']) == Bank::PAY_OFF) {
 
-                        $_SESSION['bank']->payOff($regions[$regionId]->getPayment());
+                        $_SESSION['listOfBanks'][0]->payOff($regions[$regionId]->getPayment());
 
                     }
                     else if(trim($_GET['bankstate']) == Bank::DEPOSIT) {
 
-                        $_SESSION['bank']->deposit($regions[$regionId]->getPayment());
+                        $_SESSION['listOfBanks'][0]->deposit($regions[$regionId]->getPayment());
                     }
 
                     $country = $regions[$regionId]->getCountry();
                     $paymentValue = $regions[$regionId]->getPayment()->getValue() * $regions[$regionId]->getPayment()->getCurrencyTranslation();
 
-                    $bankCapital = $_SESSION['bank']->getCapital();
+                    $bankCapital = $_SESSION['listOfBanks'][0]->getCapital();
 
                     echo json_encode(array("activeRegion"=> $regionId,
                                            "payment"     => array("value"    => $paymentValue,
@@ -94,12 +102,20 @@
                     $enemyRegion = $regions[$enemyId];
                     $enemyPayment = $enemyRegion->getPayment();
 
+                    $enemyPlayerId = $enemyRegion->getPlayerId();
+                    $enemyCountryName = $enemyRegion->getCountry()->getName();
+
                     $hasPlayerWon = $activePayment->isBuyable($enemyPayment);
 
                     if($hasPlayerWon){
-                        //  basis value muss noch abgezogen werden
-                        $activeRegion->occupyRegion($enemyRegion);
-                        $hallo = json_encode( array("activeRegion" => array("hasWon"=> $hasPlayerWon,
+
+                        $purchasePrice = $activeRegion->occupyRegion($enemyRegion);
+
+                        $_SESSION['listOfBanks'][$enemyPlayerId]->placeMoney($purchasePrice);
+
+                        $enemyBankCapital = $_SESSION['listOfBanks'][$enemyPlayerId]->getCapital();
+
+                        echo json_encode( array("activeRegion" => array("hasWon"=> $hasPlayerWon,
                                                                             "paymentValue" => $activePayment->getValue(),
                                                                             "currencyTranslation" => $activePayment->getCurrencyTranslation(),
                                                                             "regionId" => $regionId),
@@ -108,10 +124,13 @@
                                                     "regionOfPlayer" => $enemyRegion->getPlayerId(),
                                                     "countryColor" => $enemyRegion->getColor(),
                                                     "paymentValue" => $enemyPayment->getValue(),
-                                                    "currencyTranslation" => $enemyPayment->getCurrencyTranslation())
+                                                    "currencyTranslation" => $enemyPayment->getCurrencyTranslation()),
+
+                                                "enemyBank" => array("bankName" => $enemyCountryName,
+                                                                     "bankCapital" => $enemyBankCapital)
                                                 ));
 
-                        echo $hallo;
+
                     }
                     else{
                         echo json_encode( array("activeRegion" => array("hasWon"=> $hasPlayerWon)));

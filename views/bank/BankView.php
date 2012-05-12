@@ -25,7 +25,7 @@
                 $enemyTranslation[$i] = $playersArray[$i]->getCountry()->getPayment()->getCurrencyTranslation();
                 $enemyColor[$i] = $playersArray[$i]->getCountry()->getCOlor();
 
-                echo "<font color='".$enemyColor[$i]."'>". $enemyName . "</font>:  " . $enemyValue * $enemyTranslation[$i] . " " . $enemyCurrency[$i] . "<br />";
+                echo "<font color='".$enemyColor[$i]."'>". $enemyName . "</font>:  <span id=\"".$enemyName."Bank\" >" . $enemyValue * $enemyTranslation[$i] . "</span> " . $enemyCurrency[$i] . "<br />";
             }
             ?>
         <h3>Wechselkurse</h3>
@@ -50,17 +50,17 @@
         <br/>
         <form>
             <label>
-            <input type="radio" name="bankstate" value="<?php echo Bank::PAY_OFF ?>" <?php echo ($_SESSION['bank']->getState() == Bank::PAY_OFF) ? "checked=checked" :"" ?>>
+            <input type="radio" name="bankstate" value="<?php echo Bank::PAY_OFF ?>" <?php echo ($_SESSION['listOfBanks'][0]->getState() == Bank::PAY_OFF) ? "checked=checked" :"" ?>>
             PayOff</input>
             </label>
 
             <label>
-            <input type="radio" name="bankstate" value="<?php echo Bank::DEPOSIT ?>" <?php echo ($_SESSION['bank']->getState() == Bank::DEPOSIT) ? "checked=checked" :"" ?>>
+            <input type="radio" name="bankstate" value="<?php echo Bank::DEPOSIT ?>" <?php echo ($_SESSION['listOfBanks'][0]->getState() == Bank::DEPOSIT) ? "checked=checked" :"" ?>>
             Deposite</input>
             </label>
 
             <label>
-            <input type="radio" name="bankstate" value="<?php echo Bank::ATTACK ?>" <?php echo ($_SESSION['bank']->getState() == Bank::ATTACK) ? "checked=checked" :"" ?>>
+            <input type="radio" name="bankstate" value="<?php echo Bank::ATTACK ?>" <?php echo ($_SESSION['listOfBanks'][0]->getState() == Bank::ATTACK) ? "checked=checked" :"" ?>>
             Attack</input>
             </label>
         </form>
