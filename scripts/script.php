@@ -56,6 +56,10 @@ $(document).ready(function(){
         sendAjaxRequest("../states/MapState.php", {handle: "MapState", randomizeMap: "randomizeMap", <?php  echo session_name().': '.'"'.session_id().'"'; ?>}, false);
     });
 
+    $('body').on('click',':button[name="PlaySubmit"]',function (event) {
+        sendAjaxRequest("../states/PlayState.php", {handle: "PlayState", nextPlayer: "nextPlayer", <?php  echo session_name().': '.'"'.session_id().'"'; ?>}, false);
+    });
+
 
     function activeElementHandler(){
 

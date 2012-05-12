@@ -117,6 +117,25 @@
                         echo json_encode( array("activeRegion" => array("hasWon"=> $hasPlayerWon)));
                     }
                 }
+
+                if(isset($_GET['nextPlayer'])){
+                    $map = $_SESSION['map'];
+                    $regions = $map->getRegions();
+                    $allEnemyRegions = array();
+
+                    $enemy = $_SESSION['activePlayers'][1];
+                    $enemyId = $enemy->getPlayerId();
+
+                    for($i = 0; $i < count($regions); $i++){
+                        if ($regions[$i]->getPlayerId() == $enemyId){
+                            array_push($allEnemyRegions, $regions[$i]);
+                        }
+                    }
+
+                    //print_r($allEnemyRegions);
+
+                    /*$decision = */$enemy->makeDecision($allEnemyRegions, $regions);
+                }
             }
         }
     }
