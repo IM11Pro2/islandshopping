@@ -73,7 +73,9 @@
             $enemyRegion->setCountry($this->country);
             $enemyRegion->setColor($this->color);
 
-            $enemyRegion->getPayment()->setValue(($this->payment->getValue()- $purchase - BASIC_CAPITAL_REGION));
+            $af = ($this->payment->getValue()- $purchase - BASIC_CAPITAL_REGION);
+
+            $enemyRegion->getPayment()->setValue(   $af  );
 
             $this->payment->setValue(BASIC_CAPITAL_REGION);
 

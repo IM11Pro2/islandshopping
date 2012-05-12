@@ -30,10 +30,10 @@
             return self::ApplicationStateType;
         }
 
-        function attackCountry($attackingCountryId, $enemyId){
+        function attackCountry($attackingRegionId, $enemyId){
                     header('Content-type: application/json');
         
-                    $regionId = $attackingCountryId;
+                    $regionId = $attackingRegionId;
         
                     $map = $_SESSION['map'];
                     $regions = $map->getRegions();
@@ -56,9 +56,8 @@
                         $_SESSION['listOfBanks'][$enemyPlayerId]->placeMoney($purchasePrice);
 
                         $enemyBankCapital = $_SESSION['listOfBanks'][$enemyPlayerId]->getCapital();
-                        
-                        $activeRegion->occupyRegion($enemyRegion);
-                        $hallo = json_encode( array("activeRegion" => array("hasWon"=> $hasPlayerWon,
+
+                        echo json_encode( array("activeRegion" => array("hasWon"=> $hasPlayerWon,
                                                                             "paymentValue" => $activePayment->getValue(),
                                                                             "currencyTranslation" => $activePayment->getCurrencyTranslation(),
                                                                             "regionId" => $regionId),
@@ -72,8 +71,7 @@
                                                     "enemyBank" => array("bankName" => $enemyCountryName,
                                                     "bankCapital" => $enemyBankCapital)
                                                 ));
-        
-                        echo $hallo;
+
                     }
                     else{
                         echo json_encode( array("activeRegion" => array("hasWon"=> $hasPlayerWon)));
@@ -86,12 +84,12 @@
                     $map = $_SESSION['map'];
                     $regions = $map->getRegions();
         
-                    //if(trim($_GET['bankstate']) == Bank::PAY_OFF) {
+                   // if(trim($_GET['bankstate']) == Bank::PAY_OFF) {
         
-            $_SESSION['listOfBanks'][0]->payOff($regions[$regionId]->getPayment());
+                        $_SESSION['listOfBanks'][0]->payOff($regions[$regionId]->getPayment());
         
-                   // }
-        /*            else if(trim($_GET['bankstate']) == Bank::DEPOSIT) {
+                   //}
+                 /*  else if(trim($_GET['bankstate']) == Bank::DEPOSIT) {
         
                         $_SESSION['listOfBanks'][0]->deposit($regions[$regionId]->getPayment());
                     }*/
@@ -160,10 +158,8 @@
        
                            $decision = $enemy->makeDecision($allEnemyRegions, $regions);
        
-                           print_r($decision);
-       
                            if(array_key_exists("attack", $decision)){
-                               $_SESSION['state']->attackCountry($decision["attack"], $decision["actualRegionId"]);
+                               $_SESSION['state']->attackCountry($decision["actualRegionId"], $decision["attack"]);
                            }
                            else if (array_key_exists("payOff", $decision)){
                                $_SESSION['state']->spendMoney($decision["payOff"]);

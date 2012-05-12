@@ -233,12 +233,12 @@ $(document).ready(function(){
             var regions = $.parseJSON(xhr.responseText);
             highlightNeighbourRegions(regions);
         }
-        if(settings.url.indexOf("getCountry")!= -1){
+        if(settings.url.indexOf("getCountry")!= -1 || settings.url.indexOf("nextPlayer")!= -1){
             var payment = $.parseJSON(xhr.responseText);
             addBasicCapitalToRegion(payment);
         }
 
-        if(settings.url.indexOf("region")!= -1 && settings.url.indexOf("enemy")!= -1){
+        if((settings.url.indexOf("region")!= -1 && settings.url.indexOf("enemy")!= -1 )|| settings.url.indexOf("nextPlayer")!= -1){
             var regionInfo = $.parseJSON(xhr.responseText);
             updateMap(regionInfo);
         }
