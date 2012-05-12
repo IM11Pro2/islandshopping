@@ -62,14 +62,31 @@ $(document).ready(function(){
 
 
     function activeElementHandler(){
-        if(this.data('regionOfPlayer') == 0){
+
+        var activeElement = this;
+
+        if(activeElement.type == "text"){
+            paper.forEach(function(el){
+
+               if(el.type == "circle"){
+
+                   if(el.data('region') == activeElement.data('text')){
+                       activeElement = el;
+                   }
+
+               }
+            });
+        }
+
+
+        if(activeElement.data('regionOfPlayer') == 0){
 
             paper.forEach(function (el) {
                 el.attr('stroke-width', 1);
             });
 
-            this.attr('stroke-width', 3);
-            var regionId = this.data('region');
+            activeElement.attr('stroke-width', 3);
+            var regionId = activeElement.data('region');
             activeRegionId = regionId;
             if($('input:radio[name="bankstate"]:checked').val() == "<?php echo Bank::PAY_OFF ?>" ){
                 sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getCountry: regionId, bankstate: "<?php echo Bank::PAY_OFF ?>", <?php  echo session_name().': '.'"'.session_id().'"'; ?>},true);
@@ -84,7 +101,7 @@ $(document).ready(function(){
         }
         else if(activeRegion == true){
             for(var i = 0; i < activeNeighbours.length; i++) {
-                if (this.data("region") == activeNeighbours[i]){
+                if (activeElement.data("region") == activeNeighbours[i]){
                     sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", region: activeRegionId ,enemy: this.data("region"), <?php  echo session_name().': '.'"'.session_id().'"'; ?>},true);
                     alert("ANGRIFF");
 
@@ -132,7 +149,11 @@ $(document).ready(function(){
 
         activeNeighbours = new Array();
         paper.forEach(function (el) {
-            el.attr('fill-opacity', 0.3);
+
+            if(el.type == "circle"){
+                el.attr('fill-opacity', 0.3);
+            }
+
 
             for(var i = 0; i < regions.neighbours.length; i++){
 
