@@ -145,7 +145,7 @@
                     print_r($decision);
 
                     if(array_key_exists("attack", $decision)){
-                        //$_SESSION['state']->attackCountry($decision[0], $decision[1]);
+                        $_SESSION['state']->attackCountry($decision["attack"], $decision["actualRegionId"]);
                     }
                     else if (array_key_exists("payOff", $decision)){
                         $_SESSION['state']->spendMOney($decision["payOff"]);
