@@ -47,6 +47,6 @@
             dass sich min der grundbetrag auch auf übernommener region befindet
             (spekulationszufallswert beachten)
             */
-            return ($this->value >= $enemyPayment->getValue());
+            return ($this->value >= ($enemyPayment->getValue()+2*BASIC_CAPITAL_REGION));
         }
     }
