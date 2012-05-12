@@ -14,6 +14,11 @@
             return $this->value;
         }
 
+        //Money I can use for an attack minus basis capital
+        public function getUsableValue() {
+            return $this->value - BASIC_CAPITAL_REGION;
+        }
+
         public function getCurrency() {
             return $this->currency;
         }

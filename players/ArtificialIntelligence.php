@@ -27,27 +27,37 @@
         }
 
         public function makeDecision($allEnemyRegions, $regions){
+            $possibleDecisions = array();
+
             for($i=0; $i<count($allEnemyRegions); $i++){
                 $actualRegion = $allEnemyRegions[$i];
-
-
-
+                $actualRegionId = $actualRegion->getRegionId();
 
                 //Look if Neighbour-Attack is possible
                 $neighbours = $actualRegion->getNeighbours();
-                //print_r($neighbours);
                 for($j=0; $j< count($neighbours); $j++){
                     if($regions[$neighbours[$j]]->getCountry() != $this->getCountry()){
-                        if($regions[$neighbours[$j]]->getPayment()->getValue() < $actualRegion->getPayment()->getValue()){
-                            $regionId = $regions[$neighbours[$j]]->getRegionId();
-                            echo json_encode(array("attack" => $regionId));
+                        if($regions[$neighbours[$j]]->getPayment()->getValue() < $actualRegion->getPayment()->getUsableValue()){
+                            $enemyRegionId = $regions[$neighbours[$j]]->getRegionId();
+
+                            array_push($possibleDecisions, array("attack" => $enemyRegionId, "actualRegionId" => $actualRegionId));
                         }
                         else{
-                            $regionId = $actualRegion->getRegionId();
-                            echo json_encode(array("payOff" => $regionId));
+                            array_push($possibleDecisions, array("payOff" => $actualRegionId));
                         }
                     }
                 }
             }
+
+            //chooses a random number between 0 and length-1 of array
+            $random = rand(0, count($possibleDecisions)-1);
+
+/*            echo "Possible Decisions Array";
+            print_r($possibleDecisions);
+            echo "<br/>";
+            echo "random: " . $random . "<br/>";*/
+
+            //returns a random decison of all possible decisions
+            return $possibleDecisions[$random];
         }
     }
