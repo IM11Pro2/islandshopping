@@ -172,7 +172,7 @@ $(document).ready(function(){
             if(el.data("text") == payment.activeRegion){
                 var value = payment.payment.value;
                 el.attr('text', value);
-                $('#ownCapital').text(payment.bankCapital);
+                $('#'+payment.bankName).text(payment.bankCapital);
             }
         });
     }
@@ -197,7 +197,7 @@ $(document).ready(function(){
 
             });
 
-            $('#'+regionInfo.enemyBank.bankName+'Bank').text(regionInfo.enemyBank.bankCapital);
+            $('#'+regionInfo.enemyBank.bankName).text(regionInfo.enemyBank.bankCapital);
         }
     }
 
