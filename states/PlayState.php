@@ -96,8 +96,10 @@
         
                     $country = $regions[$regionId]->getCountry();
                     $paymentValue = $regions[$regionId]->getPayment()->getValue() * $regions[$regionId]->getPayment()->getCurrencyTranslation();
-        
-                    $bankCapital = $_SESSION['listOfBanks'][0]->getCapital();
+
+                    $playerId = $regions[$regionId]->getPlayerId();
+
+                    $bankCapital = $_SESSION['listOfBanks'][$playerId]->getCapital();
         
                     echo json_encode(array("activeRegion"=> $regionId,
                                            "payment"     => array("value"    => $paymentValue,
