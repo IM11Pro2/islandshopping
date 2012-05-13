@@ -83,21 +83,22 @@
         
                     $map = $_SESSION['map'];
                     $regions = $map->getRegions();
-        
+
+                    $playerId = $regions[$regionId]->getPlayerId();
+
                     //if(trim($_GET['bankstate']) == Bank::PAY_OFF) {
-        
-                        $_SESSION['listOfBanks'][0]->payOff($regions[$regionId]->getPayment());
-        
+
+                    $_SESSION['listOfBanks'][$playerId]->payOff($regions[$regionId]->getPayment());
+
                     /*}
                    else if(trim($_GET['bankstate']) == Bank::DEPOSIT) {
-        
+
                         $_SESSION['listOfBanks'][0]->deposit($regions[$regionId]->getPayment());
                     }*/
-        
+
                     $country = $regions[$regionId]->getCountry();
                     $paymentValue = $regions[$regionId]->getPayment()->getValue() * $regions[$regionId]->getPayment()->getCurrencyTranslation();
 
-                    $playerId = $regions[$regionId]->getPlayerId();
 
                     $bankCapital = $_SESSION['listOfBanks'][$playerId]->getCapital();
         
