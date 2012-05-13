@@ -13,7 +13,7 @@
             $color = $playersArray[0]->getCountry()->getColor();
             ?>
             <?php
-            echo "<font color='".$color."'>" . $name . "</font>:  <span id=\"ownCapital\">" . $value * $translation . "</span>  " . $currency;
+            echo "<font color='".$color."'>" . $name . "</font>:  <span id=\"".$name."Bank\">" . $value * $translation . "</span>  " . $currency;
 
             ?>
         <h3>Kapital der Gegner</h3>

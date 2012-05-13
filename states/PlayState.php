@@ -68,7 +68,7 @@
                                                     "paymentValue" => $enemyPayment->getValue(),
                                                     "currencyTranslation" => $enemyPayment->getCurrencyTranslation()),
                                                     
-                                                    "enemyBank" => array("bankName" => $enemyCountryName,
+                                                    "enemyBank" => array("bankName" => $enemyCountryName."Bank",
                                                     "bankCapital" => $enemyBankCapital)
                                                 ));
 
@@ -84,12 +84,12 @@
                     $map = $_SESSION['map'];
                     $regions = $map->getRegions();
         
-                   // if(trim($_GET['bankstate']) == Bank::PAY_OFF) {
+                    //if(trim($_GET['bankstate']) == Bank::PAY_OFF) {
         
                         $_SESSION['listOfBanks'][0]->payOff($regions[$regionId]->getPayment());
         
-                   //}
-                 /*  else if(trim($_GET['bankstate']) == Bank::DEPOSIT) {
+                    /*}
+                   else if(trim($_GET['bankstate']) == Bank::DEPOSIT) {
         
                         $_SESSION['listOfBanks'][0]->deposit($regions[$regionId]->getPayment());
                     }*/
@@ -102,7 +102,8 @@
                     echo json_encode(array("activeRegion"=> $regionId,
                                            "payment"     => array("value"    => $paymentValue,
                                                                   "currency" => $country->getPayment()->getCurrency()),
-                                           "bankCapital" => $bankCapital));
+                                           "bankCapital" => $bankCapital,
+                                            "bankName" => $country->getName()."Bank"));
                 }
         
 
