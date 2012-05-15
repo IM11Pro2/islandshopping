@@ -1,7 +1,9 @@
 <?php
 require_once("../config/config.php");
 require_once("../scripts/script.php");
+
 session_start();
+$_SESSION = array();
 ?>
 <!DOCTYPE html>
 <html>
