@@ -36,6 +36,124 @@
     //Basic Capital per Region == Grundkapital
     define("BASIC_CAPITAL_REGION", 50.0);
 
+    //Defines how often an incident occurs (more is less)
+    define("FREQUENCY_OF_INCIDENT", 20);
+
+    //Messages for the incident dialogs
+    //---------- LOCAL INCIDENT -------------
+    function getIncidentMessages(){
+
+        $currencies = getCurrencies();
+
+        $countryNames = array();
+        foreach($currencies as $key){
+            array_push($countryNames, $key);
+        }
+
+        return array(
+            // 0 global
+            array(
+                //0.0 bank
+                "Bank wurde ausgeraubt",
+
+                //0.1 region
+                "Region Finanzen wurde eingebrochen"
+            ),
+            // 1 local
+            array(
+                // 1.0 country1
+                $countryNames[0] => array(
+                    // 1.0.0 positve
+                    "positve" => array(
+                        "positive message 1 for $countryNames[0]",
+                        "positive message 2 for $countryNames[0]",
+                        "positive message 3 for $countryNames[0]"
+                    ),
+
+                    // 1.0.1 negative
+                    "negative" => array(
+                        "negative message 1 for $countryNames[0]",
+                        "negative message 2 for $countryNames[0]",
+                        "negative message 3 for $countryNames[0]"
+                    )
+
+                ),
+                // 1.1 country2
+                $countryNames[1] => array(
+                    // 1.1.0 positve
+                    "positve" => array(
+                        "positive message 1 for $countryNames[1]",
+                        "positive message 2 for $countryNames[1]",
+                        "positive message 3 for $countryNames[1]"
+                    ),
+
+                    // 1.1.1 negative
+                    "negative" => array(
+                        "negative message 1 for $countryNames[1]",
+                        "negative message 2 for $countryNames[1]",
+                        "negative message 3 for $countryNames[1]"
+                    )
+
+                ),
+                // 1.2 country3
+                $countryNames[2] => array(
+                    // 1.2.0 positve
+                    "positve" => array(
+                        "positive message 1 for $countryNames[2]",
+                        "positive message 2 for $countryNames[2]",
+                        "positive message 3 for $countryNames[2]"
+                    ),
+
+                    // 1.2.1 negative
+                    "negative" => array(
+                        "negative message 1 for $countryNames[2]",
+                        "negative message 2 for $countryNames[2]",
+                        "negative message 3 for $countryNames[2]"
+                    )
+
+                ),
+                // 1.3 country4
+                $countryNames[3] => array(
+                    // 1.0.0 positve
+                    "positve" => array(
+                        "positive message 1 for $countryNames[3]",
+                        "positive message 2 for $countryNames[3]",
+                        "positive message 3 for $countryNames[3]"
+                    ),
+
+                    // 1.0.1 negative
+                    "negative" => array(
+                        "negative message 1 for $countryNames[3]",
+                        "negative message 2 for $countryNames[3]",
+                        "negative message 3 for $countryNames[3]"
+                    )
+
+                ),
+                // 1.4 country5
+                $countryNames[4] => array(
+                    // 1.0.0 positve
+                    "positve" => array(
+                        "positive message 1 for $countryNames[4]",
+                        "positive message 2 for $countryNames[4]",
+                        "positive message 3 for $countryNames[4]"
+                    ),
+
+                    // 1.0.1 negative
+                    "negative" => array(
+                        "negative message 1 for $countryNames[4]",
+                        "negative message 2 for $countryNames[4]",
+                        "negative message 3 for $countryNames[4]"
+                    )
+
+                )
+
+            )
+        );
+
+
+    }
+
+
     //Autoload
     function __autoload($classname) {
         static $classes = array('AjaxResponse'                => '../ajax/AjaxResponse.php',

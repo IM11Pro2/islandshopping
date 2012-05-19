@@ -1,13 +1,17 @@
 <?php
     require_once("../config/config.php");
 
-    class PlayState implements IApplicationState {
+    class PlayState implements IApplicationState, IEventListener {
 
         const ApplicationStateType = "PlayState";
 
         private $listOfBanks;
+        private $incidentGenerator;
 
         function init() {
+            $this->incidentGenerator = new IncidentGenerator();
+            $_SESSION['incidentGenerator'] = $this->incidentGenerator;
+
             $playerList = $_SESSION['activePlayers'];
             $this->listOfBanks = array();
             for($i = 0; $i < count($playerList); $i++){
@@ -130,7 +134,11 @@
                            $regions = $map->getRegions();
        
                            $neighbours = $regions[$regionId]->getNeighbours();
-       
+
+                           if(!$_SESSION['incidentGenerator']->isIncidentActive()){
+                               $_SESSION['incidentGenerator']->generateIncident();
+                           }
+
                            echo json_encode(array("activeRegion"=> $regionId,
                                                   "neighbours"  => $neighbours));
                        }
@@ -171,7 +179,20 @@
                        }
                    }
                }
-           }
+
+        function handleEvent(IEvent $event)
+        {
+            if($event->getEventType() == GlobalBankEvent::TYPE){
+
+                $event->execute();
+
+            }else if($event->getEventType() == GlobalRegionEvent::TYPE){
+
+                $event->execute();
+
+            }
+        }
+    }
        
        
        
