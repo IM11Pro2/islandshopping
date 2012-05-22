@@ -7,6 +7,7 @@
 
         private $listOfBanks;
         private $incidentGenerator;
+        private $response;
 
         function init() {
             $this->incidentGenerator = new IncidentGenerator();
@@ -61,7 +62,7 @@
 
                         $enemyBankCapital = $_SESSION['listOfBanks'][$enemyPlayerId]->getCapital();
 
-                        echo json_encode( array("activeRegion" => array("hasWon"=> $hasPlayerWon,
+                        $this->handleResponse(array("activeRegion" => array("hasWon"=> $hasPlayerWon,
                                                                             "paymentValue" => $activePayment->getValue(),
                                                                             "currencyTranslation" => $activePayment->getCurrencyTranslation(),
                                                                             "regionId" => $regionId),
@@ -78,7 +79,8 @@
 
                     }
                     else{
-                        echo json_encode( array("activeRegion" => array("hasWon"=> $hasPlayerWon)));
+                        //echo json_encode( array("activeRegion" => array("hasWon"=> $hasPlayerWon)));
+                        $this->handleResponse(array("activeRegion" => array("hasWon"=> $hasPlayerWon)));
                     }
                 }
         
@@ -135,16 +137,12 @@
        
                            $neighbours = $regions[$regionId]->getNeighbours();
 
-                           if(!$_SESSION['incidentGenerator']->isIncidentActive()){
-                               $_SESSION['incidentGenerator']->generateIncident();
-                           }
-
                            echo json_encode(array("activeRegion"=> $regionId,
                                                   "neighbours"  => $neighbours));
                        }
        
                        if(isset($_GET['getCountry'])) {
-                           $_SESSION['state']->spendMOney(trim($_GET['getCountry']));
+                           $_SESSION['state']->spendMoney(trim($_GET['getCountry']));
                        }
        
                        if(isset($_GET['region']) && isset($_GET['enemy'])){
@@ -167,7 +165,11 @@
                            }
        
                            //print_r($allEnemyRegions);
-       
+
+                           //if(!$_SESSION['incidentGenerator']->isIncidentActive()){
+                             //  $_SESSION['incidentGenerator']->generateIncident();
+                           //}
+
                            $decision = $enemy->makeDecision($allEnemyRegions, $regions);
        
                            if(array_key_exists("attack", $decision)){
@@ -184,13 +186,24 @@
         {
             if($event->getEventType() == GlobalBankEvent::TYPE){
 
-                $event->execute();
+                $this->response = $event->execute();
 
             }else if($event->getEventType() == GlobalRegionEvent::TYPE){
 
-                $event->execute();
+                $this->response = $event->execute();
 
             }
+        }
+
+        private function handleResponse($json){
+
+
+           /* if(isset($this->response)){
+                array_push($json, $this->response);
+            }
+            unset($this->response);
+            */
+            echo json_encode($json);
         }
     }
        

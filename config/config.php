@@ -177,6 +177,11 @@
                                 'UpdateViewEvent'             => '../events/UpdateViewEvent.php',
                                 'ChangeViewEvent'             => '../events/ChangeViewEvent.php',
                                 'ChangeStateEvent'            => '../events/ChangeStateEvent.php',
+                                'GlobalBankEvent'             => '../events/GlobalBankEvent.php',
+                                'GlobalRegionEvent'           => '../events/GlobalRegionEvent.php',
+                                'IncidentEvent'               => '../events/IncidentEvent.php',
+
+                                'IncidentGenerator'           => '../incident/IncidentGenerator.php',
 
                                 'Map'                         => '../map/Map.php',
                                 'Region'                      => '../map/Region.php',

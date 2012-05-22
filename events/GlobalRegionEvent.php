@@ -1,4 +1,5 @@
 <?php
+require_once("../config/config.php");
 
 class GlobalRegionEvent extends IncidentEvent
 {
@@ -21,7 +22,11 @@ class GlobalRegionEvent extends IncidentEvent
 
     function execute()
     {
-        // $this->region;
-        // $this->message;
+        $payment = $this->region->getPayment();
+        $payment->setValue(BASIC_CAPITAL_REGION);
+        return array("incident" => array("message" => $this->message, "region" => array(
+                                                                            "regionId" => $this->region->getRegionId(),
+                                                                            "paymentValue" => $payment->getValue(),
+                                                                            "currency" => $payment->getCurrency())));
     }
 }
