@@ -114,7 +114,9 @@ $(document).ready(function(){
         event.stopPropagation();
         if(event.target == paper.canvas || event.target.nodeName == "INPUT"){
             paper.forEach(function(el){
-                el.attr('stroke-width',1).attr('fill-opacity', 1);
+                if(el.type == "circle"){
+                    el.attr('stroke', "#000000").attr('stroke-width',1).attr('fill-opacity', 1);
+                }
             });
 
             activeRegion = false;
@@ -199,7 +201,32 @@ $(document).ready(function(){
 
             $('#'+regionInfo.enemyBank.bankName).text(regionInfo.enemyBank.bankCapital);
         }
-    }
+    };
+
+    function renderIncidentInfo(incident){
+        if(incident.type == "<?php echo GlobalRegionEvent::TYPE ?>"){
+
+            paper.forEach(function(el){
+
+                if(el.data('region') == incident.region.regionId){
+                    el.attr('stroke', "#FF0000");
+                }
+
+                if(el.data('text') == incident.region.regionId){
+                    el.attr('text', incident.region.paymentValue * incident.region.currencyTranslation);
+                }
+            });
+            alert(incident.message + " region: " + incident.region.regionId);
+        }
+        else if(incident.type == "<?php echo GlobalBankEvent::TYPE ?>"){
+
+            $('#'+incident.bankName).text(incident.bankCapital);
+
+            alert(incident.message + " bank: " + incident.bankName);
+
+        }
+    };
+
 
     $('.ajaxSuccess').ajaxSuccess(function(e, xhr, settings) {
         if(settings.url.indexOf("../states/MenuState.php")!= -1){
@@ -237,10 +264,16 @@ $(document).ready(function(){
             var payment = $.parseJSON(xhr.responseText);
             addBasicCapitalToRegion(payment);
         }
-
         if((settings.url.indexOf("region")!= -1 && settings.url.indexOf("enemy")!= -1 )|| settings.url.indexOf("nextPlayer")!= -1){
             var regionInfo = $.parseJSON(xhr.responseText);
             updateMap(regionInfo);
+        }
+        if(settings.url.indexOf("nextPlayer")!= -1){ // recognise incident
+
+            var incident =  $.parseJSON(xhr.responseText);
+            if(incident.incident){
+                 renderIncidentInfo(incident.incident);
+            }
         }
 
     });

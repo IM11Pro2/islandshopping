@@ -7,7 +7,7 @@
 
         private $listOfBanks;
         private $incidentGenerator;
-        private $response;
+        private $incident;
 
         function init() {
             $this->incidentGenerator = new IncidentGenerator();
@@ -23,6 +23,8 @@
 
             $_SESSION['listOfBanks'] = $this->listOfBanks;
             $_SESSION['state'] = $this;
+            GameEventManager::getInstance()->addEventListener($this, GlobalBankEvent::TYPE);
+            GameEventManager::getInstance()->addEventListener($this, GlobalRegionEvent::TYPE);
         }
 
         function endState() {
@@ -108,7 +110,7 @@
 
                     $bankCapital = $_SESSION['listOfBanks'][$playerId]->getCapital();
         
-                    echo json_encode(array("activeRegion"=> $regionId,
+                    $this->handleResponse(array("activeRegion"=> $regionId,
                                            "payment"     => array("value"    => $paymentValue,
                                                                   "currency" => $country->getPayment()->getCurrency()),
                                            "bankCapital" => $bankCapital,
@@ -166,9 +168,9 @@
        
                            //print_r($allEnemyRegions);
 
-                           //if(!$_SESSION['incidentGenerator']->isIncidentActive()){
-                             //  $_SESSION['incidentGenerator']->generateIncident();
-                           //}
+                           if(!$_SESSION['incidentGenerator']->isIncidentActive()){
+                               $_SESSION['incidentGenerator']->generateIncident();
+                           }
 
                            $decision = $enemy->makeDecision($allEnemyRegions, $regions);
        
@@ -186,11 +188,11 @@
         {
             if($event->getEventType() == GlobalBankEvent::TYPE){
 
-                $this->response = $event->execute();
+                $this->incident = $event->execute();
 
             }else if($event->getEventType() == GlobalRegionEvent::TYPE){
 
-                $this->response = $event->execute();
+                $this->incident = $event->execute();
 
             }
         }
@@ -198,11 +200,11 @@
         private function handleResponse($json){
 
 
-           /* if(isset($this->response)){
-                array_push($json, $this->response);
-            }
-            unset($this->response);
-            */
+           if(isset($this->incident)){
+               $json['incident'] = $this->incident;
+           }
+           unset($this->incident);
+
             echo json_encode($json);
         }
     }

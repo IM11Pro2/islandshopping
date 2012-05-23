@@ -36,33 +36,36 @@
     //Basic Capital per Region == Grundkapital
     define("BASIC_CAPITAL_REGION", 50.0);
 
-    //Defines how often an incident occurs (more is less)
-    define("FREQUENCY_OF_INCIDENT", 20);
+    //Defines the interval after how many moves an incident occurs
+    define("MIN_MOVES_FOR_INCIDENT", 0);
+    define("MAX_MOVES_FOR_INCIDENT", 10);
+
+    define("BankRobbery", 0.5); // p/100 of lost bankcapital
 
     //Messages for the incident dialogs
     //---------- LOCAL INCIDENT -------------
     function getIncidentMessages(){
 
-        $currencies = getCurrencies();
+        $currencies = getCountriesArray();
 
         $countryNames = array();
-        foreach($currencies as $key){
+        foreach($currencies as $key => $value){
             array_push($countryNames, $key);
         }
 
-        return array(
+        $messages = array(
             // 0 global
             array(
                 //0.0 bank
                 "Bank wurde ausgeraubt",
 
                 //0.1 region
-                "Region Finanzen wurde eingebrochen"
+                "Region: Finanzmarkt ist eingebrochen :("
             ),
             // 1 local
             array(
                 // 1.0 country1
-                $countryNames[0] => array(
+               $countryNames[0] => array(
                     // 1.0.0 positve
                     "positve" => array(
                         "positive message 1 for $countryNames[0]",
@@ -79,7 +82,7 @@
 
                 ),
                 // 1.1 country2
-                $countryNames[1] => array(
+               $countryNames[1] => array(
                     // 1.1.0 positve
                     "positve" => array(
                         "positive message 1 for $countryNames[1]",
@@ -149,7 +152,7 @@
 
             )
         );
-
+        return $messages;
 
     }
 

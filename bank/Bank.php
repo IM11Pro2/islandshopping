@@ -14,7 +14,10 @@
         private $bankStateList;
         private $type;
 
+        private $country;
+
         function __construct(ICountry $country, $initState) {
+            $this->country = $country;
 
             $this->capital = $country->getPayment();
             $this->capital->setValue(START_CAPITAL_COUNTRY);
@@ -67,8 +70,16 @@
             return $this->capital->getValue();
         }
 
+        public function setPlainCapital($value){
+            $this->capital->setValue($value);
+        }
+
         public function getCapital(){
             return $this->capital->getValue() * $this->capital->getCurrencyTranslation();
+        }
+
+        public function getCountry(){
+            return $this->country;
         }
     }
 

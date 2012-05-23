@@ -27,7 +27,9 @@ class IncidentGenerator
     public function generateIncident(){
 
         // random local or global incident
-        $level = $this->incidentLevel[mt_rand(0, (count($this->incidentLevel) -1) )];
+        //$level = $this->incidentLevel[mt_rand(0, (count($this->incidentLevel) -1) )];
+
+        $level = 0;
 
         $messages = getIncidentMessages(); // from config
 
@@ -63,7 +65,7 @@ class IncidentGenerator
 
 
         // calculates when the incident occurs, relative to the acctual move
-        $this->numberOfMoves = mt_rand(1, FREQUENCY_OF_INCIDENT);
+        $this->numberOfMoves = mt_rand(MIN_MOVES_FOR_INCIDENT, MAX_MOVES_FOR_INCIDENT);
         $this->isActive = true;
     }
 

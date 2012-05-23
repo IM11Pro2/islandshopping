@@ -1,5 +1,5 @@
 <?php
-
+require_once("../config/config.php");
 class GlobalBankEvent extends IncidentEvent
 {
 
@@ -21,7 +21,9 @@ class GlobalBankEvent extends IncidentEvent
 
     function execute()
     {
-        // $this->bank;
-        // $this->message;
+        $this->bank->setPlainCapital($this->bank->getPlainCapital()*BankRobbery);
+        return array("message" => $this->message, "bankCapital" => $this->bank->getCapital(),
+                                                    "bankName" => $this->bank->getCountry()->getName()."Bank",
+                            "type" => self::TYPE);
     }
 }
