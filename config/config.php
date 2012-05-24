@@ -38,10 +38,11 @@
 
     //Defines the interval after how many moves an incident occurs
     define("MIN_MOVES_FOR_INCIDENT", 0);
-    define("MAX_MOVES_FOR_INCIDENT", 10);
+    define("MAX_MOVES_FOR_INCIDENT", 1);
 
     define("BankRobbery", 0.5); // p/100 of lost bankcapital
 
+    define("INCIDENT_CAPITAL", 100);
     //Messages for the incident dialogs
     //---------- LOCAL INCIDENT -------------
     function getIncidentMessages(){
@@ -67,85 +68,85 @@
                 // 1.0 country1
                $countryNames[0] => array(
                     // 1.0.0 positve
-                    "positve" => array(
-                        "positive message 1 for $countryNames[0]",
-                        "positive message 2 for $countryNames[0]",
-                        "positive message 3 for $countryNames[0]"
+                    "positive" => array(
+                        "Die ".$countryNames[0]." hat die Steuern für Bier erhöht und erzielt damit Mehreinnahmen von:",
+                        "Durch Kürzungen im Bildungssystem spart die ".$countryNames[0].":",
+                        "Die ".$countryNames[0]."-Mitgliedsländer haben einen höheren Beitrag zu zahlen, dadurch steigt der Gewinn um:"
                     ),
 
                     // 1.0.1 negative
                     "negative" => array(
-                        "negative message 1 for $countryNames[0]",
-                        "negative message 2 for $countryNames[0]",
-                        "negative message 3 for $countryNames[0]"
+                        "Der Verwaltungsaufwand in der ".$countryNames[0]." hat das Budget überschritten. Die Kosten belaufen sich bei:",
+                        "Der Fehler eines Dolmetschers kostet die ".$countryNames[0].":",
+                        "Die Spesen mehrerer ".$countryNames[0]."-Abgeordneten auf dem Ballermann betragen:"
                     )
 
                 ),
                 // 1.1 country2
                $countryNames[1] => array(
                     // 1.1.0 positve
-                    "positve" => array(
-                        "positive message 1 for $countryNames[1]",
-                        "positive message 2 for $countryNames[1]",
-                        "positive message 3 for $countryNames[1]"
+                    "positive" => array(
+                        "Die Einzahlung von Schmiergeldern beschert der ".$countryNames[1]." Zinsen im Wert von",
+                        "Das internationale Käsefestival in der ".$countryNames[1]." lockt viele Besucher an. Der Gewinn beträgt:",
+                        "Die ".$countryNames[1]." mustert Teile der Lawinenhund-Staffel aus und erspart sich Kosten im Wert von:"
                     ),
 
                     // 1.1.1 negative
                     "negative" => array(
-                        "negative message 1 for $countryNames[1]",
-                        "negative message 2 for $countryNames[1]",
-                        "negative message 3 for $countryNames[1]"
+                        "In der ".$countryNames[1]." hat die Schließung einer Schokoladenfabrik zum Streik der ganzen Bevölkerung geführt. Die Kosten belaufen sich bei:",
+                        "In der ".$countryNames[1]." kostet das Aufschütten der Alpen für die Vergrößerung von Skigebieten:",
+                        "Die verzögerte Entwicklung eines Hightech-Messers kostet die ".$countryNames[1].":"
                     )
 
                 ),
                 // 1.2 country3
                 $countryNames[2] => array(
                     // 1.2.0 positve
-                    "positve" => array(
-                        "positive message 1 for $countryNames[2]",
-                        "positive message 2 for $countryNames[2]",
-                        "positive message 3 for $countryNames[2]"
+                    "positive" => array(
+                        "Der Verkauf von Burkinis in der ".$countryNames[2]." erwirtschaftet ein Plus von:",
+                        "Zahlreiche Maturaklassen feiern in der ".$countryNames[2]." und bescheren einen Gewinn von:",
+                        "Eine neue Kebapstand-Filiale in Wien bringt der".$countryNames[2]." ein Umsatzplus von:"
                     ),
 
                     // 1.2.1 negative
                     "negative" => array(
-                        "negative message 1 for $countryNames[2]",
-                        "negative message 2 for $countryNames[2]",
-                        "negative message 3 for $countryNames[2]"
+                        "Die ".$countryNames[2]." investiert in die Bestrebungen der EU beizutreten - Verursachte Kosten:",
+                        "Schmerzensgeldzahlungen wegen Lebensmittelvergiftungen kosten die ".$countryNames[2].":",
+                        "Die ".$countryNames[2]." baut die Züchtung von Seidenraupen aus und rechnet mit Mehrkosten von:"
                     )
 
                 ),
                 // 1.3 country4
                 $countryNames[3] => array(
                     // 1.0.0 positve
-                    "positve" => array(
-                        "positive message 1 for $countryNames[3]",
-                        "positive message 2 for $countryNames[3]",
-                        "positive message 3 for $countryNames[3]"
+                    "positive" => array(
+                        "Ein neuer Ölfund bringt ".$countryNames[3]." Einnahmen von:",
+                        $countryNames[3]." verkauft seine größte Sandburg und erzielt einen Preis von:",
+                        "Mekka-Pilger bringen ".$countryNames[3]." Einnahmen von:"
                     ),
 
                     // 1.0.1 negative
                     "negative" => array(
-                        "negative message 1 for $countryNames[3]",
-                        "negative message 2 for $countryNames[3]",
-                        "negative message 3 for $countryNames[3]"
+                        "Die Veranstaltung eines Beachvolleyball-Turniers kostet ".$countryNames[3].":",
+                        "Ein neues Hochhaus wird errichtet und übersteigt das Budget. ".$countryNames[3]." zahlt die Mehrkosten von:",
+                        "Eine ausgelassene Party der reichsten Scheichs von ".$countryNames[3]." kostet:"
                     )
 
                 ),
                 // 1.4 country5
                 $countryNames[4] => array(
                     // 1.0.0 positve
-                    "positve" => array(
-                        "positive message 1 for $countryNames[4]",
-                        "positive message 2 for $countryNames[4]",
-                        "positive message 3 for $countryNames[4]"
+                    "positive" => array(
+                        "Die Werbeinnahmen der Superbowl bescheren der ".$countryNames[4]." einen Gewinn von:",
+                        "Die Casinos in Las Vegas/".$countryNames[4]." erwirtschaften ein Plus von:",
+                        "Nach dem Einführen der Fettsteuer in den ".$countryNames[4]." steigen die Mehreinnahmen um:"
                     ),
 
                     // 1.0.1 negative
                     "negative" => array(
-                        "negative message 1 for $countryNames[4]",
-                        "negative message 2 for $countryNames[4]",
-                        "negative message 3 for $countryNames[4]"
+                        "Die ".$countryNames[4]." verschärfen die Grenzkontrollen nach Mexico. Kostenpunkt:",
+                        "Die Finazierung von NASA-Projekten kostet die ". $countryNames[4].":",
+                        "Das neuerliche Aufrüsten von Atomwaffen belastet das Budget der ".$countryNames[4]." um:"
                     )
 
                 )
@@ -182,6 +183,7 @@
                                 'ChangeStateEvent'            => '../events/ChangeStateEvent.php',
                                 'GlobalBankEvent'             => '../events/GlobalBankEvent.php',
                                 'GlobalRegionEvent'           => '../events/GlobalRegionEvent.php',
+                                'LocalIncidentEvent'           => '../events/LocalIncidentEvent.php',
                                 'IncidentEvent'               => '../events/IncidentEvent.php',
 
                                 'IncidentGenerator'           => '../incident/IncidentGenerator.php',

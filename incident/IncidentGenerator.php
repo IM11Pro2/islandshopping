@@ -13,39 +13,39 @@ class IncidentGenerator
     private $numberOfMoves;
 
     private $incidentLevel;
-    private $incidentType;
 
     private $incidentEvent;
+
+    private $boolList;
 
     public function __construct(){
         $this->incidentLevel = array(self::GLOBAL_INCIDENT, self::LOCAL_INCIDENT);
         $this->isActive = false;
         $this->numberOfMoves = PHP_INT_MAX;
+        $this->boolList = array(true,false);
     }
 
 
     public function generateIncident(){
 
         // random local or global incident
-        //$level = $this->incidentLevel[mt_rand(0, (count($this->incidentLevel) -1) )];
-
-        $level = 0;
+        $level = $this->incidentLevel[mt_rand(0, (count($this->incidentLevel) -1) )];
 
         $messages = getIncidentMessages(); // from config
 
         if(self::GLOBAL_INCIDENT == $level){
-            $this->incidentType = mt_rand(0,1);
+            $incidentType = mt_rand(0,1);
 
-            $message = $messages[self::GLOBAL_INCIDENT][$this->incidentType ];
+            $message = $messages[self::GLOBAL_INCIDENT][$incidentType ];
 
-            if(self::BANK_INCIDENT == $this->incidentType){
+            if(self::BANK_INCIDENT == $incidentType){
 
                 $bank = $_SESSION['listOfBanks'][mt_rand(0, (count($_SESSION['listOfBanks']) -1))];
 
                 $this->incidentEvent = new GlobalBankEvent($message, $bank);
 
             }
-            else if(self::REGION_INCIDENT == $this->incidentType){
+            else if(self::REGION_INCIDENT == $incidentType){
 
                 $regionList = $_SESSION['map']->getRegions();
 
@@ -57,9 +57,19 @@ class IncidentGenerator
 
         }
         else if(self::LOCAL_INCIDENT == $level){
-            //choose country
-            //$_SESSION['activePlayers'];
-            //choose if positive or negative
+
+            $bank = $_SESSION['listOfBanks'][mt_rand(0, (count($_SESSION['listOfBanks']) -1))];
+
+            $isPositive = $this->boolList[mt_rand(0, (count($this->boolList) -1))];
+
+            $message = $messages[self::LOCAL_INCIDENT][$bank->getCountry()->getName()];
+
+            $message = $message[$isPositive ? "positive" : "negative"];
+
+            $message = $message[mt_rand(0,2)];
+
+            $this->incidentEvent = new LocalIncidentEvent($message, $bank, $isPositive);
+
         }
 
 

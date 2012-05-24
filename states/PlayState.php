@@ -25,6 +25,7 @@
             $_SESSION['state'] = $this;
             GameEventManager::getInstance()->addEventListener($this, GlobalBankEvent::TYPE);
             GameEventManager::getInstance()->addEventListener($this, GlobalRegionEvent::TYPE);
+            GameEventManager::getInstance()->addEventListener($this, LocalIncidentEvent::TYPE);
         }
 
         function endState() {
@@ -186,15 +187,15 @@
 
         function handleEvent(IEvent $event)
         {
-            if($event->getEventType() == GlobalBankEvent::TYPE){
-
-                $this->incident = $event->execute();
-
-            }else if($event->getEventType() == GlobalRegionEvent::TYPE){
+            if($event->getEventType() == GlobalBankEvent::TYPE ||
+                $event->getEventType() == GlobalRegionEvent::TYPE ||
+                $event->getEventType() == LocalIncidentEvent::TYPE
+            ){
 
                 $this->incident = $event->execute();
 
             }
+
         }
 
         private function handleResponse($json){

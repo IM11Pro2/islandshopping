@@ -223,7 +223,12 @@ $(document).ready(function(){
             $('#'+incident.bankName).text(incident.bankCapital);
 
             alert(incident.message + " bank: " + incident.bankName);
+        }
+        else if(incident.type == "<?php echo LocalIncidentEvent::TYPE ?>"){
 
+            $('#'+incident.bankName).text(incident.bankCapital);
+
+            alert(incident.message + " " + incident.value + " "+ incident.currency);
         }
     };
 
