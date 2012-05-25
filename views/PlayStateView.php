@@ -26,7 +26,7 @@
 
             </div><!--end .mapView-->
 
-            <input type="button" name="PlaySubmit" value="NextPlayer">
+            <input type="button" name="NextPlayerSubmit" value="NextPlayer">
         </div> <!-- end .left -->
         <div class="right">
             <h2>Bank</h2>

@@ -3,11 +3,9 @@ require_once("../config/config.php");
 function printJavaScript(){
 
 ?>
-
 <script type="text/javascript">
-$(document).ready(function(){
 
-    function sendAjaxRequest(url, data, getAsJSON){
+function sendAjaxRequest(url, data, getAsJSON){
         var type;
 
         if(getAsJSON){
@@ -22,6 +20,15 @@ $(document).ready(function(){
             dataType: type
         });
     }
+
+function sendAIRequest() {
+    sendAjaxRequest("../states/PlayState.php", {handle: "PlayState", nextPlayer: "nextPlayer", <?php  echo session_name().': '.'"'.session_id().'"'; ?>}, false);
+}
+
+
+$(document).ready(function(){
+
+
 
     $('input:checkbox[name="enemyCountries[]"]').click(function(event){
         if($('input:checked').length > 0){
@@ -56,10 +63,9 @@ $(document).ready(function(){
         sendAjaxRequest("../states/MapState.php", {handle: "MapState", randomizeMap: "randomizeMap", <?php  echo session_name().': '.'"'.session_id().'"'; ?>}, false);
     });
 
-    $('body').on('click',':button[name="PlaySubmit"]',function (event) {
-        sendAjaxRequest("../states/PlayState.php", {handle: "PlayState", nextPlayer: "nextPlayer", <?php  echo session_name().': '.'"'.session_id().'"'; ?>}, false);
+    $('body').on('click',':button[name="NextPlayerSubmit"]',function (event) {
+        sendAIRequest();
     });
-
 
     function activeElementHandler(){
 
@@ -204,7 +210,7 @@ $(document).ready(function(){
     }
     
     function switchToNextPlayer(nextPlayer) {
-            alert("nextPlayerId: " + nextPlayer.nextPlayerId);
+            //alert("nextPlayerId: " + nextPlayer.nextPlayerId);
     }
     
     function renderIncidentInfo(incident){
@@ -281,17 +287,17 @@ $(document).ready(function(){
 
         if(settings.url.indexOf("nextPlayer")!= -1){
             if($.parseJSON(xhr.responseText).attackCountry){
-                alert("AI attacks")
+                message_box.show_message('KI: ', 'Attacked', true);
                 var regionInfo = $.parseJSON(xhr.responseText);
                 updateMap(regionInfo);
             }
             else if($.parseJSON(xhr.responseText).spendMoney){
-                alert("AI spends money")
+                message_box.show_message('KI: ', 'Spent Money', true);
                 var payment = $.parseJSON(xhr.responseText);
                 addBasicCapitalToRegion(payment);
             }
             else if($.parseJSON(xhr.responseText).nextPlayer){
-                alert("AI switches Player")
+                message_box.show_message('KI: ', 'Swiched Player', false);
                 var nextPlayer = $.parseJSON(xhr.responseText);
                 switchToNextPlayer(nextPlayer);
             }
@@ -326,10 +332,6 @@ $(document).ready(function(){
         }
         return false;
     }
-
-
-
-
 });
 
 function disableEnemyCountry($playerCountry){
@@ -344,6 +346,46 @@ function disableEnemyCountry($playerCountry){
 function jsonpcallback(data) {
     alert(data["message"]);
 }
+
+function sendNewAIRequest(){
+    message_box.close_message();
+    sendAIRequest();
+}
+
+var message_box = function() {
+	var button_request = '<input type="button" onclick="sendNewAIRequest();" value="Ok" />';
+    var button_close = '<input type="button" onclick="message_box.close_message();" value="Ok" />';
+	return {
+		show_message: function(title, body, request) {
+
+            //if request needed --> button sends request, else only close window
+            var button = request ? button_request : button_close;
+
+			if(jQuery('#message_box').html() === null) {
+				var message = '<div id="message_box"><h1>' + title + '</h1>' + body + '<br/>' + button + '</div>';
+				jQuery(document.body).append( message );
+				jQuery(document.body).append( '<div id="darkbg"></div>' );
+				jQuery('#darkbg').show();
+				jQuery('#darkbg').css('height', jQuery(document).height());
+
+				jQuery('#message_box').css('top', 150);
+				jQuery('#message_box').show('slow');
+			} else {
+				var message = '<h1>' + title + '</h1>' + body + '<br/>' + button;
+				jQuery('#darkbg').show();
+				jQuery('#darkbg').css('height', jQuery(document).height());
+
+				jQuery('#message_box').css('top', 150);
+				jQuery('#message_box').show('slow');
+				jQuery('#message_box').html( message );
+			}
+		},
+		close_message: function() {
+			jQuery('#message_box').hide('fast');
+			jQuery('#darkbg').hide();
+		}
+	}
+}();
 
 </script>
 <?php
