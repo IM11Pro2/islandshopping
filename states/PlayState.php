@@ -62,7 +62,10 @@
 
                         $enemyBankCapital = $_SESSION['listOfBanks'][$enemyPlayerId]->getCapital();
 
-                        $this->handleResponse(array("activeRegion" => array("hasWon"=> $hasPlayerWon,
+                        $this->handleResponse(array("attackCountry" => true,
+                            "spendMoney" => false,
+                            "nextPlayer" => false,
+                            "activeRegion" => array("hasWon"=> $hasPlayerWon,
                                                                             "paymentValue" => $activePayment->getValue(),
                                                                             "currencyTranslation" => $activePayment->getCurrencyTranslation(),
                                                                             "regionId" => $regionId),
@@ -108,12 +111,27 @@
 
                     $bankCapital = $_SESSION['listOfBanks'][$playerId]->getCapital();
         
-                    echo json_encode(array("activeRegion"=> $regionId,
+                    echo json_encode(array("attackCountry" => false,
+                        "spendMoney" => true,
+                        "nextPlayer" => false,
+                        "activeRegion"=> $regionId,
                                            "payment"     => array("value"    => $paymentValue,
                                                                   "currency" => $country->getPayment()->getCurrency()),
                                            "bankCapital" => $bankCapital,
                                             "bankName" => $country->getName()."Bank"));
                 }
+
+        function nextPlayer() {
+            header('Content-type: application/json');
+
+            // TODO calculate next PlayerId
+            $playerId = "0";
+
+            echo json_encode(array("attackCountry" => false,
+                                        "spendMoney" => false,
+                                        "nextPlayer" => true,
+                "nextPlayerId" => $playerId));
+        }
         
 
         public static function ajaxRequest() {
@@ -177,6 +195,9 @@
                            }
                            else if (array_key_exists("payOff", $decision)){
                                $_SESSION['state']->spendMoney($decision["payOff"]);
+                           }
+                           else if (array_key_exists("nextPlayer", $decision)){
+                               $_SESSION['state']->nextPlayer();
                            }
                        }
                    }

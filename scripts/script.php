@@ -201,6 +201,10 @@ $(document).ready(function(){
         }
     }
 
+    function switchToNextPlayer(nextPlayer) {
+        alert("nextPlayerId: " + nextPlayer.nextPlayerId);
+    }
+
     $('.ajaxSuccess').ajaxSuccess(function(e, xhr, settings) {
         if(settings.url.indexOf("../states/MenuState.php")!= -1){
             if(settings.url.indexOf("playercountry")!= -1){
@@ -233,14 +237,33 @@ $(document).ready(function(){
             var regions = $.parseJSON(xhr.responseText);
             highlightNeighbourRegions(regions);
         }
-        if(settings.url.indexOf("getCountry")!= -1 || settings.url.indexOf("nextPlayer")!= -1){
+        if(settings.url.indexOf("getCountry")!= -1 ){ // || settings.url.indexOf("nextPlayer")!= -1
             var payment = $.parseJSON(xhr.responseText);
             addBasicCapitalToRegion(payment);
         }
 
-        if((settings.url.indexOf("region")!= -1 && settings.url.indexOf("enemy")!= -1 )|| settings.url.indexOf("nextPlayer")!= -1){
+        if((settings.url.indexOf("region")!= -1 && settings.url.indexOf("enemy")!= -1 )){ //|| settings.url.indexOf("nextPlayer")!= -1
             var regionInfo = $.parseJSON(xhr.responseText);
             updateMap(regionInfo);
+        }
+
+        if(settings.url.indexOf("nextPlayer")!= -1){
+            if($.parseJSON(xhr.responseText).attackCountry){
+                alert("AI attacks")
+                var regionInfo = $.parseJSON(xhr.responseText);
+                updateMap(regionInfo);
+            }
+            else if($.parseJSON(xhr.responseText).spendMoney){
+                alert("AI spends money")
+                var payment = $.parseJSON(xhr.responseText);
+                addBasicCapitalToRegion(payment);
+            }
+            else if($.parseJSON(xhr.responseText).nextPlayer){
+                alert("AI switches Player")
+                var nextPlayer = $.parseJSON(xhr.responseText);
+                switchToNextPlayer(nextPlayer);
+            }
+
         }
 
     });
