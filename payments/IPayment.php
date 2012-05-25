@@ -16,5 +16,5 @@
 
         function setCurrencyTranslation($countryName);
 
-        function isBuyable(IPayment $otherPayment);
+        function isBuyable(IPayment $otherPayment, $venture);
     }

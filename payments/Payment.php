@@ -47,11 +47,11 @@
             $this->currencyTranslation = $this->countryCurrencies[$countryName][1];
         }
 
-        public function isBuyable(IPayment $enemyPayment) {
+        public function isBuyable(IPayment $enemyPayment, $venture) {
             /* grundwert noch zu subtrahieren und gewährleisten,
             dass sich min der grundbetrag auch auf übernommener region befindet
             (spekulationszufallswert beachten)
             */
-            return ($this->value >= ($enemyPayment->getValue()+2*BASIC_CAPITAL_REGION));
+            return (($this->value * $venture)>= ($enemyPayment->getValue()+2*BASIC_CAPITAL_REGION));
         }
     }

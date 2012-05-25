@@ -201,6 +201,13 @@ $(document).ready(function(){
 
             $('#'+regionInfo.enemyBank.bankName).text(regionInfo.enemyBank.bankCapital);
         }
+        else{
+            paper.forEach(function(el){
+                if(el.data('text') == regionInfo.activeRegion.regionId){
+                    el.attr('text', regionInfo.activeRegion.paymentValue * regionInfo.activeRegion.currencyTranslation)
+                }
+            });
+        }
     }
     
     function switchToNextPlayer(nextPlayer) {
@@ -295,11 +302,11 @@ $(document).ready(function(){
                 var nextPlayer = $.parseJSON(xhr.responseText);
                 switchToNextPlayer(nextPlayer);
             }
-            /*
+
             var incident =  $.parseJSON(xhr.responseText);
             if(incident.incident){
                  renderIncidentInfo(incident.incident);
-            }*/
+            }
 
         }
 

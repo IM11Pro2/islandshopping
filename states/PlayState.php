@@ -9,6 +9,8 @@
         private $incidentGenerator;
         private $incident;
 
+        private $ventureList;
+
         function init() {
             $this->incidentGenerator = new IncidentGenerator();
             $_SESSION['incidentGenerator'] = $this->incidentGenerator;
@@ -23,6 +25,9 @@
 
             $_SESSION['listOfBanks'] = $this->listOfBanks;
             $_SESSION['state'] = $this;
+
+            $this->ventureList = getVentureValues();
+
             GameEventManager::getInstance()->addEventListener($this, GlobalBankEvent::TYPE);
             GameEventManager::getInstance()->addEventListener($this, GlobalRegionEvent::TYPE);
             GameEventManager::getInstance()->addEventListener($this, LocalIncidentEvent::TYPE);
@@ -54,11 +59,15 @@
             
                     $enemyPlayerId = $enemyRegion->getPlayerId();
                     $enemyCountryName = $enemyRegion->getCountry()->getName();
-        
-                    $hasPlayerWon = $activePayment->isBuyable($enemyPayment);
+
+                    $venture = $this->ventureList[mt_rand(0,count($this->ventureList)-1)];
+
+                    $hasPlayerWon = $activePayment->isBuyable($enemyPayment, $venture);
         
                     if($hasPlayerWon){
-                        //  basis value muss noch abgezogen werden
+
+                        $activePayment->setValue( ($activePayment->getValue() * $venture) );
+
                         $purchasePrice = $activeRegion->occupyRegion($enemyRegion);
                         
                         $_SESSION['listOfBanks'][$enemyPlayerId]->placeMoney($purchasePrice);
@@ -71,7 +80,8 @@
                             "activeRegion" => array("hasWon"=> $hasPlayerWon,
                                                                             "paymentValue" => $activePayment->getValue(),
                                                                             "currencyTranslation" => $activePayment->getCurrencyTranslation(),
-                                                                            "regionId" => $regionId),
+                                                                            "regionId" => $regionId,
+                                                                            "ventureValue" => $venture),
                                                 "enemyRegion" => array(
                                                     "regionId" => $enemyId,
                                                     "regionOfPlayer" => $enemyRegion->getPlayerId(),
@@ -86,7 +96,12 @@
                     }
                     else{
                         //echo json_encode( array("activeRegion" => array("hasWon"=> $hasPlayerWon)));
-                        $this->handleResponse(array("activeRegion" => array("hasWon"=> $hasPlayerWon)));
+                        $activePayment->setValue(BASIC_CAPITAL_REGION);
+                        $this->handleResponse(array("activeRegion" => array("hasWon"=> $hasPlayerWon,
+                                                                            "paymentValue" => $activePayment->getValue(),
+                                                                            "currencyTranslation" => $activePayment->getCurrencyTranslation(),
+                                                                            "regionId" => $regionId,
+                                                                            "ventureValue" => $venture)));
                     }
                 }
         
