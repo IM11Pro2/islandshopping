@@ -37,13 +37,26 @@
                 $neighbours = $actualRegion->getNeighbours();
                 for($j=0; $j< count($neighbours); $j++){
                     if($regions[$neighbours[$j]]->getCountry() != $this->getCountry()){
+                        // if neighbour region has less money --> attack
                         if($regions[$neighbours[$j]]->getPayment()->getValue() < $actualRegion->getPayment()->getUsableValue()){
                             $enemyRegionId = $regions[$neighbours[$j]]->getRegionId();
 
                             array_push($possibleDecisions, array("attack" => $enemyRegionId, "actualRegionId" => $actualRegionId));
                         }
-                        else{
+                        // if neighbour region has more money --> payoff
+                        else if($regions[$neighbours[$j]]->getPayment()->getValue() > $actualRegion->getPayment()->getUsableValue()){
                             array_push($possibleDecisions, array("payOff" => $actualRegionId));
+                        }
+                        // if neighbour region has equal money
+                        else {
+                            // if there is minimum half of the startcapital of money on the bank -- pay off
+                            if($_SESSION['listOfBanks'][$this->playerId]->getPlainCapital() > (START_CAPITAL_COUNTRY/2)){
+                                array_push($possibleDecisions, array("payOff" => $actualRegionId));
+                            }
+                            else {
+                                array_push($possibleDecisions, array("nextPlayer" => $actualRegionId));
+                            }
+                            //array_push($possibleDecisions, array("test" => $actualRegionId));
                         }
                     }
                 }
