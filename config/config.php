@@ -36,11 +36,22 @@
     //Basic Capital per Region == Grundkapital
     define("BASIC_CAPITAL_REGION", 50.0);
 
-    //Defines the interval after how many moves an incident occurs
-    define("MIN_MOVES_FOR_INCIDENT", 0);
-    define("MAX_MOVES_FOR_INCIDENT", 1);
+    function getVentureValues(){
+        return array(
+            0.5,
+            0.66,
+            1,
+            1,
+            1.5,
+            2
+        );
+    }
 
-    define("BankRobbery", 0.5); // p/100 of lost bankcapital
+    //Defines the interval after how many moves an incident occurs
+    define("MIN_MOVES_FOR_INCIDENT", 5);
+    define("MAX_MOVES_FOR_INCIDENT", 10);
+
+    define("BANK_ROBBERY", 0.5); // p/100 of lost bankcapital
 
     define("INCIDENT_CAPITAL", 100);
     //Messages for the incident dialogs

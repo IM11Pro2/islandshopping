@@ -21,7 +21,7 @@ class GlobalBankEvent extends IncidentEvent
 
     function execute()
     {
-        $this->bank->setPlainCapital($this->bank->getPlainCapital()*BankRobbery);
+        $this->bank->setPlainCapital($this->bank->getPlainCapital()*BANK_ROBBERY);
         return array("message" => $this->message, "bankCapital" => $this->bank->getCapital(),
                                                     "bankName" => $this->bank->getCountry()->getName()."Bank",
                             "type" => self::TYPE);
