@@ -54,4 +54,8 @@
             */
             return (($this->value * $venture)>= ($enemyPayment->getValue()+2*BASIC_CAPITAL_REGION));
         }
+
+        public function __toString(){
+            return ($this->value * $this->currencyTranslation)." ".$this->currency;
+        }
     }
