@@ -58,6 +58,7 @@
                     circle.data('region', <?php echo $regions[$i]->getRegionId(); ?>);
                     circle.data('regionOfPlayer', <?php echo $regions[$i]->getPlayerId(); ?>);
 
+                    circle.attr("title", "<?php echo $regions[$i]->getRegionId(); ?>");
 
                     text = paper.text(  <?php echo $this->coordinates[$i]['x']?>,
                                         <?php echo $this->coordinates[$i]['y']?>,

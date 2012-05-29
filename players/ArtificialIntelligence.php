@@ -28,6 +28,8 @@
 
         public function makeDecision($allEnemyRegions, $regions){
             $possibleDecisions = array();
+            $nextPlayerCounter = 0;
+            $sameCountryNeighbours = 0;
 
             for($i=0; $i<count($allEnemyRegions); $i++){
                 $actualRegion = $allEnemyRegions[$i];
@@ -36,6 +38,7 @@
                 //Look if Neighbour-Attack is possible
                 $neighbours = $actualRegion->getNeighbours();
                 for($j=0; $j< count($neighbours); $j++){
+                    // if neighbour region is of other country
                     if($regions[$neighbours[$j]]->getCountry() != $this->getCountry()){
                         // if neighbour region has less money --> attack
                         if($regions[$neighbours[$j]]->getPayment()->getValue() < $actualRegion->getPayment()->getUsableValue()){
@@ -50,13 +53,29 @@
                         // if neighbour region has equal money
                         else {
                             // if there is minimum half of the startcapital of money on the bank -- pay off
-                            if($_SESSION['listOfBanks'][$this->playerId]->getPlainCapital() > (START_CAPITAL_COUNTRY/2)){
+                            if($_SESSION['listOfBanks'][$this->playerId]->getPlainCapital() > (START_CAPITAL_COUNTRY/3)){
                                 array_push($possibleDecisions, array("payOff" => $actualRegionId));
                             }
                             else {
                                 array_push($possibleDecisions, array("nextPlayer" => $actualRegionId));
                             }
-                            //array_push($possibleDecisions, array("test" => $actualRegionId));
+                        }
+
+                        if($nextPlayerCounter == 3){
+                            array_push($possibleDecisions, array("nextPlayer" => $actualRegionId));
+                            $nextPlayerCounter = 0;
+                        }
+
+                        $nextPlayerCounter++;
+                    }
+                    // if neighbour is of same country
+                    else {
+                        $sameCountryNeighbours++;
+
+                        if($sameCountryNeighbours == 2) {
+                            if(($regions[$neighbours[$j]]->getPayment()->getValue()-BASIC_CAPITAL_REGION) >= BASIC_CAPITAL_REGION){
+                                 array_push($possibleDecisions, array("deposit" => $actualRegionId));
+                            }
                         }
                     }
                 }

@@ -294,13 +294,14 @@ $(document).ready(function(){
 
         if(settings.url.indexOf("nextPlayer")!= -1){
             if($.parseJSON(xhr.responseText).attackCountry){
-                message_box.show_message('KI: ', 'Attacked', true);
                 var regionInfo = $.parseJSON(xhr.responseText);
+                message_box.show_message('KI: ', regionInfo.activeRegion.regionId + ' attacked '
+                    + regionInfo.enemyRegion.regionId + " and has won: " + regionInfo.activeRegion.hasWon, true);
                 updateMap(regionInfo);
             }
             else if($.parseJSON(xhr.responseText).spendMoney){
-                message_box.show_message('KI: ', 'Spent Money', true);
                 var payment = $.parseJSON(xhr.responseText);
+                message_box.show_message('KI: ', payment.activeRegion + ' spent Money '+ payment.action , true);
                 addBasicCapitalToRegion(payment);
             }
             else if($.parseJSON(xhr.responseText).nextPlayer){

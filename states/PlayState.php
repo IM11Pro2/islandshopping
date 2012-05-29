@@ -45,12 +45,20 @@
 
         function attackCountry($attackingRegionId, $enemyId){
                     header('Content-type: application/json');
-        
+
                     $regionId = $attackingRegionId;
         
                     $map = $_SESSION['map'];
                     $regions = $map->getRegions();
-        
+
+
+
+                    // HACK!!!!!!!!!!! state wird für human player 2 mal gesetzt!!!
+                    $playerId = $regions[$regionId]->getPlayerId();
+                    $_SESSION['listOfBanks'][$playerId]->setState(Bank::ATTACK);
+
+
+
                     $activeRegion = $regions[$regionId];
                     $activePayment = $activeRegion->getPayment();
         
@@ -82,7 +90,7 @@
                                                                             "currencyTranslation" => $activePayment->getCurrencyTranslation(),
                                                                             "regionId" => $regionId,
                                                                             "ventureValue" => $venture),
-                                                "enemyRegion" => array(
+                                                    "enemyRegion" => array(
                                                     "regionId" => $enemyId,
                                                     "regionOfPlayer" => $enemyRegion->getPlayerId(),
                                                     "countryColor" => $enemyRegion->getColor(),
@@ -100,6 +108,7 @@
                         $this->handleResponse(array("attackCountry" => true,
                                                     "spendMoney" => false,
                                                     "nextPlayer" => false,
+                            "enemyRegion" => array("regionId" => $enemyId),
                                                     "activeRegion" => array("hasWon"=> $hasPlayerWon,
                                                                             "paymentValue" => $activePayment->getValue(),
                                                                             "currencyTranslation" => $activePayment->getCurrencyTranslation(),
@@ -108,7 +117,7 @@
                     }
                 }
         
-        function spendMoney($regionId){
+        function spendMoney($regionId, $action){
                     header('Content-type: application/json');
         
                     $map = $_SESSION['map'];
@@ -116,15 +125,17 @@
 
                     $playerId = $regions[$regionId]->getPlayerId();
 
-                    //if(trim($_GET['bankstate']) == Bank::PAY_OFF) {
+                    if($action == "payOff" ||  (isset($_GET['bankstate']) && trim($_GET['bankstate']) == Bank::PAY_OFF)  ) {
+                        // HACK!!!!!!!!!!! state wird für human player 2 mal gesetzt!!!
+                        $_SESSION['listOfBanks'][$playerId]->setState(Bank::PAY_OFF);
+                        $_SESSION['listOfBanks'][$playerId]->payOff($regions[$regionId]->getPayment());
 
-                    $_SESSION['listOfBanks'][$playerId]->payOff($regions[$regionId]->getPayment());
-
-                    /*}
-                   else if(trim($_GET['bankstate']) == Bank::DEPOSIT) {
-
-                        $_SESSION['listOfBanks'][0]->deposit($regions[$regionId]->getPayment());
-                    }*/
+                    }
+                   else if($action == "deposit" ||  (isset($_GET['bankstate']) && trim($_GET['bankstate']) == Bank::DEPOSIT)  ) {
+                       // HACK!!!!!!!!!!! state wird für human player 2 mal gesetzt!!!
+                       $_SESSION['listOfBanks'][$playerId]->setState(Bank::DEPOSIT);
+                       $_SESSION['listOfBanks'][$playerId]->deposit($regions[$regionId]->getPayment());
+                    }
 
                     $country = $regions[$regionId]->getCountry();
                     $paymentValue = $regions[$regionId]->getPayment()->getValue() * $regions[$regionId]->getPayment()->getCurrencyTranslation();
@@ -136,6 +147,7 @@
                                             "spendMoney" => true,
                                             "nextPlayer" => false,
                                             "activeRegion"=> $regionId,
+                                            "action" => $action,
                                             "payment"     => array("value"    => $paymentValue,
                                                                   "currency" => $country->getPayment()->getCurrency()),
                                             "bankCapital" => $bankCapital,
@@ -181,7 +193,7 @@
                        }
        
                        if(isset($_GET['getCountry'])) {
-                           $_SESSION['state']->spendMoney(trim($_GET['getCountry']));
+                           $_SESSION['state']->spendMoney(trim($_GET['getCountry']), "");
                        }
        
                        if(isset($_GET['region']) && isset($_GET['enemy'])){
@@ -215,10 +227,13 @@
                                $_SESSION['state']->attackCountry($decision["actualRegionId"], $decision["attack"]);
                            }
                            else if (array_key_exists("payOff", $decision)){
-                               $_SESSION['state']->spendMoney($decision["payOff"]);
+                               $_SESSION['state']->spendMoney($decision["payOff"], "payOff");
                            }
                            else if (array_key_exists("nextPlayer", $decision)){
                                $_SESSION['state']->nextPlayer();
+                           }
+                           else if (array_key_exists("deposit", $decision)){
+                              $_SESSION['state']->spendMoney($decision["deposit"], "deposit");
                            }
                        }
                    }

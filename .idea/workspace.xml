@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d137d262-ddb3-4e9c-8a24-d58062ef8e57" name="Default" comment="Befüllen der BankView mit meinem Land">
+    <list default="true" id="d137d262-ddb3-4e9c-8a24-d58062ef8e57" name="Default" comment="KI entscheided ob sie attack, spend money, oder next Player möchte&#10;--&gt; Entscheidung wird durch alert bekanntgemacht.&#10;--&gt; ki wird nur durch klick auf &quot;nextplayer&quot; button gestartet, funktioniert noch nicht durch &quot;ok&quot; klick beim alert fenster&#10;&#10;--&gt; außerdem, noch sehr dumm bei der entscheidung ob nächster player....">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ai/Decision.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ai/DecisionTreeAction.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ai/EnemyNeighbourDecision.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ai/IDecisionTreeNode.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ai/LessMoneyDecision.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/GameApplication.php" afterPath="$PROJECT_DIR$/application/GameApplication.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bank/Bank.php" afterPath="$PROJECT_DIR$/bank/Bank.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/players/ArtificialIntelligence.php" afterPath="$PROJECT_DIR$/players/ArtificialIntelligence.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/script.php" afterPath="$PROJECT_DIR$/scripts/script.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/states/PlayState.php" afterPath="$PROJECT_DIR$/states/PlayState.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/islandViews/DummyView.php" afterPath="$PROJECT_DIR$/views/islandViews/DummyView.php" />
     </list>
     <ignored path="islandshoppingTeam.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -24,58 +33,31 @@
     <favorites_list name="islandshoppingTeam" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.44206548">
+    <splitter split-orientation="horizontal" split-proportion="0.6126847">
       <split-first>
         <leaf>
-          <file leaf-file-name="ToDo" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/ToDo">
+          <file leaf-file-name="ArtificialIntelligence.php" pinned="false" current="true" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/players/ArtificialIntelligence.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="7" column="40" selection-start="216" selection-end="216" vertical-scroll-proportion="0.0">
+                <state line="55" column="118" selection-start="2433" selection-end="2433" vertical-scroll-proportion="0.66061705">
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Bank.php" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/bank/Bank.php">
+          <file leaf-file-name="config.php" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/config/config.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="7" column="58" selection-start="247" selection-end="247" vertical-scroll-proportion="0.0">
+                <state line="50" column="38" selection-start="1424" selection-end="1424" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="BankView.php" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/views/bank/BankView.php">
+          <file leaf-file-name="HumanPlayer.php" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/players/HumanPlayer.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="36" column="35" selection-start="1550" selection-end="1550" vertical-scroll-proportion="-22.923077">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Map.php" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/map/Map.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="19" column="37" selection-start="548" selection-end="548" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Region.php" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/map/Region.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="42" column="39" selection-start="1115" selection-end="1129" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="index.php" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/application/index.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="16" column="31" selection-start="505" selection-end="505" vertical-scroll-proportion="0.0">
+                <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
@@ -84,25 +66,61 @@
           <file leaf-file-name="PlayState.php" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/states/PlayState.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="46" column="81" selection-start="1376" selection-end="1386" vertical-scroll-proportion="0.0">
+                <state line="54" column="0" selection-start="1869" selection-end="1869" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="script.php" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/scripts/script.php">
+          <file leaf-file-name="DummyView.php" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/views/islandViews/DummyView.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="136" column="9" selection-start="4336" selection-end="4336" vertical-scroll-proportion="-14.269231">
+                <state line="60" column="87" selection-start="5875" selection-end="5875" vertical-scroll-proportion="-7.1923075">
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="MapState.php" pinned="false" current="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/states/MapState.php">
+          <file leaf-file-name="PlayStateView.php" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/views/PlayStateView.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="65" column="29" selection-start="2229" selection-end="2229" vertical-scroll-proportion="0.68">
+                <state line="28" column="49" selection-start="704" selection-end="704" vertical-scroll-proportion="-3.0384614">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="ToDo" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/ToDo">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="22" column="0" selection-start="310" selection-end="310" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Bank.php" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/bank/Bank.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="49" column="87" selection-start="1296" selection-end="1367" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="PayOffState.php" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/bank/PayOffState.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="4" column="21" selection-start="120" selection-end="130" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="DepositState.php" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/bank/DepositState.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="5" column="40" selection-start="177" selection-end="205" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
@@ -112,55 +130,10 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="Payment.php" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/payments/Payment.php">
+          <file leaf-file-name="script.php" pinned="false" current="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/scripts/script.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="21" column="46" selection-start="499" selection-end="521" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="IPayment.php" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/payments/IPayment.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="16" column="0" selection-start="341" selection-end="341" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="MenuState.php" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/states/MenuState.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="35" column="0" selection-start="1024" selection-end="1024" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="MapStateView.php" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/views/MapStateView.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="11" column="0" selection-start="340" selection-end="340" vertical-scroll-proportion="1.9615384">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="GameApplication.php" pinned="false" current="true" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/application/GameApplication.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="23" column="50" selection-start="619" selection-end="619" vertical-scroll-proportion="0.55737704">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="MenuStateView.php" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/views/MenuStateView.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="1" column="37" selection-start="43" selection-end="43" vertical-scroll-proportion="-0.65384614">
+                <state line="298" column="105" selection-start="10919" selection-end="10919" vertical-scroll-proportion="0.36330274">
                   <folding />
                 </state>
               </provider>
@@ -169,34 +142,7 @@
           <file leaf-file-name="style.css" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/styles/style.css">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="43" column="19" selection-start="603" selection-end="603" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="DummyView.php" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/views/islandViews/DummyView.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="52" column="53" selection-start="2784" selection-end="2794" vertical-scroll-proportion="-17.846153">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Country.php" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/countries/Country.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="15" column="0" selection-start="329" selection-end="329" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="UpdateViewEvent.php" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/events/UpdateViewEvent.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="6" column="12" selection-start="204" selection-end="204" vertical-scroll-proportion="0.0">
+                <state line="46" column="16" selection-start="623" selection-end="623" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
@@ -228,22 +174,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/bank/Bank.php" />
-        <option value="$PROJECT_DIR$/payments/IPayment.php" />
+        <option value="$PROJECT_DIR$/ai/DecisionTreeNode.php" />
+        <option value="$PROJECT_DIR$/ai/IDecisionTreeNode.php" />
+        <option value="$PROJECT_DIR$/ai/DecisionTreeAction.php" />
+        <option value="$PROJECT_DIR$/ai/Decision.php" />
+        <option value="$PROJECT_DIR$/ai/LessMoneyDecision.php" />
+        <option value="$PROJECT_DIR$/ai/TestDecisionTree.php" />
+        <option value="$PROJECT_DIR$/ai/EnemyNeighbourDecision.php" />
         <option value="$PROJECT_DIR$/payments/Payment.php" />
-        <option value="$PROJECT_DIR$/config/config.php" />
-        <option value="$PROJECT_DIR$/views/bank/BankView.php" />
         <option value="$PROJECT_DIR$/styles/style.css" />
+        <option value="$PROJECT_DIR$/views/PlayStateView.php" />
         <option value="$PROJECT_DIR$/ToDo" />
-        <option value="$PROJECT_DIR$/map/Map.php" />
-        <option value="$PROJECT_DIR$/views/MapStateView.php" />
-        <option value="$PROJECT_DIR$/events/UpdateViewEvent.php" />
-        <option value="$PROJECT_DIR$/states/MapState.php" />
         <option value="$PROJECT_DIR$/views/islandViews/DummyView.php" />
-        <option value="$PROJECT_DIR$/states/PlayState.php" />
         <option value="$PROJECT_DIR$/scripts/script.php" />
-        <option value="$PROJECT_DIR$/views/MenuStateView.php" />
-        <option value="$PROJECT_DIR$/application/GameApplication.php" />
+        <option value="$PROJECT_DIR$/bank/Bank.php" />
+        <option value="$PROJECT_DIR$/states/PlayState.php" />
+        <option value="$PROJECT_DIR$/players/ArtificialIntelligence.php" />
       </list>
     </option>
   </component>
@@ -285,6 +231,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -331,77 +278,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="bank" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="islandshoppingTeam" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="islandshoppingTeam" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="styles" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="islandshoppingTeam" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="islandshoppingTeam" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="states" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="islandshoppingTeam" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="islandshoppingTeam" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scripts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="islandshoppingTeam" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="islandshoppingTeam" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="players" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="islandshoppingTeam" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="islandshoppingTeam" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="payments" />
+              <option name="myItemId" value="islandViews" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -416,48 +293,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="map" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="islandshoppingTeam" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="islandshoppingTeam" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="events" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="islandshoppingTeam" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="islandshoppingTeam" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eventmanagement" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="islandshoppingTeam" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="islandshoppingTeam" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="countries" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -487,127 +322,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="bank" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="islandshoppingTeam" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="islandshoppingTeam" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="application" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="islandshoppingTeam" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="islandshoppingTeam" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ajax" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-        <subPane subId="Default">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-        <subPane subId="Non-Project Files" />
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="islandshoppingTeam">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="islandshoppingTeam">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="styles">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="islandshoppingTeam">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="events">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-        <subPane subId="Changed Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-        <subPane subId="All">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="islandshoppingTeam">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="islandshoppingTeam">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="events">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -729,15 +443,15 @@
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19630873" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4129956" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3017621" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32929516" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15170941" sideWeight="0.5870044" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29405287" sideWeight="0.0" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13247864" sideWeight="0.67070484" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32929516" sideWeight="0.0" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32929516" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20264317" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18392071" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -781,7 +495,7 @@
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
     <option name="CREATE_PATCH_EXPAND_DETAILS_DEFAULT" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="neue zufallsmap generieren funktioniert" />
+    <option name="LAST_COMMIT_MESSAGE" value="bugfix --&gt; wenn hasWon false war&#10;--&gt; Messagebox schließt sich nur bei &quot;next player&quot;" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -794,21 +508,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="config.php file created&#10;added config.php file in each file with &quot;require_once&quot;" />
-    <MESSAGE value="* IApplicationState zu jedem State hinzugefügt&#10;* config.php geändert, Array hinzugefügt&#10;* MapStateView.php + IStateView.php MenuStateView.php hinzugefügt&#10;* MenuStateView.php mit Funktionalität befüllt&#10; --&gt; SpielerLand mittels Radio Buttons auswählen,&#10; --&gt; Je nach Wahl, GegnerLänder zu Auswahl generiert&#10; --&gt; Gegner + SpielerLänder bleiben ausgewählt&#10; --&gt; Übernahme durch ButtonKlick&#10; &#10; //TODO - Logik im MenuState.php erledigen, Ländergenerierung mittles Ajax(?) lösen" />
-    <MESSAGE value="ajax test bei menu state" />
-    <MESSAGE value="merged script" />
-    <MESSAGE value="first part of state-changing implemented&#10;&#10;state and view are setted new, after button click, but new view isn't rendered so far&#10;(MenuState - &gt; MapState)" />
-    <MESSAGE value="change states fortgesetzt, view ändert sich, aber nur mit direkten aufruf des &quot;mapStateView.php&quot; files&#10;MapState.php noch nicht miteinbezogen...&#10;bug fix: Player und Enemies werden richtig gesetzt und an die session übergeben ( im endState() des MenuStates )&#10;ToDo: hab im Config türkei und saudi arabien auf &quot;Tuerkei&quot; und &quot;SaudiArabien&quot; gesetzt --&gt; umlaut/leerzeichen problem, niedrige priorität das zu lösen..." />
-    <MESSAGE value="* richtiges setzen von player und country &#10;* erzeugen von HumanPlayer und für jeden Enemy ein ArtificialIntelligence Object&#10;* setzen der Ids und Namen der Countries&#10;* Neue Klassen:&#10;-- ICountry.php&#10;---- Country.php&#10;-- IPlayer.php&#10;---- HumanPlayer.php&#10;---- ArtificialIntelligence.php&#10;-- IPayment.php&#10;* Erstellen eines eigenen Style Formatters --&gt; Vorsicht bei labels!!!!!!!!" />
-    <MESSAGE value="countries wird jeweils eine farbe zugewiesen&#10;änderungen im config, country und menuState" />
-    <MESSAGE value="währung wird pro land gesetzt&#10;&#10;* Änderungen im config, country, payment und menuState" />
-    <MESSAGE value="currency und currencytranslation werden im Payment gesetzt und als Payment an das country übergeben&#10;&#10;* Änderungen in config, payment und menuState" />
-    <MESSAGE value="bissi refactoring --&gt; getPayments auf getCurrencies" />
-    <MESSAGE value="einbauen der trim() methode, um ländergleichheit zu gewährleisten...." />
-    <MESSAGE value="hinzufügen der fehlenden Views und vorbereiten für statewechsel" />
-    <MESSAGE value="statewechsel zu playstate bekommt - warum auch immer - keinen response mehr......" />
-    <MESSAGE value="bissi ausgemistet" />
     <MESSAGE value="refactoring: createPlayer and createEnemyPlayers in init von MapState verfrachtet" />
     <MESSAGE value="." />
     <MESSAGE value="* Bank und BankStates/views etc hinzugefügt&#10;* bissi css begonnen" />
@@ -818,119 +517,125 @@
     <MESSAGE value="css verändert" />
     <MESSAGE value="d" />
     <MESSAGE value="neue zufallsmap generieren funktioniert" />
+    <MESSAGE value="bug fix -&gt; zufallsmap" />
+    <MESSAGE value="Currency wird bei Klick auf Region als Wort in's Feld geschrieben" />
+    <MESSAGE value="* regions werden beim start mit grundkapital in der richtige währung befüllt&#10;* bei Klick auf Region wird wert um grundkapital erhöht&#10;&#10;* Leider: auch schon in Map sichtbar...&#10;el.attr('text', value); funktioniert nicht" />
+    <MESSAGE value="bissl aufgeräumt" />
+    <MESSAGE value="comments gelöscht" />
+    <MESSAGE value="refactoring --&gt; methoden und variablen umbenannt" />
+    <MESSAGE value="Ländernamen werden in der Farbe ihrer Regionen dargestellt :)" />
+    <MESSAGE value="nach klick auf eigene region und anschließenden Klick auf zugehörigen nachbarn wird erkannt ob ein angriff möglich ist" />
+    <MESSAGE value="gegner können &quot;angegriffen&quot; werden --&gt; ausbügeln nach merge" />
+    <MESSAGE value="teilweise gerichtet, dass nur im attack state angegriffen werden kann.&#10;ToDo: &#10;* Opacity Änderung bei RadiobuttonKlick&#10;* angriff sofot bei radiobuttonklick aufgehoben" />
+    <MESSAGE value="Bei Klick auf Radiobutton werden Elemente und Werte zurückgesetzt" />
+    <MESSAGE value="Beim Klick auf NextPlayer berechnet die KI alle ihre möglichkeiten, wählt zufällig eine aus, und ruft die ensprechenden methoden auf&#10;--&gt; Funktioniert noch nicht wegen fehlender bank, aber sonst ok :)" />
+    <MESSAGE value="änderung nachgereicht" />
+    <MESSAGE value="Geld wird bei PayOff von jeweils richtiger Bank abgezogen" />
+    <MESSAGE value="KI entscheided ob sie attack, spend money, oder next Player möchte&#10;--&gt; Entscheidung wird durch alert bekanntgemacht.&#10;--&gt; ki wird nur durch klick auf &quot;nextplayer&quot; button gestartet, funktioniert noch nicht durch &quot;ok&quot; klick beim alert fenster&#10;&#10;--&gt; außerdem, noch sehr dumm bei der entscheidung ob nächster player...." />
+    <MESSAGE value="bugfix --&gt; wenn hasWon false war&#10;--&gt; Messagebox schließt sich nur bei &quot;next player&quot;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/views/bank/BankView.php">
+    <entry file="file://$PROJECT_DIR$/incident/IncidentGenerator.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="35" selection-start="1550" selection-end="1550" vertical-scroll-proportion="-22.923077">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-1.1634078" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/map/Region.php">
+    <entry file="file://$PROJECT_DIR$/config/config.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="39" selection-start="1115" selection-end="1129" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="50" column="38" selection-start="1424" selection-end="1424" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/PlayStateView.php">
+    <entry file="file://$PROJECT_DIR$/players/HumanPlayer.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="0" selection-start="1087" selection-end="1087" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ToDo">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="40" selection-start="216" selection-end="216" vertical-scroll-proportion="0.0">
+        <state line="22" column="0" selection-start="310" selection-end="310" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/styles/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="46" column="16" selection-start="623" selection-end="623" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/map/RegionGraph.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/map/Map.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="37" selection-start="548" selection-end="548" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/islandViews/DummyView.php">
+    <entry file="file://$PROJECT_DIR$/payments/IPayment.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="53" selection-start="2784" selection-end="2794" vertical-scroll-proportion="-17.846153">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/states/PlayState.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="81" selection-start="1376" selection-end="1386" vertical-scroll-proportion="0.0">
+        <state line="12" column="17" selection-start="227" selection-end="227" vertical-scroll-proportion="0.2363847">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/script.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="136" column="9" selection-start="4336" selection-end="4336" vertical-scroll-proportion="-14.269231">
+        <state line="298" column="105" selection-start="10919" selection-end="10919" vertical-scroll-proportion="0.36330274">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/events/UpdateViewEvent.php">
+    <entry file="file://$PROJECT_DIR$/bank/PayOffState.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="12" selection-start="204" selection-end="204" vertical-scroll-proportion="0.0">
+        <state line="4" column="21" selection-start="120" selection-end="130" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/countries/Country.php">
+    <entry file="file://$PROJECT_DIR$/views/PlayStateView.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="0" selection-start="329" selection-end="329" vertical-scroll-proportion="0.0">
+        <state line="28" column="49" selection-start="704" selection-end="704" vertical-scroll-proportion="-3.0384614">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/MapStateView.php">
+    <entry file="file://$PROJECT_DIR$/states/PlayState.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="0" selection-start="340" selection-end="340" vertical-scroll-proportion="1.9615384">
+        <state line="54" column="0" selection-start="1869" selection-end="1869" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/states/MenuState.php">
+    <entry file="file://$PROJECT_DIR$/bank/DepositState.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="0" selection-start="1024" selection-end="1024" vertical-scroll-proportion="0.0">
+        <state line="5" column="40" selection-start="177" selection-end="205" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/states/MapState.php">
+    <entry file="file://$PROJECT_DIR$/bank/Bank.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="29" selection-start="2229" selection-end="2229" vertical-scroll-proportion="0.68">
+        <state line="49" column="87" selection-start="1296" selection-end="1367" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/config.php">
+    <entry file="file://$PROJECT_DIR$/views/islandViews/DummyView.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="5" selection-start="914" selection-end="914" vertical-scroll-proportion="0.0">
+        <state line="60" column="87" selection-start="5875" selection-end="5875" vertical-scroll-proportion="-7.1923075">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/MenuStateView.php">
+    <entry file="file://$PROJECT_DIR$/players/ArtificialIntelligence.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="37" selection-start="43" selection-end="43" vertical-scroll-proportion="-0.65384614">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/GameApplication.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="50" selection-start="619" selection-end="619" vertical-scroll-proportion="0.55737704">
+        <state line="55" column="118" selection-start="2433" selection-end="2433" vertical-scroll-proportion="0.66061705">
           <folding />
         </state>
       </provider>

@@ -48,7 +48,7 @@
         public function deposit(IPayment $entryPayment){
 
             if(($entryPayment->getValue()-BASIC_CAPITAL_REGION) >= BASIC_CAPITAL_REGION){
-                $entryPayment->reduceValue($this->bankState->depositMoney($this->capital));
+                $entryPayment->reduceValue( $this->bankState->depositMoney($this->capital) );
             }
         }
 
