@@ -75,9 +75,9 @@
                         $enemyBankCapital = $_SESSION['listOfBanks'][$enemyPlayerId]->getCapital();
 
                         $this->handleResponse(array("attackCountry" => true,
-                            "spendMoney" => false,
-                            "nextPlayer" => false,
-                            "activeRegion" => array("hasWon"=> $hasPlayerWon,
+                                                    "spendMoney" => false,
+                                                    "nextPlayer" => false,
+                                                    "activeRegion" => array("hasWon"=> $hasPlayerWon,
                                                                             "paymentValue" => $activePayment->getValue(),
                                                                             "currencyTranslation" => $activePayment->getCurrencyTranslation(),
                                                                             "regionId" => $regionId,
@@ -97,7 +97,10 @@
                     else{
                         //echo json_encode( array("activeRegion" => array("hasWon"=> $hasPlayerWon)));
                         $activePayment->setValue(BASIC_CAPITAL_REGION);
-                        $this->handleResponse(array("activeRegion" => array("hasWon"=> $hasPlayerWon,
+                        $this->handleResponse(array("attackCountry" => true,
+                                                    "spendMoney" => false,
+                                                    "nextPlayer" => false,
+                                                    "activeRegion" => array("hasWon"=> $hasPlayerWon,
                                                                             "paymentValue" => $activePayment->getValue(),
                                                                             "currencyTranslation" => $activePayment->getCurrencyTranslation(),
                                                                             "regionId" => $regionId,
@@ -130,12 +133,12 @@
                     $bankCapital = $_SESSION['listOfBanks'][$playerId]->getCapital();
         
                     $this->handleResponse(array("attackCountry" => false,
-                        "spendMoney" => true,
-                        "nextPlayer" => false,
-                        "activeRegion"=> $regionId,
-                                           "payment"     => array("value"    => $paymentValue,
+                                            "spendMoney" => true,
+                                            "nextPlayer" => false,
+                                            "activeRegion"=> $regionId,
+                                            "payment"     => array("value"    => $paymentValue,
                                                                   "currency" => $country->getPayment()->getCurrency()),
-                                           "bankCapital" => $bankCapital,
+                                            "bankCapital" => $bankCapital,
                                             "bankName" => $country->getName()."Bank"));
                 }
 
