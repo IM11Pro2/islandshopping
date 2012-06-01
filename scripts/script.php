@@ -21,11 +21,6 @@ function sendAjaxRequest(url, data, getAsJSON){
         });
     }
 
-function sendAIRequest() {
-    sendAjaxRequest("../states/PlayState.php", {handle: "PlayState", nextPlayer: "nextPlayer", <?php  echo session_name().': '.'"'.session_id().'"'; ?>}, false);
-}
-
-
 $(document).ready(function(){
 
 
@@ -64,7 +59,7 @@ $(document).ready(function(){
     });
 
     $('body').on('click',':button[name="NextPlayerSubmit"]',function (event) {
-        sendAIRequest();
+        sendAjaxRequest("../states/PlayState.php", {handle: "PlayState", nextPlayer: "nextPlayer", <?php  echo session_name().': '.'"'.session_id().'"'; ?>}, false);
     });
 
     function activeElementHandler(){
@@ -217,6 +212,9 @@ $(document).ready(function(){
     }
     
     function switchToNextPlayer(nextPlayer) {
+        //if(nextPlayer.nextPlayerId != "0"){
+            //sendNewAIRequest();
+        //}
             //alert("nextPlayerId: " + nextPlayer.nextPlayerId);
     }
     
@@ -292,22 +290,26 @@ $(document).ready(function(){
             updateMap(regionInfo);
         }
 
-        if(settings.url.indexOf("nextPlayer")!= -1){
+        if(settings.url.indexOf("nextPlayer")!= -1 || settings.url.indexOf("newAIRequest")!= -1){
             if($.parseJSON(xhr.responseText).attackCountry){
                 var regionInfo = $.parseJSON(xhr.responseText);
-                message_box.show_message('KI: ', regionInfo.activeRegion.regionId + ' attacked '
-                    + regionInfo.enemyRegion.regionId + " and has won: " + regionInfo.activeRegion.hasWon, true);
+                message_box.show_message('KI ' + regionInfo.playerId + ': ', regionInfo.activeRegion.regionId + ' attacked '
+                    + regionInfo.enemyRegion.regionId + " and has won: " + regionInfo.activeRegion.hasWon,  true);
                 updateMap(regionInfo);
             }
             else if($.parseJSON(xhr.responseText).spendMoney){
                 var payment = $.parseJSON(xhr.responseText);
-                message_box.show_message('KI: ', payment.activeRegion + ' spent Money '+ payment.action , true);
+                message_box.show_message('KI ' + payment.playerId + ': ', payment.activeRegion + ' spent money '+ payment.action , true);
                 addBasicCapitalToRegion(payment);
             }
             else if($.parseJSON(xhr.responseText).nextPlayer){
-                message_box.show_message('KI: ', 'Swiched Player', false);
                 var nextPlayer = $.parseJSON(xhr.responseText);
+                message_box.show_message('KI: ', 'Swiched Player to PlayerId ' + nextPlayer.nextPlayerId , true);
                 switchToNextPlayer(nextPlayer);
+            }
+            else if($.parseJSON(xhr.responseText).humanPlayer){
+                var humanPlayer = $.parseJSON(xhr.responseText);
+                message_box.show_message('Info: ', 'Your turn! ', false);
             }
 
             var incident =  $.parseJSON(xhr.responseText);
@@ -357,12 +359,12 @@ function jsonpcallback(data) {
 
 function sendNewAIRequest(){
     message_box.close_message();
-    sendAIRequest();
+    sendAjaxRequest("../states/PlayState.php", {handle: "PlayState", newAIRequest:"newAIRequest",<?php  echo session_name().': '.'"'.session_id().'"'; ?>}, false);
 }
 
 var message_box = function() {
 	var button_request = '<input type="button" onclick="sendNewAIRequest();" value="Ok" />';
-    var button_close = '<input type="button" onclick="message_box.close_message();" value="Ok" />';
+    var button_close = '<input type="button" onclick="message_box.close_message();" value="Ok" />'; //onclick="message_box.close_message();"
 	return {
 		show_message: function(title, body, request) {
 

@@ -11,22 +11,32 @@
 
         private $ventureList;
 
+        private $playerList;
+        private $numberOfPlayers;
+        private $nextPlayerCounter;
+
         function init() {
             $this->incidentGenerator = new IncidentGenerator();
             $_SESSION['incidentGenerator'] = $this->incidentGenerator;
 
-            $playerList = $_SESSION['activePlayers'];
-            $this->listOfBanks = array();
-            for($i = 0; $i < count($playerList); $i++){
+            $this->playerList = $_SESSION['activePlayers'];
+            $this->numberOfPlayers = count($this->playerList);
+            $this->nextPlayerCounter = 0;
 
-                array_push($this->listOfBanks, new Bank($playerList[$i]->getCountry(), Bank::PAY_OFF));
+            $this->listOfBanks = array();
+            for($i = 0; $i < $this->numberOfPlayers; $i++){
+
+                array_push($this->listOfBanks, new Bank($this->playerList[$i]->getCountry(), Bank::PAY_OFF));
 
             }
 
             $_SESSION['listOfBanks'] = $this->listOfBanks;
             $_SESSION['state'] = $this;
+            $_SESSION['nextPlayerCounter'] =  $this->nextPlayerCounter;
 
             $this->ventureList = getVentureValues();
+
+            $this->nextPlayerCounter = 0;
 
             GameEventManager::getInstance()->addEventListener($this, GlobalBankEvent::TYPE);
             GameEventManager::getInstance()->addEventListener($this, GlobalRegionEvent::TYPE);
@@ -51,13 +61,9 @@
                     $map = $_SESSION['map'];
                     $regions = $map->getRegions();
 
-
-
                     // HACK!!!!!!!!!!! state wird für human player 2 mal gesetzt!!!
                     $playerId = $regions[$regionId]->getPlayerId();
                     $_SESSION['listOfBanks'][$playerId]->setState(Bank::ATTACK);
-
-
 
                     $activeRegion = $regions[$regionId];
                     $activePayment = $activeRegion->getPayment();
@@ -85,6 +91,7 @@
                         $this->handleResponse(array("attackCountry" => true,
                                                     "spendMoney" => false,
                                                     "nextPlayer" => false,
+                                                    "playerId" => $playerId,
                                                     "activeRegion" => array("hasWon"=> $hasPlayerWon,
                                                                             "paymentValue" => $activePayment->getValue(),
                                                                             "currencyTranslation" => $activePayment->getCurrencyTranslation(),
@@ -108,6 +115,7 @@
                         $this->handleResponse(array("attackCountry" => true,
                                                     "spendMoney" => false,
                                                     "nextPlayer" => false,
+                                                    "playerId" => $playerId,
                             "enemyRegion" => array("regionId" => $enemyId),
                                                     "activeRegion" => array("hasWon"=> $hasPlayerWon,
                                                                             "paymentValue" => $activePayment->getValue(),
@@ -146,6 +154,7 @@
                     $this->handleResponse(array("attackCountry" => false,
                                             "spendMoney" => true,
                                             "nextPlayer" => false,
+                                            "playerId" => $playerId,
                                             "activeRegion"=> $regionId,
                                             "action" => $action,
                                             "payment"     => array("value"    => $paymentValue,
@@ -157,15 +166,52 @@
         function nextPlayer() {
             header('Content-type: application/json');
 
-            // TODO calculate next PlayerId
-            $playerId = "0";
+            $_SESSION["nextPlayerCounter"]++;
+            $this->nextPlayerCounter = $_SESSION["nextPlayerCounter"];
+
+            $nextPlayerId = $this->nextPlayerCounter % $this->numberOfPlayers;
 
             echo json_encode(array("attackCountry" => false,
-                                        "spendMoney" => false,
-                                        "nextPlayer" => true,
-                "nextPlayerId" => $playerId));
+                                   "spendMoney" => false,
+                                   "nextPlayer" => true,
+                                   "nextPlayerId" => $nextPlayerId));
         }
-        
+
+        function activateAI($nextPlayer) {
+           $map = $_SESSION['map'];
+           $regions = $map->getRegions();
+           $allEnemyRegions = array();
+
+           $enemy = $_SESSION['activePlayers'][$nextPlayer];
+           $enemyId = $enemy->getPlayerId();
+
+           for($i = 0; $i < count($regions); $i++){
+               if ($regions[$i]->getPlayerId() == $enemyId){
+                   array_push($allEnemyRegions, $regions[$i]);
+               }
+           }
+
+           //print_r($allEnemyRegions);
+
+           if(!$_SESSION['incidentGenerator']->isIncidentActive()){
+               $_SESSION['incidentGenerator']->generateIncident();
+           }
+
+           $decision = $enemy->makeDecision($allEnemyRegions, $regions);
+
+           if(array_key_exists("attack", $decision)){
+               $_SESSION['state']->attackCountry($decision["actualRegionId"], $decision["attack"]);
+           }
+           else if (array_key_exists("payOff", $decision)){
+               $_SESSION['state']->spendMoney($decision["payOff"], "payOff");
+           }
+           else if (array_key_exists("nextPlayer", $decision)){
+               $_SESSION['state']->nextPlayer();
+           }
+           else if (array_key_exists("deposit", $decision)){
+              $_SESSION['state']->spendMoney($decision["deposit"], "deposit");
+           }
+        }
 
         public static function ajaxRequest() {
        
@@ -201,39 +247,22 @@
                        }
        
                        if(isset($_GET['nextPlayer'])){
-                           $map = $_SESSION['map'];
-                           $regions = $map->getRegions();
-                           $allEnemyRegions = array();
-       
-                           $enemy = $_SESSION['activePlayers'][1];
-                           $enemyId = $enemy->getPlayerId();
-       
-       
-                           for($i = 0; $i < count($regions); $i++){
-                               if ($regions[$i]->getPlayerId() == $enemyId){
-                                   array_push($allEnemyRegions, $regions[$i]);
-                               }
-                           }
-       
-                           //print_r($allEnemyRegions);
+                           $_SESSION["nextPlayerCounter"]++;
+                           $_SESSION['state']->activateAI(1);
+                       }
 
-                           if(!$_SESSION['incidentGenerator']->isIncidentActive()){
-                               $_SESSION['incidentGenerator']->generateIncident();
-                           }
+                       if(isset($_GET['newAIRequest'])){
 
-                           $decision = $enemy->makeDecision($allEnemyRegions, $regions);
-       
-                           if(array_key_exists("attack", $decision)){
-                               $_SESSION['state']->attackCountry($decision["actualRegionId"], $decision["attack"]);
+                           $nextPlayerCounter = $_SESSION["nextPlayerCounter"];
+                           $numberOfPlayers = count($_SESSION['activePlayers']);
+
+                           $nextPlayerId = $nextPlayerCounter % $numberOfPlayers;
+
+                           if($nextPlayerId != 0) {
+                                $_SESSION['state']->activateAI($nextPlayerId);
                            }
-                           else if (array_key_exists("payOff", $decision)){
-                               $_SESSION['state']->spendMoney($decision["payOff"], "payOff");
-                           }
-                           else if (array_key_exists("nextPlayer", $decision)){
-                               $_SESSION['state']->nextPlayer();
-                           }
-                           else if (array_key_exists("deposit", $decision)){
-                              $_SESSION['state']->spendMoney($decision["deposit"], "deposit");
+                           else {
+                            echo json_encode(array("humanPlayer" => true));
                            }
                        }
                    }
@@ -262,9 +291,7 @@
             echo json_encode($json);
         }
     }
-       
-       
-       
+
            if(isset($_GET['handle']) && trim($_GET['handle']) == "PlayState") {
        
                PlayState::ajaxRequest();
