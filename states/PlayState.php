@@ -180,9 +180,9 @@
         function activateAI($nextPlayer) {
             
             /* vielleicht erst nötig wenn das weiterschalten der spieler funktioniert
-           foreach($_SESSION['listOFBanks'] as $bank){
+           foreach($_SESSION['listOfBanks'] as $bank){
                */
-           $_SESSION['listOFBanks'][0]->setState(Bank::DEPOSIT);
+           $_SESSION['listOfBanks'][0]->setState(Bank::DEPOSIT);
                 /*$bank->setState(Bank::DEPOSIT);
            }*/
             
