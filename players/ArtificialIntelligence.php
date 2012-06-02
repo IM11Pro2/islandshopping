@@ -1,29 +1,11 @@
 <?php
-    class ArtificialIntelligence implements IPlayer {
+    class ArtificialIntelligence extends IPlayer {
 
-        private $country;
-        private $playerId;
-        static $counter = 1;
+        static $AI_ID_counter = 1;
 
         public function __construct() {
-            $this->playerId = self::$counter;
-            self::$counter++;
-        }
-
-        public function __destruct() {
-            // TODO: Implement __destruct() method.
-        }
-
-        public function getCountry() {
-           return $this->country;
-        }
-
-        public function setCountry(ICountry $country) {
-            $this->country = $country;
-        }
-
-        public function getPlayerId() {
-            return $this->playerId;
+            $this->playerId = self::$AI_ID_counter;
+            self::$AI_ID_counter++;
         }
 
         public function makeDecision($allEnemyRegions, $regions){

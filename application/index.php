@@ -16,7 +16,7 @@ $_SESSION = array();
     <?php printJavaScript(); ?>
 </head>
 <body>
-<h2> Hallo IslandshoppAA!! </h2>
+<h2> Islandshopping v0.9 </h2>
 <?php
 $gameApp = new GameApplication();
 ?>
