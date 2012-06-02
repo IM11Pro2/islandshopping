@@ -27,8 +27,8 @@
 
         function endState() {
 
-            $_SESSION['player'] = $this->playerCountry;
-            $_SESSION['enemies'] = $this->enemyCountries;
+            $_SESSION['playerCountryName'] = $this->playerCountry;
+            $_SESSION['enemyCountryNames'] = $this->enemyCountries;
             //$_SESSION['countryArray'] = $this->countryArray;
 
             $_SESSION['activePlayers'] = array();

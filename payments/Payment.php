@@ -6,9 +6,18 @@
         private $currencyTranslation;
         private $countryCurrencies;
 
-        public function __construct(){
+        public function __construct(ICountry $country = null){
             $this->countryCurrencies = getCurrencies();
+
+            if($country != null){
+                $this->setCurrency($country->getName());
+                $this->setCurrencyTranslation($country->getName());
+                $this->setValue(START_CAPITAL_COUNTRY);
+
+                $country->setPayment($this);
+            }
         }
+
 
         public function getValue() {
             return $this->value;

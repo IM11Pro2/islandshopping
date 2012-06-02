@@ -6,7 +6,7 @@
 
         function getColor();
 
-        function setColor($playerId);
+        function setColor($color);
 
         function getPayment();
 

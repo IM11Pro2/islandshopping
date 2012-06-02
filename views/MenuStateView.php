@@ -1,21 +1,13 @@
 <?php
-    class MenuStateView implements /*IEventListener,*/
-        IStateView {
+    class MenuStateView implements IStateView {
 
         const ViewType = "MenuStateView";
 
         public function __construct() {
-            //GameEventManager::getInstance()->addEventListener($this, UpdateViewEvent::TYPE);
             $_SESSION['view'] = $this;
         }
 
-/*
-        function handleEvent(IEvent $event) {
-            if($event->getEventType() == UpdateViewEvent::TYPE) {
-                //echo "Update Menu State View Event<br />";
-            }
-        }
-*/
+
         function printView() {
             ?>
         <div id="container">

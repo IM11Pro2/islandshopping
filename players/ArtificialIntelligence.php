@@ -3,9 +3,12 @@
 
         static $AI_ID_counter = 1;
 
-        public function __construct() {
+        public function __construct($countryName, $colorArray) {
             $this->playerId = self::$AI_ID_counter;
             self::$AI_ID_counter++;
+
+            $this->setPlayerState(self::INACTIVE);
+            $this->init($countryName, $colorArray);
         }
 
         public function makeDecision($allEnemyRegions, $regions){

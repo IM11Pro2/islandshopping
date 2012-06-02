@@ -9,6 +9,10 @@
         protected $playerId;
         private $playerState;
 
+        protected function init($countryName, $colorArray){
+            $this->country = new Country($this, $countryName, $colorArray[$this->playerId]);
+        }
+
         public function getCountry() {
             return $this->country;
         }

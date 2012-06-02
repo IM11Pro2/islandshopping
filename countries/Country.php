@@ -4,14 +4,14 @@
         private $name;
         private $payment;
         private $color;
-        private $colors;
 
-        function __construct() {
-            $this->colors = getColorArray();
-        }
+        function __construct(IPlayer $player, $countryName ,$countryColor) {
 
-        function __destruct() {
-            // TODO: Implement __destruct() method.
+            $this->name = $countryName;
+            $this->color = $countryColor;
+
+            $player->setCountry($this);
+            $this->payment = new Payment($this);
         }
 
         public function setName($name) {
@@ -22,8 +22,8 @@
             return $this->name;
         }
 
-        public function setColor($playerId) {
-            $this->color = $this->colors[$playerId];
+        public function setColor($color) {
+            $this->color = $color;
         }
 
         public function getColor() {
