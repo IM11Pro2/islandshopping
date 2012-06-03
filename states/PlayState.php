@@ -37,9 +37,8 @@
 
             }
 
-            //$_SESSION['listOfBanks'] = $this->listOfBanks;
             $_SESSION['state'] = $this;
-            $_SESSION['nextPlayerCounter'] =  $this->nextPlayerCounter;
+            //$_SESSION['nextPlayerCounter'] =  $this->nextPlayerCounter;
 
             $this->speculationValues = getSpeculationValues();
 
@@ -171,8 +170,7 @@
         function nextPlayer() {
             header('Content-type: application/json');
 
-            $_SESSION["nextPlayerCounter"]++;
-            $this->nextPlayerCounter = $_SESSION["nextPlayerCounter"];
+            $this->nextPlayerCounter++;
 
             $nextPlayerId = $this->nextPlayerCounter % $this->numberOfPlayers;
 
@@ -260,13 +258,14 @@
                        }
        
                        if(isset($_GET['nextPlayer'])){
-                           $_SESSION["nextPlayerCounter"]++;
+                           $nextPlayerCounter = $_SESSION['state']->getNextPlayerCounter();
+                           $_SESSION['state']->setNextPlayerCounter(++$nextPlayerCounter);
                            $_SESSION['state']->activateAI(1);
                        }
 
                        if(isset($_GET['newAIRequest'])){
 
-                           $nextPlayerCounter = $_SESSION["nextPlayerCounter"];
+                           $nextPlayerCounter = $_SESSION['state']->getNextPlayerCounter();
                            $numberOfPlayers = count($_SESSION['activePlayers']);
 
                            $nextPlayerId = $nextPlayerCounter % $numberOfPlayers;
