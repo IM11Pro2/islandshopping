@@ -36,7 +36,7 @@
     //Basic Capital per Region == Grundkapital
     define("BASIC_CAPITAL_REGION", 50.0);
 
-    function getVentureValues(){
+    function getSpeculationValues(){
         return array(
             0.5,
             0.66,

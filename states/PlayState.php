@@ -5,11 +5,11 @@
 
         const ApplicationStateType = "PlayState";
 
-        private $listOfBanks;
+        private $bankList;
         private $incidentGenerator;
         private $incident;
 
-        private $ventureList;
+        private $speculationValues;
 
         private $playerList;
         private $numberOfPlayers;
@@ -23,20 +23,25 @@
             $this->numberOfPlayers = count($this->playerList);
             $this->nextPlayerCounter = 0;
 
-            $this->listOfBanks = array();
+            $this->bankList = array();
             for($i = 0; $i < $this->numberOfPlayers; $i++){
 
-                array_push($this->listOfBanks, new Bank($this->playerList[$i]->getCountry(), Bank::PAY_OFF));
+                $bank = null;
+                if($i == 0){
+                    $bank = new Bank($this->playerList[$i]->getCountry(), Bank::PAY_OFF);
+                }
+                else{
+                    $bank = new Bank($this->playerList[$i]->getCountry(), Bank::DEPOSIT);
+                }
+                array_push($this->bankList, $bank);
 
             }
 
-            $_SESSION['listOfBanks'] = $this->listOfBanks;
+            //$_SESSION['listOfBanks'] = $this->listOfBanks;
             $_SESSION['state'] = $this;
             $_SESSION['nextPlayerCounter'] =  $this->nextPlayerCounter;
 
-            $this->ventureList = getVentureValues();
-
-            $this->nextPlayerCounter = 0;
+            $this->speculationValues = getSpeculationValues();
 
             GameEventManager::getInstance()->addEventListener($this, GlobalBankEvent::TYPE);
             GameEventManager::getInstance()->addEventListener($this, GlobalRegionEvent::TYPE);
@@ -63,7 +68,7 @@
 
                     // HACK!!!!!!!!!!! state wird für human player 2 mal gesetzt!!!
                     $playerId = $regions[$regionId]->getPlayerId();
-                    $_SESSION['listOfBanks'][$playerId]->setState(Bank::ATTACK);
+                    $this->bankList[$playerId]->setState(Bank::ATTACK);
 
                     $activeRegion = $regions[$regionId];
                     $activePayment = $activeRegion->getPayment();
@@ -74,7 +79,7 @@
                     $enemyPlayerId = $enemyRegion->getPlayerId();
                     $enemyCountryName = $enemyRegion->getCountry()->getName();
 
-                    $venture = $this->ventureList[mt_rand(0,count($this->ventureList)-1)];
+                    $venture = $this->speculationValues[mt_rand(0,count($this->speculationValues)-1)];
 
                     $hasPlayerWon = $activePayment->isBuyable($enemyPayment, $venture);
         
@@ -84,9 +89,9 @@
 
                         $purchasePrice = $activeRegion->occupyRegion($enemyRegion);
                         
-                        $_SESSION['listOfBanks'][$enemyPlayerId]->placeMoney($purchasePrice);
+                        $this->bankList[$enemyPlayerId]->placeMoney($purchasePrice);
 
-                        $enemyBankCapital = $_SESSION['listOfBanks'][$enemyPlayerId]->getCapital();
+                        $enemyBankCapital = $this->bankList[$enemyPlayerId]->getCapital();
 
                         $this->handleResponse(array("attackCountry" => true,
                                                     "spendMoney" => false,
@@ -135,21 +140,21 @@
 
                     if($action == "payOff" ||  (isset($_GET['bankstate']) && trim($_GET['bankstate']) == Bank::PAY_OFF)  ) {
                         // HACK!!!!!!!!!!! state wird für human player 2 mal gesetzt!!!
-                        $_SESSION['listOfBanks'][$playerId]->setState(Bank::PAY_OFF);
-                        $_SESSION['listOfBanks'][$playerId]->payOff($regions[$regionId]->getPayment());
+                        $this->bankList[$playerId]->setState(Bank::PAY_OFF);
+                        $this->bankList[$playerId]->payOff($regions[$regionId]->getPayment());
 
                     }
                    else if($action == "deposit" ||  (isset($_GET['bankstate']) && trim($_GET['bankstate']) == Bank::DEPOSIT)  ) {
                        // HACK!!!!!!!!!!! state wird für human player 2 mal gesetzt!!!
-                       $_SESSION['listOfBanks'][$playerId]->setState(Bank::DEPOSIT);
-                       $_SESSION['listOfBanks'][$playerId]->deposit($regions[$regionId]->getPayment());
+                       $this->bankList[$playerId]->setState(Bank::DEPOSIT);
+                       $this->bankList[$playerId]->deposit($regions[$regionId]->getPayment());
                     }
 
                     $country = $regions[$regionId]->getCountry();
                     $paymentValue = $regions[$regionId]->getPayment()->getValue() * $regions[$regionId]->getPayment()->getCurrencyTranslation();
 
 
-                    $bankCapital = $_SESSION['listOfBanks'][$playerId]->getCapital();
+                    $bankCapital = $this->bankList[$playerId]->getCapital();
         
                     $this->handleResponse(array("attackCountry" => false,
                                             "spendMoney" => true,
@@ -180,9 +185,9 @@
         function activateAI($nextPlayer) {
             
             /* vielleicht erst nötig wenn das weiterschalten der spieler funktioniert
-           foreach($_SESSION['listOfBanks'] as $bank){
+           foreach($this->bankList as $bank){
                */
-           $_SESSION['listOfBanks'][0]->setState(Bank::DEPOSIT);
+           $this->bankList[0]->setState(Bank::DEPOSIT);
                 /*$bank->setState(Bank::DEPOSIT);
            }*/
             
@@ -297,6 +302,22 @@
            unset($this->incident);
 
             echo json_encode($json);
+        }
+
+        public function setBankList($bankList) {
+            $this->bankList = $bankList;
+        }
+
+        public function getBankList() {
+            return $this->bankList;
+        }
+
+        public function setNextPlayerCounter($nextPlayerCounter) {
+            $this->nextPlayerCounter = $nextPlayerCounter;
+        }
+
+        public function getNextPlayerCounter() {
+            return $this->nextPlayerCounter;
         }
     }
 

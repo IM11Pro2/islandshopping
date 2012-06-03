@@ -38,7 +38,8 @@
                         // if neighbour region has equal money
                         else {
                             // if there is minimum half of the startcapital of money on the bank -- pay off
-                            if($_SESSION['listOfBanks'][$this->playerId]->getPlainCapital() > (START_CAPITAL_COUNTRY/3)){
+                            $bankList = $_SESSION['state']->getBankList();
+                            if($bankList[$this->playerId]->getPlainCapital() > (START_CAPITAL_COUNTRY/3)){
                                 array_push($possibleDecisions, array("payOff" => $actualRegionId));
                             }
                             else {

@@ -40,7 +40,8 @@ class IncidentGenerator
 
             if(self::BANK_INCIDENT == $incidentType){
 
-                $bank = $_SESSION['listOfBanks'][mt_rand(0, (count($_SESSION['listOfBanks']) -1))];
+                $bankList = $_SESSION['state']->getBankList();
+                $bank = $bankList[mt_rand(0, (count($bankList) -1))];
 
                 $this->incidentEvent = new GlobalBankEvent($message, $bank);
 
@@ -58,7 +59,8 @@ class IncidentGenerator
         }
         else if(self::LOCAL_INCIDENT == $level){
 
-            $bank = $_SESSION['listOfBanks'][mt_rand(0, (count($_SESSION['listOfBanks']) -1))];
+            $bankList = $_SESSION['state']->getBankList();
+            $bank = $bankList[mt_rand(0, (count($bankList) -1))];
 
             $isPositive = $this->boolList[mt_rand(0, (count($this->boolList) -1))];
 
@@ -71,8 +73,6 @@ class IncidentGenerator
             $this->incidentEvent = new LocalIncidentEvent($message, $bank, $isPositive);
 
         }
-
-
 
         // calculates when the incident occurs, relative to the acctual move
         $this->numberOfMoves = mt_rand(MIN_MOVES_FOR_INCIDENT, MAX_MOVES_FOR_INCIDENT);
