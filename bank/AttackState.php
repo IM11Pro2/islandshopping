@@ -1,7 +1,7 @@
 <?php
     class AttackState implements IBankState{
 
-        public function depositMoney(IPayment $capital) {
+        public function depositMoney(IPayment $capital, $value) {
             // do nothing: bank is inactive
             return 0;
         }

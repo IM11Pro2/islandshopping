@@ -66,23 +66,27 @@
             return $this->payment;
         }
 
-        public function occupyRegion(Region $enemyRegion){
+        public function buyRegion(Region $enemyRegion){
             $purchase = $enemyRegion->getPayment()->getValue();
+
+            $purchasePayment = new Payment();
+            $purchasePayment->setValue($purchase);
+            $purchasePayment->setCurrency($enemyRegion->getCountry()->getName());
+            $purchasePayment->setCurrencyTranslation($enemyRegion->getCountry()->getName());
 
             $enemyRegion->setPlayerId($this->playerId);
             $enemyRegion->setCountry($this->country);
             $enemyRegion->setColor($this->color);
-
-            $af = ($this->payment->getValue()- $purchase - BASIC_CAPITAL_REGION);
-
-            $enemyRegion->getPayment()->setValue(   $af  );
-
-            $this->payment->setValue(BASIC_CAPITAL_REGION);
-
             $enemyRegion->getPayment()->setCurrency($this->country->getName());
             $enemyRegion->getPayment()->setCurrencyTranslation($this->country->getName());
 
-            return $purchase;
+            // new paymentvalue of the bought region
+            $transferValue = ($this->payment->getValue()- $purchase - BASIC_CAPITAL_REGION);
+            $enemyRegion->getPayment()->setValue($transferValue);
+
+            $this->payment->setValue(BASIC_CAPITAL_REGION);
+
+            return $purchasePayment;
         }
 
         public static function resetRegionId() {

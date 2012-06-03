@@ -70,6 +70,10 @@
         public function getRegions(){
             return $this->regions;
         }
+
+        public function getRegion($regionId){
+            return $this->regions[$regionId];
+        }
     }
 
 ?>

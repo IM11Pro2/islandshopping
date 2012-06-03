@@ -1,7 +1,7 @@
 <?php
     class PayOffState implements IBankState{
 
-        public function depositMoney(IPayment $capital){
+        public function depositMoney(IPayment $capital, $value){
             return 0;
         }
 

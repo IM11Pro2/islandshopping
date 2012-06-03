@@ -38,7 +38,6 @@
             }
 
             $_SESSION['state'] = $this;
-            //$_SESSION['nextPlayerCounter'] =  $this->nextPlayerCounter;
 
             $this->speculationValues = getSpeculationValues();
 
@@ -50,45 +49,43 @@
         function endState() {
             GameEventManager::getInstance()->dispatchEvent(new ChangeViewEvent(new EndOfPlayStateView()));
             //next state übergeben
-            GameEventManager::getInstance()->dispatchEvent(new ChangeStateEvent(new EndOfPlayState() /*,session_id()*/));
+            GameEventManager::getInstance()->dispatchEvent(new ChangeStateEvent(new EndOfPlayState()));
         }
 
         function getApplicationStateType() {
             return self::ApplicationStateType;
         }
 
-        function attackCountry($attackingRegionId, $enemyId){
+        function tryToBuyRegion($attackingRegionId, $enemyId){
                     header('Content-type: application/json');
 
                     $regionId = $attackingRegionId;
         
                     $map = $_SESSION['map'];
-                    $regions = $map->getRegions();
 
-                    // HACK!!!!!!!!!!! state wird für human player 2 mal gesetzt!!!
-                    $playerId = $regions[$regionId]->getPlayerId();
-                    $this->bankList[$playerId]->setState(Bank::ATTACK);
+                    $activeRegion = $map->getRegion($regionId);
+                    $activePayment = $map->getRegion($regionId)->getPayment();
 
-                    $activeRegion = $regions[$regionId];
-                    $activePayment = $activeRegion->getPayment();
-        
-                    $enemyRegion = $regions[$enemyId];
+                    $playerId = $activeRegion->getPlayerId();
+
+                    $enemyRegion = $map->getRegion($enemyId);
                     $enemyPayment = $enemyRegion->getPayment();
             
                     $enemyPlayerId = $enemyRegion->getPlayerId();
                     $enemyCountryName = $enemyRegion->getCountry()->getName();
 
-                    $venture = $this->speculationValues[mt_rand(0,count($this->speculationValues)-1)];
+                    $speculationValue = $this->speculationValues[mt_rand(0,count($this->speculationValues)-1)];
 
-                    $hasPlayerWon = $activePayment->isBuyable($enemyPayment, $venture);
+                    $hasPlayerWon = $activePayment->isBuyable($enemyPayment, $speculationValue);
         
                     if($hasPlayerWon){
 
-                        $activePayment->setValue( ($activePayment->getValue() * $venture) );
+                        $activePayment->setValue( ($activePayment->getValue() * $speculationValue) );
 
-                        $purchasePrice = $activeRegion->occupyRegion($enemyRegion);
+                        $purchasePayment = $activeRegion->buyRegion($enemyRegion);
                         
-                        $this->bankList[$enemyPlayerId]->placeMoney($purchasePrice);
+                        //$this->bankList[$enemyPlayerId]->placeMoney($purchasePrice); /*!!!!!!!!*/
+                        $this->bankList[$enemyPlayerId]->deposit($purchasePayment, true);
 
                         $enemyBankCapital = $this->bankList[$enemyPlayerId]->getCapital();
 
@@ -100,7 +97,7 @@
                                                                             "paymentValue" => $activePayment->getValue(),
                                                                             "currencyTranslation" => $activePayment->getCurrencyTranslation(),
                                                                             "regionId" => $regionId,
-                                                                            "ventureValue" => $venture),
+                                                                            "ventureValue" => $speculationValue),
                                                     "enemyRegion" => array(
                                                     "regionId" => $enemyId,
                                                     "regionOfPlayer" => $enemyRegion->getPlayerId(),
@@ -125,7 +122,7 @@
                                                                             "paymentValue" => $activePayment->getValue(),
                                                                             "currencyTranslation" => $activePayment->getCurrencyTranslation(),
                                                                             "regionId" => $regionId,
-                                                                            "ventureValue" => $venture)));
+                                                                            "ventureValue" => $speculationValue)));
                     }
                 }
         
@@ -146,7 +143,7 @@
                    else if($action == "deposit" ||  (isset($_GET['bankstate']) && trim($_GET['bankstate']) == Bank::DEPOSIT)  ) {
                        // HACK!!!!!!!!!!! state wird für human player 2 mal gesetzt!!!
                        $this->bankList[$playerId]->setState(Bank::DEPOSIT);
-                       $this->bankList[$playerId]->deposit($regions[$regionId]->getPayment());
+                       $this->bankList[$playerId]->deposit($regions[$regionId]->getPayment(), false);
                     }
 
                     $country = $regions[$regionId]->getCountry();
@@ -180,7 +177,7 @@
                                    "nextPlayerId" => $nextPlayerId));
         }
 
-        function activateAI($nextPlayer) {
+        function activateAI($aiPlayerId) {
             
             /* vielleicht erst nötig wenn das weiterschalten der spieler funktioniert
            foreach($this->bankList as $bank){
@@ -191,14 +188,13 @@
             
            $map = $_SESSION['map'];
            $regions = $map->getRegions();
-           $allEnemyRegions = array();
+           $allAiPlayerRegions = array();
 
-           $enemy = $_SESSION['activePlayers'][$nextPlayer];
-           $enemyId = $enemy->getPlayerId();
+           $aiPlayer = $_SESSION['activePlayers'][$aiPlayerId];
 
            for($i = 0; $i < count($regions); $i++){
-               if ($regions[$i]->getPlayerId() == $enemyId){
-                   array_push($allEnemyRegions, $regions[$i]);
+               if ($regions[$i]->getPlayerId() == $aiPlayerId){
+                   array_push($allAiPlayerRegions, $regions[$i]);
                }
            }
 
@@ -208,18 +204,22 @@
                $_SESSION['incidentGenerator']->generateIncident();
            }
 
-           $decision = $enemy->makeDecision($allEnemyRegions, $regions);
+           $decision = $aiPlayer->makeDecision($allAiPlayerRegions, $regions);
 
            if(array_key_exists("attack", $decision)){
-               $_SESSION['state']->attackCountry($decision["actualRegionId"], $decision["attack"]);
+               $this->bankList[$aiPlayerId]->setState(Bank::ATTACK);
+               $_SESSION['state']->tryToBuyRegion($decision["actualRegionId"], $decision["attack"]);
            }
            else if (array_key_exists("payOff", $decision)){
+               $this->bankList[$aiPlayerId]->setState(Bank::PAY_OFF);
                $_SESSION['state']->spendMoney($decision["payOff"], "payOff");
            }
            else if (array_key_exists("nextPlayer", $decision)){
+               $this->bankList[$aiPlayerId]->setState(Bank::DEPOSIT);
                $_SESSION['state']->nextPlayer();
            }
            else if (array_key_exists("deposit", $decision)){
+               $this->bankList[$aiPlayerId]->setState(Bank::DEPOSIT);
               $_SESSION['state']->spendMoney($decision["deposit"], "deposit");
            }
         }
@@ -254,7 +254,7 @@
                        }
        
                        if(isset($_GET['region']) && isset($_GET['enemy'])){
-                           $_SESSION['state']->attackCountry(trim($_GET['region']), trim($_GET['enemy']));
+                           $_SESSION['state']->tryToBuyRegion(trim($_GET['region']), trim($_GET['enemy']));
                        }
        
                        if(isset($_GET['nextPlayer'])){

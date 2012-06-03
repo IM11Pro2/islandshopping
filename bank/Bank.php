@@ -45,10 +45,18 @@
             return $this->type;
         }
 
-        public function deposit(IPayment $entryPayment){
+        public function deposit(IPayment $entryPayment, $isPurchase){
 
-            if(($entryPayment->getValue()-BASIC_CAPITAL_REGION) >= BASIC_CAPITAL_REGION){
-                $entryPayment->reduceValue( $this->bankState->depositMoney($this->capital) );
+            if($isPurchase){
+                $entryPayment->reduceValue( $this->bankState->depositMoney($this->capital, $entryPayment->getValue()) );
+            }
+            else{
+
+                if(($entryPayment->getValue()-BASIC_CAPITAL_REGION) >= BASIC_CAPITAL_REGION){
+
+                    $entryPayment->reduceValue( $this->bankState->depositMoney($this->capital, BASIC_CAPITAL_REGION) );
+
+                }
             }
         }
 
