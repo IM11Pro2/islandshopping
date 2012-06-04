@@ -162,15 +162,26 @@
         function nextPlayer() {
             header('Content-type: application/json');
 
-            $this->nextPlayerCounter++;
-            $this->nextPlayerCounter = $this->nextPlayerCounter % $this->numberOfPlayers;
+            $this->playerList[$this->nextPlayerCounter]->setPlayerState(IPlayer::INACTIVE);
 
-            $nextPlayerId = $this->nextPlayerCounter;
+            $nextPlayerId = $this->getNextPlayerId();
+
+            $this->playerList[$nextPlayerId]->setPlayerState(IPlayer::ACTIVE);
 
             echo json_encode(array("attackCountry" => false,
                                    "spendMoney" => false,
                                    "nextPlayer" => true,
                                    "nextPlayerId" => $nextPlayerId));
+        }
+
+        private function getNextPlayerId(){
+            do{
+                $this->nextPlayerCounter++;
+                $this->nextPlayerCounter = $this->nextPlayerCounter % $this->numberOfPlayers;
+
+            }while($this->playerList[$this->nextPlayerCounter]->getPlayerState() == IPlayer::GAME_OVER );
+
+            return $this->nextPlayerCounter;
         }
 
         function activateAI($aiPlayerId) {
@@ -194,30 +205,36 @@
                }
            }
 
+            if(count($allAiPlayerRegions) == 0){
+                $this->playerList[$aiPlayerId]->setPlayerState(IPlayer::GAME_OVER);
+                $_SESSION['state']->nextPlayer();
+            }
+            else{
            //print_r($allEnemyRegions);
 
-           if(!$_SESSION['incidentGenerator']->isIncidentActive()){
-               $_SESSION['incidentGenerator']->generateIncident();
-           }
+               if(!$_SESSION['incidentGenerator']->isIncidentActive()){
+                   $_SESSION['incidentGenerator']->generateIncident();
+               }
 
-           $decision = $aiPlayer->makeDecision($allAiPlayerRegions, $regions);
+               $decision = $aiPlayer->makeDecision($allAiPlayerRegions, $regions);
 
-           if(array_key_exists("attack", $decision)){
-               $this->bankList[$aiPlayerId]->setState(Bank::ATTACK);
-               $_SESSION['state']->tryToBuyRegion($decision["actualRegionId"], $decision["attack"]);
-           }
-           else if (array_key_exists("payOff", $decision)){
-               $this->bankList[$aiPlayerId]->setState(Bank::PAY_OFF);
-               $_SESSION['state']->spendMoney($decision["payOff"], "payOff");
-           }
-           else if (array_key_exists("nextPlayer", $decision)){
-               $this->bankList[$aiPlayerId]->setState(Bank::DEPOSIT);
-               $_SESSION['state']->nextPlayer();
-           }
-           else if (array_key_exists("deposit", $decision)){
-               $this->bankList[$aiPlayerId]->setState(Bank::DEPOSIT);
-              $_SESSION['state']->spendMoney($decision["deposit"], "deposit");
-           }
+               if(array_key_exists("attack", $decision)){
+                   $this->bankList[$aiPlayerId]->setState(Bank::ATTACK);
+                   $_SESSION['state']->tryToBuyRegion($decision["actualRegionId"], $decision["attack"]);
+               }
+               else if (array_key_exists("payOff", $decision)){
+                   $this->bankList[$aiPlayerId]->setState(Bank::PAY_OFF);
+                   $_SESSION['state']->spendMoney($decision["payOff"], "payOff");
+               }
+               else if (array_key_exists("nextPlayer", $decision)){
+                   $this->bankList[$aiPlayerId]->setState(Bank::DEPOSIT);
+                   $_SESSION['state']->nextPlayer();
+               }
+               else if (array_key_exists("deposit", $decision)){
+                   $this->bankList[$aiPlayerId]->setState(Bank::DEPOSIT);
+                  $_SESSION['state']->spendMoney($decision["deposit"], "deposit");
+               }
+            }
         }
 
         public static function ajaxRequest() {
@@ -254,9 +271,12 @@
                        }
        
                        if(isset($_GET['nextPlayer'])){
-                           $nextPlayerCounter = $_SESSION['state']->getNextPlayerCounter();
-                           $_SESSION['state']->setNextPlayerCounter(++$nextPlayerCounter);
-                           $_SESSION['state']->activateAI(1);
+                           //$nextPlayerCounter = $_SESSION['state']->getNextPlayerCounter();
+                           //$_SESSION['state']->setNextPlayerCounter(++$nextPlayerCounter);
+
+                           $nextPlayerId = $_SESSION['state']->getNextPlayerId();
+
+                           $_SESSION['state']->activateAI($nextPlayerId);
                        }
 
                        if(isset($_GET['newAIRequest'])){
