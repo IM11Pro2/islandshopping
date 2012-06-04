@@ -84,7 +84,6 @@
 
                         $purchasePayment = $activeRegion->buyRegion($enemyRegion);
                         
-                        //$this->bankList[$enemyPlayerId]->placeMoney($purchasePrice); /*!!!!!!!!*/
                         $this->bankList[$enemyPlayerId]->deposit($purchasePayment, true);
 
                         $enemyBankCapital = $this->bankList[$enemyPlayerId]->getCapital();
@@ -135,19 +134,15 @@
                     $playerId = $regions[$regionId]->getPlayerId();
 
                     if($action == "payOff" ||  (isset($_GET['bankstate']) && trim($_GET['bankstate']) == Bank::PAY_OFF)  ) {
-                        // HACK!!!!!!!!!!! state wird für human player 2 mal gesetzt!!!
-                        $this->bankList[$playerId]->setState(Bank::PAY_OFF);
                         $this->bankList[$playerId]->payOff($regions[$regionId]->getPayment());
 
                     }
                    else if($action == "deposit" ||  (isset($_GET['bankstate']) && trim($_GET['bankstate']) == Bank::DEPOSIT)  ) {
-                       // HACK!!!!!!!!!!! state wird für human player 2 mal gesetzt!!!
-                       $this->bankList[$playerId]->setState(Bank::DEPOSIT);
                        $this->bankList[$playerId]->deposit($regions[$regionId]->getPayment(), false);
                     }
 
                     $country = $regions[$regionId]->getCountry();
-                    $paymentValue = $regions[$regionId]->getPayment()->getValue() * $regions[$regionId]->getPayment()->getCurrencyTranslation();
+                    $paymentValue = $regions[$regionId]->getPayment()->__toString();
 
 
                     $bankCapital = $this->bankList[$playerId]->getCapital();
@@ -168,8 +163,9 @@
             header('Content-type: application/json');
 
             $this->nextPlayerCounter++;
+            $this->nextPlayerCounter = $this->nextPlayerCounter % $this->numberOfPlayers;
 
-            $nextPlayerId = $this->nextPlayerCounter % $this->numberOfPlayers;
+            $nextPlayerId = $this->nextPlayerCounter;
 
             echo json_encode(array("attackCountry" => false,
                                    "spendMoney" => false,

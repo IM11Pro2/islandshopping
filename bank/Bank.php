@@ -104,7 +104,7 @@
 
         if(isset($_GET['bankstate'])){
             $bankList = $_SESSION['state']->getBankList();
-            $banksList[0]->setState($_GET['bankstate']);
+            $bankList[0]->setState($_GET['bankstate']);
         }
     }
 
