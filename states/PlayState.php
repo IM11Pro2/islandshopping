@@ -185,55 +185,66 @@
         }
 
         function activateAI($aiPlayerId) {
-            
-            /* vielleicht erst nötig wenn das weiterschalten der spieler funktioniert
-           foreach($this->bankList as $bank){
-               */
-           $this->bankList[0]->setState(Bank::DEPOSIT);
-                /*$bank->setState(Bank::DEPOSIT);
-           }*/
-            
-           $map = $_SESSION['map'];
-           $regions = $map->getRegions();
-           $allAiPlayerRegions = array();
 
-           $aiPlayer = $_SESSION['activePlayers'][$aiPlayerId];
+            if($this->playerList[$aiPlayerId]->getPlayerState() != IPlayer::GAME_OVER){
 
-           for($i = 0; $i < count($regions); $i++){
-               if ($regions[$i]->getPlayerId() == $aiPlayerId){
-                   array_push($allAiPlayerRegions, $regions[$i]);
+                //vielleicht erst nötig wenn das weiterschalten der spieler funktioniert
+               foreach($this->bankList as $bank){
+
+               //$this->bankList[0]->setState(Bank::DEPOSIT);
+                    $bank->setState(Bank::DEPOSIT);
                }
-           }
 
-            if(count($allAiPlayerRegions) == 0){
-                $this->playerList[$aiPlayerId]->setPlayerState(IPlayer::GAME_OVER);
-                $_SESSION['state']->nextPlayer();
+               $map = $_SESSION['map'];
+               $regions = $map->getRegions();
+               $allAiPlayerRegions = array();
+
+               $aiPlayer = $_SESSION['activePlayers'][$aiPlayerId];
+
+               for($i = 0; $i < count($regions); $i++){
+                   if ($regions[$i]->getPlayerId() == $aiPlayerId){
+                       array_push($allAiPlayerRegions, $regions[$i]);
+                   }
+               }
+
+                if(count($allAiPlayerRegions) == 0){
+                    $this->playerList[$aiPlayerId]->setPlayerState(IPlayer::GAME_OVER);
+                    $this->nextPlayer();
+                }
+                else{
+               //print_r($allEnemyRegions);
+
+                   if(!$_SESSION['incidentGenerator']->isIncidentActive()){
+                       $_SESSION['incidentGenerator']->generateIncident();
+                   }
+
+                   $decision = $aiPlayer->makeDecision($allAiPlayerRegions, $regions);
+
+                    $this->doDecision($aiPlayerId, $decision);
+
+                }
             }
-            else{
-           //print_r($allEnemyRegions);
+            else {
+                $this->nextPlayer();
+            }
+        }
 
-               if(!$_SESSION['incidentGenerator']->isIncidentActive()){
-                   $_SESSION['incidentGenerator']->generateIncident();
-               }
-
-               $decision = $aiPlayer->makeDecision($allAiPlayerRegions, $regions);
-
-               if(array_key_exists("attack", $decision)){
-                   $this->bankList[$aiPlayerId]->setState(Bank::ATTACK);
-                   $_SESSION['state']->tryToBuyRegion($decision["actualRegionId"], $decision["attack"]);
-               }
-               else if (array_key_exists("payOff", $decision)){
-                   $this->bankList[$aiPlayerId]->setState(Bank::PAY_OFF);
-                   $_SESSION['state']->spendMoney($decision["payOff"], "payOff");
-               }
-               else if (array_key_exists("nextPlayer", $decision)){
-                   $this->bankList[$aiPlayerId]->setState(Bank::DEPOSIT);
-                   $_SESSION['state']->nextPlayer();
-               }
-               else if (array_key_exists("deposit", $decision)){
-                   $this->bankList[$aiPlayerId]->setState(Bank::DEPOSIT);
-                  $_SESSION['state']->spendMoney($decision["deposit"], "deposit");
-               }
+        public function doDecision($aiPlayerId, $decision){
+            if(array_key_exists("attack", $decision)){
+                $this->bankList[$aiPlayerId]->setState(Bank::ATTACK);
+                $this->tryToBuyRegion($decision["actualRegionId"], $decision["attack"]);
+            }
+            else if(array_key_exists("payOff", $decision)) {
+                $this->bankList[$aiPlayerId]->setState(Bank::PAY_OFF);
+                $this->spendMoney($decision["payOff"], "payOff");
+            }
+            else if(array_key_exists("nextPlayer", $decision)) {
+                $this->bankList[$aiPlayerId]->setState(Bank::DEPOSIT);
+                $this->nextPlayer();
+            }
+            else if(array_key_exists("deposit", $decision)) {
+                $this->bankList[$aiPlayerId]->setState(Bank::DEPOSIT);
+                $this->spendMoney($decision["deposit"], "deposit");
             }
         }
 
@@ -271,16 +282,12 @@
                        }
        
                        if(isset($_GET['nextPlayer'])){
-                           //$nextPlayerCounter = $_SESSION['state']->getNextPlayerCounter();
-                           //$_SESSION['state']->setNextPlayerCounter(++$nextPlayerCounter);
-
                            $nextPlayerId = $_SESSION['state']->getNextPlayerId();
 
                            $_SESSION['state']->activateAI($nextPlayerId);
                        }
 
                        if(isset($_GET['newAIRequest'])){
-
                            $nextPlayerCounter = $_SESSION['state']->getNextPlayerCounter();
                            $numberOfPlayers = count($_SESSION['activePlayers']);
 

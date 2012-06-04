@@ -59,6 +59,8 @@ $(document).ready(function(){
     });
 
     $('body').on('click',':button[name="NextPlayerSubmit"]',function (event) {
+        $('input:radio[name="bankstate"][value="<?php echo Bank::DEPOSIT ?>"]').attr('checked','checked');
+        resetElements(event);
         sendAjaxRequest("../states/PlayState.php", {handle: "PlayState", nextPlayer: "nextPlayer", <?php  echo session_name().': '.'"'.session_id().'"'; ?>}, false);
     });
 
@@ -122,10 +124,8 @@ $(document).ready(function(){
 
             activeRegion = false;
         }
-
-
-
     }
+
 
     function activateRegions(){
         paper.forEach(function (el) {
