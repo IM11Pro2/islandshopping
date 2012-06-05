@@ -114,7 +114,7 @@
                                                     "spendMoney" => false,
                                                     "nextPlayer" => false,
                                                     "playerId" => $playerId,
-                            "enemyRegion" => array("regionId" => $enemyId),
+                                                    "enemyRegion" => array("regionId" => $enemyId),
                                                     "activeRegion" => array("hasWon"=> $hasPlayerWon,
                                                                             "payment" => $activePayment->__toString(),
                                                                             "regionId" => $regionId,
