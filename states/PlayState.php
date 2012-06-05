@@ -188,24 +188,17 @@
 
             if($this->playerList[$aiPlayerId]->getPlayerState() != IPlayer::GAME_OVER){
 
-                //vielleicht erst nötig wenn das weiterschalten der spieler funktioniert
                foreach($this->bankList as $bank){
-
-               //$this->bankList[0]->setState(Bank::DEPOSIT);
                     $bank->setState(Bank::DEPOSIT);
                }
 
                $map = $_SESSION['map'];
-               $regions = $map->getRegions();
-               $allAiPlayerRegions = array();
+
+               //$allAiPlayerRegions = array();
 
                $aiPlayer = $_SESSION['activePlayers'][$aiPlayerId];
 
-               for($i = 0; $i < count($regions); $i++){
-                   if ($regions[$i]->getPlayerId() == $aiPlayerId){
-                       array_push($allAiPlayerRegions, $regions[$i]);
-                   }
-               }
+                $allAiPlayerRegions = $map->getRegionsForPlayerId($aiPlayerId);
 
                 if(count($allAiPlayerRegions) == 0){
                     $this->playerList[$aiPlayerId]->setPlayerState(IPlayer::GAME_OVER);
@@ -217,7 +210,7 @@
                    if(!$_SESSION['incidentGenerator']->isIncidentActive()){
                        $_SESSION['incidentGenerator']->generateIncident();
                    }
-
+                   $regions = $map->getRegions();
                    $decision = $aiPlayer->makeDecision($allAiPlayerRegions, $regions);
 
                     $this->doDecision($aiPlayerId, $decision);

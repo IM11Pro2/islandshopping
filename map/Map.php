@@ -67,6 +67,17 @@
             return $regionsOfPlayer;
         }
 
+        public function getRegionsForPlayerId($playerId){
+            $regionsOfPlayer = array();
+            foreach($this->regions as $region) {
+                if($region->getPlayerId() == $playerId) {
+                    array_push($regionsOfPlayer, $region);
+                }
+            }
+
+            return $regionsOfPlayer;
+        }
+
         public function getRegions(){
             return $this->regions;
         }
