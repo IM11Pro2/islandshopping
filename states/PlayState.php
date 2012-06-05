@@ -93,19 +93,17 @@
                                                     "nextPlayer" => false,
                                                     "playerId" => $playerId,
                                                     "activeRegion" => array("hasWon"=> $hasPlayerWon,
-                                                                            "paymentValue" => $activePayment->getValue(),
-                                                                            "currencyTranslation" => $activePayment->getCurrencyTranslation(),
+                                                                            "payment" => $activePayment->__toString(),
                                                                             "regionId" => $regionId,
                                                                             "ventureValue" => $speculationValue),
                                                     "enemyRegion" => array(
-                                                    "regionId" => $enemyId,
-                                                    "regionOfPlayer" => $enemyRegion->getPlayerId(),
-                                                    "countryColor" => $enemyRegion->getColor(),
-                                                    "paymentValue" => $enemyPayment->getValue(),
-                                                    "currencyTranslation" => $enemyPayment->getCurrencyTranslation()),
-                                                    
+                                                                            "regionId" => $enemyId,
+                                                                            "regionOfPlayer" => $enemyRegion->getPlayerId(),
+                                                                            "countryColor" => $enemyRegion->getColor(),
+                                                                            "payment" => $enemyPayment->__toString()),
+
                                                     "enemyBank" => array("bankName" => $enemyCountryName."Bank",
-                                                    "bankCapital" => $enemyBankCapital)
+                                                                        "bankCapital" => $enemyBankCapital)
                                                 ));
 
                     }
@@ -118,8 +116,7 @@
                                                     "playerId" => $playerId,
                             "enemyRegion" => array("regionId" => $enemyId),
                                                     "activeRegion" => array("hasWon"=> $hasPlayerWon,
-                                                                            "paymentValue" => $activePayment->getValue(),
-                                                                            "currencyTranslation" => $activePayment->getCurrencyTranslation(),
+                                                                            "payment" => $activePayment->__toString(),
                                                                             "regionId" => $regionId,
                                                                             "ventureValue" => $speculationValue)));
                     }

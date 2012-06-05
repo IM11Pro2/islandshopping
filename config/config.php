@@ -48,8 +48,8 @@
     }
 
     //Defines the interval after how many moves an incident occurs
-    define("MIN_MOVES_FOR_INCIDENT", PHP_INT_MAX-1);
-    define("MAX_MOVES_FOR_INCIDENT", PHP_INT_MAX);
+    define("MIN_MOVES_FOR_INCIDENT", 0);
+    define("MAX_MOVES_FOR_INCIDENT", 1);
 
     define("BANK_ROBBERY", 0.5); // p/100 of lost bankcapital
 
@@ -202,7 +202,7 @@
                                 'Map'                         => '../map/Map.php',
                                 'Region'                      => '../map/Region.php',
                                 'RegionGraph'                 => '../map/RegionGraph.php',
-                                'GraphNode'                 => '../map/RegionGraph.php',
+                                'GraphNode'                   => '../map/RegionGraph.php',
 
                                 'IPayment'                    => '../payments/IPayment.php',
                                 'Payment'                     => '../payments/Payment.php',

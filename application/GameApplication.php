@@ -32,7 +32,6 @@ class GameApplication implements IEventListener
 
         if($event->getEventType() == ChangeStateEvent::TYPE){
             $this->state = $event->getState();
-            //session_id($event->getSessionId());
             $this->state->init();
         }
     }

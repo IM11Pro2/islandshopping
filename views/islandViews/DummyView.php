@@ -61,11 +61,9 @@
                     circle.attr("title", "<?php echo $regions[$i]->getRegionId(); ?>");
 
                     text = paper.text(  <?php echo $this->coordinates[$i]['x']?>,
-                                        <?php echo $this->coordinates[$i]['y']?>,
-                                        '<?php /*echo $this->calculateRegionValue($regions[$i]->getRegionId())*/ ?>');
+                                        <?php echo $this->coordinates[$i]['y']?>, '');
                     text.data('text', '<?php echo $regions[$i]->getRegionId(); ?>');
                     text.data('value', '<?php echo $regions[$i]->getPayment()->__toString(); ?>');
-                    //text.node.setAttribute('data-text', '<?php /*echo $regions[$i]->getRegionId(); */?>')
 
                     <?php
                 }

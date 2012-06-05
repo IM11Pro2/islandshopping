@@ -7,25 +7,27 @@
         <?php
             $playersArray = $_SESSION['activePlayers'];
             $name = $playersArray[0]->getCountry()->getName();
-            $value = $playersArray[0]->getCountry()->getPayment()->getValue();
+            $bankCapital = $playersArray[0]->getCountry()->getPayment();
             $currency = $playersArray[0]->getCountry()->getPayment()->getCurrency();
             $translation = $playersArray[0]->getCountry()->getPayment()->getCurrencyTranslation();
             $color = $playersArray[0]->getCountry()->getColor();
             ?>
             <?php
-            echo "<font color='".$color."'>" . $name . "</font>:  <span id=\"".$name."Bank\">" . $value * $translation . "</span>  " . $currency;
+/*            echo "<font color='".$color."'>" . $name . "</font>:  <span id=\"".$name."Bank\">" . $value * $translation . "</span>  " . $currency;*/
+              echo "<font color='".$color."'>" . $name . "</font>:  <span id=\"".$name."Bank\">" . $bankCapital . "</span>  ";
+
 
             ?>
         <h3>Kapital der Gegner</h3>
         <?php
             for($i = 1; $i < count($playersArray); $i++) {
                 $enemyName = $playersArray[$i]->getCountry()->getName();
-                $enemyValue = $playersArray[$i]->getCountry()->getPayment()->getValue();
+                $enemyBankCapital = $playersArray[$i]->getCountry()->getPayment();
                 $enemyCurrency[$i] = $playersArray[$i]->getCountry()->getPayment()->getCurrency();
                 $enemyTranslation[$i] = $playersArray[$i]->getCountry()->getPayment()->getCurrencyTranslation();
                 $enemyColor[$i] = $playersArray[$i]->getCountry()->getCOlor();
 
-                echo "<font color='".$enemyColor[$i]."'>". $enemyName . "</font>:  <span id=\"".$enemyName."Bank\" >" . $enemyValue * $enemyTranslation[$i] . "</span> " . $enemyCurrency[$i] . "<br />";
+                echo "<font color='".$enemyColor[$i]."'>". $enemyName . "</font>:  <span id=\"".$enemyName."Bank\" >" . $enemyBankCapital . "</span> <br />";
             }
             ?>
         <h3>Wechselkurse</h3>

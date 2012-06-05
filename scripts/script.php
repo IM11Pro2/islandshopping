@@ -23,7 +23,7 @@ function sendAjaxRequest(url, data, getAsJSON){
 
 $(document).ready(function(){
 
-
+    activeRegion = false;
 
     $('input:checkbox[name="enemyCountries[]"]').click(function(event){
         if($('input:checked').length > 0){
@@ -102,7 +102,7 @@ $(document).ready(function(){
                 sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getNeigbours: regionId, <?php  echo session_name().': '.'"'.session_id().'"'; ?>},true);
             }
         }
-        else if(activeRegion == true){
+        else if(activeRegion){
             for(var i = 0; i < activeNeighbours.length; i++) {
                 if (activeElement.data("region") == activeNeighbours[i]){
                     sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", region: activeRegionId ,enemy: this.data("region"), <?php  echo session_name().': '.'"'.session_id().'"'; ?>},true);
@@ -191,11 +191,11 @@ $(document).ready(function(){
                 }
 
                 if(el.data('text') == regionInfo.enemyRegion.regionId){
-                    el.attr('text', regionInfo.enemyRegion.paymentValue * regionInfo.enemyRegion.currencyTranslation)
+                    el.attr('text', regionInfo.enemyRegion.payment);
                 }
 
                 if(el.data('text') == regionInfo.activeRegion.regionId){
-                    el.attr('text', regionInfo.activeRegion.paymentValue * regionInfo.activeRegion.currencyTranslation)
+                    el.attr('text', regionInfo.activeRegion.payment);
                 }
 
             });
@@ -205,7 +205,7 @@ $(document).ready(function(){
         else{
             paper.forEach(function(el){
                 if(el.data('text') == regionInfo.activeRegion.regionId){
-                    el.attr('text', regionInfo.activeRegion.paymentValue * regionInfo.activeRegion.currencyTranslation)
+                    el.attr('text', regionInfo.activeRegion.payment)
                 }
             });
         }

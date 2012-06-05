@@ -5,10 +5,9 @@
 
         const PAY_OFF = "PayOffState";
         const ATTACK = "AttackState";
-        const DEPOSIT = "DEPOSIT";
+        const DEPOSIT = "Deposit";
 
-        private $basicCapitalRegion;
-        private $capital; // to do capital as payment
+        private $capital;
 
         private $bankState;
         private $bankStateList;
@@ -22,18 +21,13 @@
             $this->capital = $country->getPayment();
             $this->capital->setValue(START_CAPITAL_COUNTRY);
 
-            //$this->basicCapitalRegion = BASIC_CAPITAL_REGION;
-
-
-
             $this->bankStateList = array(
                 self::PAY_OFF => new PayOffState(),
                 self::ATTACK => new AttackState(),
-                self::DEPOSIT => new DepositState(),
-
+                self::DEPOSIT => new DepositState()
             );
-            $this->type = $initState;
-            $this->bankState = $this->bankStateList[$initState];
+
+            $this->setState($initState);
         }
 
         public function setState($state){
@@ -60,14 +54,11 @@
             }
         }
 
-        public function placeMoney($price){
-            $this->capital->addValue($price);
-        }
 
+        public function payOff(IPayment $regionPayment){
 
-        public function payOff(IPayment $entryPayment){
-
-            $entryPayment->addValue($this->bankState->payOffMoney($this->capital));
+            $moneyToAdd = $this->bankState->payOffMoney($this->capital);
+            $regionPayment->addValue( $moneyToAdd );
         }
 
         public function chargeInterest(){
@@ -83,7 +74,7 @@
         }
 
         public function getCapital(){
-            return $this->capital->getValue() * $this->capital->getCurrencyTranslation();
+            return $this->capital->__toString();
         }
 
         public function getCountry(){

@@ -15,3 +15,4 @@
             // do nothing: bank is inactive
         }
     }
+?>

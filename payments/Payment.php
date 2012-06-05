@@ -65,6 +65,8 @@
         }
 
         public function __toString(){
-            return ($this->value * $this->currencyTranslation)." ".$this->currency;
+            //return ($this->value * $this->currencyTranslation)." ".$this->currency;
+
+            return (sprintf("%01.2f", $this->value * $this->currencyTranslation) . " " . $this->currency);
         }
     }
