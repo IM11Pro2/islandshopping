@@ -8,6 +8,8 @@ function printJavaScript(){
 function sendAjaxRequest(url, data, getAsJSON){
         var type;
 
+        data.<?php  echo session_name(); ?> = "<?php echo session_id(); ?>";
+
         if(getAsJSON){
             type = "json";
         }
@@ -27,41 +29,41 @@ $(document).ready(function(){
 
     $('input:checkbox[name="enemyCountries[]"]').click(function(event){
         if($('input:checked').length > 0){
-            sendAjaxRequest("../states/MenuState.php", {handle: "MenuState", enemycountry: $(this).parent().text(), <?php  echo session_name().': '.'"'.session_id().'"'; ?>}, false);
+            sendAjaxRequest("../states/MenuState.php", {handle: "MenuState", enemycountry: $(this).parent().text()}, false);
         }
     });
 
 
     $('input:radio[name="playerCountry"]').click(function(event) {
         if($('input:checked').length > 0){
-            sendAjaxRequest("../states/MenuState.php", {handle: "MenuState", playercountry: $(this).parent().text(), <?php  echo session_name().': '.'"'.session_id().'"'; ?>}, false);
+            sendAjaxRequest("../states/MenuState.php", {handle: "MenuState", playercountry: $(this).parent().text()}, false);
         }
     });
 
     $('body').on('click','input:radio[name="bankstate"]', function(event) {
         resetElements(event);
         if($('input:checked').length > 0){
-            sendAjaxRequest("../bank/Bank.php", {handle: "bank", bankstate: $.trim($(this).val()) , <?php  echo session_name().': '.'"'.session_id().'"'; ?>}, false);
+            sendAjaxRequest("../bank/Bank.php", {handle: "bank", bankstate: $.trim($(this).val())}, false);
         }
     });
 
     $(':button[name="MenuSubmit"]').click(function (event) {
-        sendAjaxRequest("../states/MenuState.php", {handle: "MenuState", endState: "Menu", <?php  echo session_name().': '.'"'.session_id().'"'; ?>}, false);
+        sendAjaxRequest("../states/MenuState.php", {handle: "MenuState", endState: "Menu"}, false);
     });
 
 
     $('body').on('click',':button[name="MapSubmit"]',function (event) {
-        sendAjaxRequest("../states/MapState.php", {handle: "MapState", endState: "Map", <?php  echo session_name().': '.'"'.session_id().'"'; ?>}, false);
+        sendAjaxRequest("../states/MapState.php", {handle: "MapState", endState: "Map"}, false);
     });
 
     $('body').on('click',':button[name="MapRandom"]',function (event) {
-        sendAjaxRequest("../states/MapState.php", {handle: "MapState", randomizeMap: "randomizeMap", <?php  echo session_name().': '.'"'.session_id().'"'; ?>}, false);
+        sendAjaxRequest("../states/MapState.php", {handle: "MapState", randomizeMap: "randomizeMap"}, false);
     });
 
     $('body').on('click',':button[name="NextPlayerSubmit"]',function (event) {
         $('input:radio[name="bankstate"][value="<?php echo Bank::DEPOSIT ?>"]').attr('checked','checked');
         resetElements(event);
-        sendAjaxRequest("../states/PlayState.php", {handle: "PlayState", nextPlayer: "nextPlayer", <?php  echo session_name().': '.'"'.session_id().'"'; ?>}, false);
+        sendAjaxRequest("../states/PlayState.php", {handle: "PlayState", nextPlayer: "nextPlayer"}, false);
     });
 
     function activeElementHandler(){
@@ -92,23 +94,25 @@ $(document).ready(function(){
             var regionId = activeElement.data('region');
             activeRegionId = regionId;
             if($('input:radio[name="bankstate"]:checked').val() == "<?php echo Bank::PAY_OFF ?>" ){
-                sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getCountry: regionId, bankstate: "<?php echo Bank::PAY_OFF ?>", <?php  echo session_name().': '.'"'.session_id().'"'; ?>},true);
+                sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getCountry: regionId, bankstate: "<?php echo Bank::PAY_OFF ?>"},true);
             }
             else if($('input:radio[name="bankstate"]:checked').val() == "<?php echo Bank::DEPOSIT ?>"){
-                sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getCountry: regionId, bankstate: "<?php echo Bank::DEPOSIT ?>",  <?php  echo session_name().': '.'"'.session_id().'"'; ?>},true);
+                sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getCountry: regionId, bankstate: "<?php echo Bank::DEPOSIT ?>"},true);
             }
             else if($('input:radio[name="bankstate"]:checked').val() == "<?php echo Bank::ATTACK ?>"){
                 activeRegion = true;
-                sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getNeigbours: regionId, <?php  echo session_name().': '.'"'.session_id().'"'; ?>},true);
+                sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getNeigbours: regionId},true);
             }
         }
         else if(activeRegion){
             for(var i = 0; i < activeNeighbours.length; i++) {
+
                 if (activeElement.data("region") == activeNeighbours[i]){
-                    sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", region: activeRegionId ,enemy: this.data("region"), <?php  echo session_name().': '.'"'.session_id().'"'; ?>},true);
+                    sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", region: activeRegionId ,enemy: activeElement.data("region")},true);
                     alert("ANGRIFF");
 
                 }
+
             }
         }
     }

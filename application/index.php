@@ -9,7 +9,7 @@ $_SESSION = array();
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Hallo IslandshoppAA!!</title>
+    <title>Welcome Islandshopper!!</title>
     <script type="text/javascript" src="../scripts/raphael.js"></script>
     <script type="text/javascript" src="../scripts/jquery-1.7.2.js"></script>
     <link rel="stylesheet" type="text/css" href="../styles/style.css" />
