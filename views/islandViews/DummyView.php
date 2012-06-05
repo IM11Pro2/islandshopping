@@ -64,7 +64,7 @@
                                         <?php echo $this->coordinates[$i]['y']?>,
                                         '<?php /*echo $this->calculateRegionValue($regions[$i]->getRegionId())*/ ?>');
                     text.data('text', '<?php echo $regions[$i]->getRegionId(); ?>');
-                    text.data('value', '<?php echo $this->calculateRegionValue($regions[$i]->getRegionId()) ?>');
+                    text.data('value', '<?php echo $regions[$i]->getPayment()->__toString(); ?>');
                     //text.node.setAttribute('data-text', '<?php /*echo $regions[$i]->getRegionId(); */?>')
 
                     <?php
@@ -76,9 +76,6 @@
         <?php
         }
 
-        function calculateRegionValue($regionID) {
-            return $this->regionsArray[$regionID]->getPayment()->getValue() * $this->regionsArray[$regionID]->getPayment()->getCurrencyTranslation();
-        }
     }
 
 ?>
