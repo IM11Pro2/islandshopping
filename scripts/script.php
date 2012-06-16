@@ -251,6 +251,24 @@ $(document).ready(function(){
         }
     };
 
+    function updateInterests(interests){
+        var text = "";
+
+        for(var i = 0; i < interests.length; i++){
+            if(i > 0){
+                text += " and ";
+            }
+            text += ('<span style="color:'+interests[i].color+'" >'+interests[i].countryName + '</span> got ' + interests[i].interest + ' interest');
+
+            $('#'+interests[i].bankName).text(interests[i].bankCapital);
+        }
+
+
+
+        $('#interestInfo').html(text).fadeIn('slow', function(){});
+
+    };
+
 
     $('.ajaxSuccess').ajaxSuccess(function(e, xhr, settings) {
         if(settings.url.indexOf("../states/MenuState.php")!= -1){
@@ -321,6 +339,10 @@ $(document).ready(function(){
                  renderIncidentInfo(incident.incident);
             }
 
+            var interestList = $.parseJSON(xhr.responseText);
+            if(interestList.interests){
+                updateInterests(interestList.interests);
+            }
         }
 
     });

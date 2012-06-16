@@ -8,7 +8,7 @@
             self::$AI_ID_counter++;
 
             $this->setPlayerState(self::INACTIVE);
-            $this->init($countryName, $colorArray);
+            $this->init($countryName, $colorArray, 0);
         }
 
         public function makeDecision($allEnemyRegions, $regions){

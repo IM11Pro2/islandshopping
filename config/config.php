@@ -13,7 +13,7 @@
     }
 
     // Currencies
-    function getCurrencies() {
+   function getCurrencies() {
         return array( //1. Stelle, Währung, 2.Stelle Wechselkurs
             "EU"           => array("Euro", 1.0),
             "Schweiz"      => array("Franken", 1.20),
@@ -47,9 +47,11 @@
         );
     }
 
+    define("INTEREST_RATE", 0.10);
+
     //Defines the interval after how many moves an incident occurs
-    define("MIN_MOVES_FOR_INCIDENT", 0);
-    define("MAX_MOVES_FOR_INCIDENT", 1);
+    define("MIN_MOVES_FOR_INCIDENT", PHP_INT_MAX-1);
+    define("MAX_MOVES_FOR_INCIDENT", PHP_INT_MAX);
 
     define("BANK_ROBBERY", 0.5); // p/100 of lost bankcapital
 

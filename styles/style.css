@@ -44,6 +44,10 @@ body{
     padding: 0 5px;
 }
 
+/* interest-info*/
+#interestInfo{
+    display: none;
+}
 /*Message Box */
 #darkbg {
 	display: none;

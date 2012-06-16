@@ -8,9 +8,11 @@
         private $country;
         protected $playerId;
         private $playerState;
+        protected $playRound;
 
-        protected function init($countryName, $colorArray){
+        protected function init($countryName, $colorArray, $round){
             $this->country = new Country($this, $countryName, $colorArray[$this->playerId]);
+            $this->playRound = $round;
         }
 
         public function getCountry() {
@@ -31,5 +33,13 @@
 
         public function getPlayerState(){
             return $this->playerState;
+        }
+
+        public function getPlayRound(){
+            return $this->playRound;
+        }
+
+        public function updatePlayRound(){
+            $this->playRound++;
         }
     }

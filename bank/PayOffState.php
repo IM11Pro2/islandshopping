@@ -17,8 +17,8 @@
 
         }
 
-        public function chargeInterest() {
-            // TODO: Implement chargeInterest() method.
+        public function chargeInterest($interestBase) {
+            return 0;
         }
     }
 ?>

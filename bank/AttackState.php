@@ -11,8 +11,8 @@
             return 0;
         }
 
-        public function chargeInterest() {
-            // do nothing: bank is inactive
+        public function chargeInterest($interestBase) {
+            return 0;
         }
     }
 ?>

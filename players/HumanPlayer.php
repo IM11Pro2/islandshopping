@@ -3,8 +3,8 @@
 
         public function __construct($countryName, $colorArray) {
             $this->playerId = 0;
-            $this->setPlayerState(self::INACTIVE);
-            $this->init($countryName, $colorArray);
+            $this->setPlayerState(self::ACTIVE);
+            $this->init($countryName, $colorArray, 1);
         }
 
     }

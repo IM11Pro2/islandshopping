@@ -3,6 +3,7 @@
 
         public function printBankView() {
             ?>
+        <div id="interestInfo"></div>
         <h3>Mein Kapital</h3>
         <?php
             $playersArray = $_SESSION['activePlayers'];

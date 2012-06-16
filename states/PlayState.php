@@ -15,6 +15,8 @@
         private $numberOfPlayers;
         private $nextPlayerCounter;
 
+        private $interestsActivatedByHuman;
+
         function init() {
             $this->incidentGenerator = new IncidentGenerator();
             $_SESSION['incidentGenerator'] = $this->incidentGenerator;
@@ -22,13 +24,13 @@
             $this->playerList = $_SESSION['activePlayers'];
             $this->numberOfPlayers = count($this->playerList);
             $this->nextPlayerCounter = 0;
-
+            $this->interestsActivatedByHuman = false;
             $this->bankList = array();
             for($i = 0; $i < $this->numberOfPlayers; $i++){
 
                 $bank = null;
                 if($i == 0){
-                    $bank = new Bank($this->playerList[$i]->getCountry(), Bank::PAY_OFF);
+                    $bank = new Bank($this->playerList[$i]->getCountry(), Bank::DEPOSIT);
                 }
                 else{
                     $bank = new Bank($this->playerList[$i]->getCountry(), Bank::DEPOSIT);
@@ -36,6 +38,7 @@
                 array_push($this->bankList, $bank);
 
             }
+            $this->bankList = Bank::getBankList();
 
             $_SESSION['state'] = $this;
 
@@ -104,7 +107,7 @@
 
                                                     "enemyBank" => array("bankName" => $enemyCountryName."Bank",
                                                                         "bankCapital" => $enemyBankCapital)
-                                                ));
+                                                ), $this->interestsActivatedByHuman);
 
                     }
                     else{
@@ -118,7 +121,7 @@
                                                     "activeRegion" => array("hasWon"=> $hasPlayerWon,
                                                                             "payment" => $activePayment->__toString(),
                                                                             "regionId" => $regionId,
-                                                                            "ventureValue" => $speculationValue)));
+                                                                            "ventureValue" => $speculationValue)), $this->interestsActivatedByHuman);
                     }
                 }
         
@@ -153,7 +156,7 @@
                                             "payment"     => array("value"    => $paymentValue,
                                                                   "currency" => $country->getPayment()->getCurrency()),
                                             "bankCapital" => $bankCapital,
-                                            "bankName" => $country->getName()."Bank"));
+                                            "bankName" => $country->getName()."Bank"), $this->interestsActivatedByHuman);
                 }
 
         function nextPlayer() {
@@ -161,22 +164,28 @@
 
             $this->playerList[$this->nextPlayerCounter]->setPlayerState(IPlayer::INACTIVE);
 
+            $this->updateInterestBaseForPlayer();
+
             $nextPlayerId = $this->getNextPlayerId();
 
             $this->playerList[$nextPlayerId]->setPlayerState(IPlayer::ACTIVE);
 
-            echo json_encode(array("attackCountry" => false,
+            $this->handleResponse(array("attackCountry" => false,
                                    "spendMoney" => false,
                                    "nextPlayer" => true,
-                                   "nextPlayerId" => $nextPlayerId));
+                                   "nextPlayerId" => $nextPlayerId,
+                                   ), true);
         }
 
         private function getNextPlayerId(){
+            $this->previousPlayerId = $this->nextPlayerCounter;
             do{
                 $this->nextPlayerCounter++;
                 $this->nextPlayerCounter = $this->nextPlayerCounter % $this->numberOfPlayers;
 
             }while($this->playerList[$this->nextPlayerCounter]->getPlayerState() == IPlayer::GAME_OVER );
+
+            $this->playerList[$this->nextPlayerCounter]->updatePlayRound();
 
             return $this->nextPlayerCounter;
         }
@@ -238,6 +247,24 @@
             }
         }
 
+        private function updateInterestBaseForPlayer(){
+            $player = $this->playerList[$this->nextPlayerCounter];
+            if($player->getPlayerState() != IPlayer::GAME_OVER){
+
+                $this->bankList[$this->nextPlayerCounter]->updateInterestBase($player->getPlayRound());
+            }
+        }
+
+
+        public function setInterestsActivatedByHuman($byHuman){
+            $this->interestsActivatedByHuman = $byHuman;
+        }
+
+
+        public function getInterestsActivatedByHuman(){
+            return $this->interestsActivatedByHuman;
+        }
+
         public static function ajaxRequest() {
        
                    if(!isset($_SESSION)) {
@@ -272,22 +299,26 @@
                        }
        
                        if(isset($_GET['nextPlayer'])){
+
+                           $_SESSION['state']->updateInterestBaseForPlayer(); //for human player
+
                            $nextPlayerId = $_SESSION['state']->getNextPlayerId();
 
+                           $_SESSION['state']->setInterestsActivatedByHuman(true);
                            $_SESSION['state']->activateAI($nextPlayerId);
                        }
 
                        if(isset($_GET['newAIRequest'])){
                            $nextPlayerCounter = $_SESSION['state']->getNextPlayerCounter();
-                           $numberOfPlayers = count($_SESSION['activePlayers']);
-
-                           $nextPlayerId = $nextPlayerCounter % $numberOfPlayers;
-
+                           //$numberOfPlayers = count($_SESSION['activePlayers']);
+                           //$nextPlayerId = $nextPlayerCounter % $numberOfPlayers;
+                            $nextPlayerId = $nextPlayerCounter;
                            if($nextPlayerId != 0) {
+                                $_SESSION['state']->setInterestsActivatedByHuman(false);;
                                 $_SESSION['state']->activateAI($nextPlayerId);
                            }
                            else {
-                            echo json_encode(array("humanPlayer" => true));
+                               $_SESSION['state']->handleResponse(array("humanPlayer" => true), false);
                            }
                        }
                    }
@@ -305,16 +336,27 @@
             }
         }
 
-        private function handleResponse($json){
-
+        private function handleResponse($json, $withInterest){
 
            if(isset($this->incident)){
                $json['incident'] = $this->incident;
            }
            unset($this->incident);
 
+           if($withInterest){
+               foreach($this->bankList as $bank){
+                    $bank->setState(Bank::DEPOSIT);
+               }
+               $interests = Bank::getInterests($this->nextPlayerCounter, $this->playerList[$this->nextPlayerCounter]->getPlayRound());
+               if(isset($interests)){
+                   $json['interests'] = $interests;
+
+               }
+           }
+
             echo json_encode($json);
         }
+
 
         public function setBankList($bankList) {
             $this->bankList = $bankList;
