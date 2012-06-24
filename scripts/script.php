@@ -392,15 +392,20 @@ function displayAIinfo(title, body, request){
 
     var listLength = $('#infoAI li').size();
 
+    if(listLength < 5){
+        $('#infoAI').append('<li></li>');
+        listLength++;
+    }
+
     $('#infoAI li').each(function(index){
 
-
         var pos = (listLength-1) - (index+1);
-        console.log(pos);
+
         if(pos >= 0 && (pos+1) < listLength){
 
             var text = $('#infoAI li').eq(pos).text();
-            $('#infoAI li').eq(pos+1).text(text);
+            $('#infoAI li').eq(pos).text("");
+            $('#infoAI li').eq(pos+1).text(text).fadeTo('fast', (1/(pos+1)));
 
         }
         else{
@@ -409,11 +414,10 @@ function displayAIinfo(title, body, request){
 
                 //$('#infoAI li').first().text(body);
 
-                $(this).text(body).fadeIn(1500, 'swing', function(){
+                $(this).text(body).fadeIn(2000, 'swing', function(){
                     if(request){
                         sendAjaxRequest("../states/PlayState.php", {handle: "PlayState", newAIRequest:"newAIRequest"}, false);
                     }
-
                 });
 
             });

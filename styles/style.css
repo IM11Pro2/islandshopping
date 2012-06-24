@@ -47,6 +47,12 @@ body{
 #interestInfo{
     display: none;
 }
+
+/* AI-info*/
+#infoAI{
+    list-style-type: none;
+}
+
 /*Message Box */
 #darkbg {
 	display: none;

@@ -39,11 +39,6 @@
             <h2>Info</h2>
             <div class="infoView">
                 <ul id="infoAI">
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
                 </ul>
             </div>
         </div><!--end .right-->
