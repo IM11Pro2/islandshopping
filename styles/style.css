@@ -24,11 +24,10 @@ body{
   margin: 20px auto 50px auto;
   /*padding: 15px;*/
   background-color: #FFFFFF;
-  border: solid 1px black;
-  position: relative;
+    border: 1px solid lightgray;
+    position: relative;
   /*top: -254px;*/
   /*border: none;*/
-  border-color: lightgrey;
 }
 
 .mapView {
@@ -37,7 +36,7 @@ body{
     border-width:1px;
 }
 
-.bankView {
+.bankView, .infoView {
     width: 270px;
     border-style:solid;
     border-width:1px;

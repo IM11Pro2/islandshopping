@@ -315,23 +315,28 @@ $(document).ready(function(){
         if(settings.url.indexOf("nextPlayer")!= -1 || settings.url.indexOf("newAIRequest")!= -1){
             if($.parseJSON(xhr.responseText).attackCountry){
                 var regionInfo = $.parseJSON(xhr.responseText);
-                message_box.show_message('KI ' + regionInfo.playerId + ': ', regionInfo.activeRegion.regionId + ' attacked '
+                /*message_box.show_message('KI ' + regionInfo.playerId + ': ', regionInfo.activeRegion.regionId + ' attacked '
+                    + regionInfo.enemyRegion.regionId + " and has won: " + regionInfo.activeRegion.hasWon,  true);*/
+                displayAIinfo('KI ' + regionInfo.playerId + ': ', regionInfo.activeRegion.regionId + ' attacked '
                     + regionInfo.enemyRegion.regionId + " and has won: " + regionInfo.activeRegion.hasWon,  true);
                 updateMap(regionInfo);
             }
             else if($.parseJSON(xhr.responseText).spendMoney){
                 var payment = $.parseJSON(xhr.responseText);
-                message_box.show_message('KI ' + payment.playerId + ': ', payment.activeRegion + ' spent money '+ payment.action , true);
+                displayAIinfo('KI ' + payment.playerId + ': ', payment.activeRegion + ' spent money '+ payment.action , true);
+                //message_box.show_message('KI ' + payment.playerId + ': ', payment.activeRegion + ' spent money '+ payment.action , true);
                 addBasicCapitalToRegion(payment);
             }
             else if($.parseJSON(xhr.responseText).nextPlayer){
                 var nextPlayer = $.parseJSON(xhr.responseText);
-                message_box.show_message('KI: ', 'Swiched Player to PlayerId ' + nextPlayer.nextPlayerId , true);
+                //message_box.show_message('KI: ', 'Swiched Player to PlayerId ' + nextPlayer.nextPlayerId , true);
+                displayAIinfo('KI: ', 'Swiched Player to PlayerId ' + nextPlayer.nextPlayerId , true);
                 switchToNextPlayer(nextPlayer);
             }
             else if($.parseJSON(xhr.responseText).humanPlayer){
                 var humanPlayer = $.parseJSON(xhr.responseText);
                 message_box.show_message('Info: ', 'Your turn! ', false);
+                //displayAIinfo('Info: ', 'Your turn! ', false);
             }
 
             var incident =  $.parseJSON(xhr.responseText);
@@ -383,9 +388,47 @@ function jsonpcallback(data) {
     alert(data["message"]);
 }
 
+function displayAIinfo(title, body, request){
+
+    var listLength = $('#infoAI li').size();
+
+    $('#infoAI li').each(function(index){
+
+
+        var pos = (listLength-1) - (index+1);
+        console.log(pos);
+        if(pos >= 0 && (pos+1) < listLength){
+
+            var text = $('#infoAI li').eq(pos).text();
+            $('#infoAI li').eq(pos+1).text(text);
+
+        }
+        else{
+
+            $('#infoAI li').first().fadeOut('fast', 'linear', function(){
+
+                //$('#infoAI li').first().text(body);
+
+                $(this).text(body).fadeIn(1500, 'swing', function(){
+                    if(request){
+                        sendAjaxRequest("../states/PlayState.php", {handle: "PlayState", newAIRequest:"newAIRequest"}, false);
+                    }
+
+                });
+
+            });
+        }
+
+    });
+
+
+
+
+}
+
 function sendNewAIRequest(){
     message_box.close_message();
-    sendAjaxRequest("../states/PlayState.php", {handle: "PlayState", newAIRequest:"newAIRequest",<?php  echo session_name().': '.'"'.session_id().'"'; ?>}, false);
+    sendAjaxRequest("../states/PlayState.php", {handle: "PlayState", newAIRequest:"newAIRequest"}, false);
 }
 
 var message_box = function() {

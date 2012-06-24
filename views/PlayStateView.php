@@ -13,9 +13,7 @@
 
         <div class="left">
             <h2>Map</h2>
-
             <div class="mapView">
-
                 <!-- Load svg -->
                 <div id="canvas">
                 <?php
@@ -36,6 +34,17 @@
                     $bankView = new BankView();
                     $bankView->printBankView();
                 ?>
+            </div>
+            <br />
+            <h2>Info</h2>
+            <div class="infoView">
+                <ul id="infoAI">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
             </div>
         </div><!--end .right-->
 
