@@ -114,6 +114,47 @@
             array(0,3,10,34,67), // Limnos
             array(27,28,29,70), // Kefalonia
             array(69,43), // Zakynthos*/
+
+                /*
+
+            array(1, 34),   //Evros
+            array(0, 2, 3),   //Drama
+            array(1, 5),   //Thasos
+            array(1, 4),   //Serres
+            array(3, 5, 6),   //Thessaloniki
+            array(2, 4, 34),   //Chalkidiki
+            array(4, 7, 8, 13),   //Imathia
+            array(6, 8, 9),   //Florina
+            array(6, 7, 9, 12, 13),   //Kozani
+            array(7, 8, 10, 11, 12),   //Ionnina
+            array(9, 11),   //Korfu-Thesprotia
+            array(9, 10, 12, 16),   //Arta
+            array(8, 9, 11, 13, 16, 17),   //Trikala
+            array(6, 8, 12, 14, 17),   //Larisa
+            array(13, 17, 19),   //Magnisia-Sporaden
+            array(16, 22),   //Lefkada-Zakynthos
+            array(11, 12, 15, 17, 18, 22),   //Akarnanien
+            array(12, 13, 14, 16, 18, 19),   //Evrytania
+            array(16, 17, 19, 20, 22),   //Fokida
+            array(14, 17, 18, 20, 30, 32),   //Euboa
+            array(18, 19, 21, 24, 25, 30),   //Attika-Inseln
+            array(20, 22, 23),   //Korinthia
+            array(15, 16, 18, 21, 23, 24),   //Elis
+            array(21, 22, 24),   //Arkadien
+            array(20, 22, 23),   //Lakonien
+            array(20, 26),   //Chania
+            array(25, 27),   //Iraklio
+            array(26, 28),   //Karpathos-Rhodos
+            array(27, 29, 31),   //Kos-Kalymnos
+            array(28, 30),   //Milos-Naxos
+            array(19, 20, 29, 31),   //Andros-Mykonos
+            array(28, 30, 32),   //Ikaria-Samos
+            array(19, 31, 33),   //Chiros
+            array(32, 34),   //Lesbos
+            array(0, 5, 33),   //Limnos
+
+            */
+
             array(2, 3),
                 array(4, 5, 6, 7),
                 array(0, 3, 5),
