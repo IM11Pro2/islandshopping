@@ -17,6 +17,8 @@
 
         private $interestsActivatedByHuman;
 
+        private $decisionCounter;
+
         function init() {
             $this->incidentGenerator = new IncidentGenerator();
             $_SESSION['incidentGenerator'] = $this->incidentGenerator;
@@ -43,6 +45,8 @@
             $_SESSION['state'] = $this;
 
             $this->speculationValues = getSpeculationValues();
+
+            $this->decisionCounter = 0;
 
             GameEventManager::getInstance()->addEventListener($this, GlobalBankEvent::TYPE);
             GameEventManager::getInstance()->addEventListener($this, GlobalRegionEvent::TYPE);
@@ -217,7 +221,13 @@
                        $_SESSION['incidentGenerator']->generateIncident();
                    }
                    $regions = $map->getRegions();
-                   $decision = $aiPlayer->makeDecision($allAiPlayerRegions, $regions);
+
+                    if($aiPlayer->getPlayRound() <= PAYOFF_ROUNDS ){
+                        $decision = $aiPlayer->makeInitPayOff($allAiPlayerRegions, $regions);
+                    }
+                    else {
+                        $decision = $aiPlayer->makeDecision($allAiPlayerRegions, $regions);
+                    }
 
                     $this->doDecision($aiPlayerId, $decision);
 
@@ -229,8 +239,20 @@
         }
 
         public function doDecision($aiPlayerId, $decision){
-            //test; blub
-            if(array_key_exists("attack", $decision)){
+
+            if (array_key_exists("initPayOff", $decision)){
+                $this->bankList[$aiPlayerId]->setState(Bank::PAY_OFF);
+                if($this->decisionCounter < PAYOFF_REGIONS_PER_ROUND){
+                    $this->decisionCounter++;
+                    $this->spendMoney($decision["initPayOff"], "payOff");
+                }
+                else {
+                    $this->decisionCounter = 0;
+                    $this->nextPlayer();
+                }
+
+            }
+            else if(array_key_exists("attack", $decision)){
                 $this->bankList[$aiPlayerId]->setState(Bank::ATTACK);
                 $this->tryToBuyRegion($decision["actualRegionId"], $decision["attack"]);
             }

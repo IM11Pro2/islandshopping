@@ -11,6 +11,32 @@
             $this->init($countryName, $colorArray, 0);
         }
 
+        public function makeInitPayOff($allEnemyRegions, $regions){
+            $possiblePayoffDecisions = array();
+
+            for($i=0; $i<count($allEnemyRegions); $i++){
+                $actualRegion = $allEnemyRegions[$i];
+                $actualRegionId = $actualRegion->getRegionId();
+
+                $neighbours = $actualRegion->getNeighbours();
+
+                for($j=0; $j< count($neighbours); $j++){
+                    // if neighbour region is of other country
+                    if($regions[$neighbours[$j]]->getCountry() != $this->getCountry()){
+                        // if neighbour region has more/equal money --> payoff
+                        if($regions[$neighbours[$j]]->getPayment()->getValue() >= $actualRegion->getPayment()->getUsableValue()){
+                            array_push($possiblePayoffDecisions, array("initPayOff" => $actualRegionId));
+                        }
+                    }
+                }
+
+            }
+
+            $randomPayoff = rand(0, count($possiblePayoffDecisions)-1);
+
+            return $possiblePayoffDecisions[$randomPayoff];
+        }
+
         public function makeDecision($allEnemyRegions, $regions){
             $possibleDecisions = array();
             $nextPlayerCounter = 0;
