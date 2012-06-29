@@ -229,6 +229,7 @@
         }
 
         public function doDecision($aiPlayerId, $decision){
+            //test;
             if(array_key_exists("attack", $decision)){
                 $this->bankList[$aiPlayerId]->setState(Bank::ATTACK);
                 $this->tryToBuyRegion($decision["actualRegionId"], $decision["attack"]);
