@@ -28,7 +28,7 @@
     }
 
     //Number of Regions
-    define("NUM_OF_REGIONS", 12);
+    define("NUM_OF_REGIONS", 35);
 
     //Amount of StartMoney per Country
     define("START_CAPITAL_COUNTRY", 1000.0);
@@ -228,6 +228,7 @@
                                 'PreloaderStateView'          => '../views/PreloaderStateView.php',
 
                                 'DummyView'                   => '../views/islandViews/DummyView.php',
+                                'MapView'                   => '../views/islandViews/MapView.php',
                                 'BankView'                    => '../views/bank/BankView.php',
 
         );

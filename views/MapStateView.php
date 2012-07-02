@@ -25,7 +25,8 @@
             <!-- Load svg -->
             <div id="canvas">
             <?php
-                $dummyView = new DummyView();
+                //$dummyView = new DummyView();
+                $dummyView = new MapView();
                 $dummyView->printDummyMap();
             ?>
             </div>

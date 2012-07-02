@@ -1,0 +1,271 @@
+<?php
+
+    require_once("../config/config.php");
+
+    class MapView {
+
+        private $regions;
+        private $coordinates;
+
+        private $xmlNodes;
+        private $style;
+
+        public function __construct() {
+            $this->xmlNodes = simplexml_load_file("../views/islandViews/greece.svg");
+            $this->style = null;
+        }
+
+
+        public function printDummyMap() {
+            $this->regions = $_SESSION['map']->getRegions();
+            //$this->regionsArray = $regions;
+
+            ?>
+        <script type="text/javascript">
+            var paper = Raphael('canvas', 700, 800);
+
+            var regionSet = paper.set();
+            var transformationMatrix;
+            var path;
+            var text;
+            var elP;
+                <?php
+
+
+                $layerElements = $this->xmlNodes->g;
+
+                foreach($layerElements as $childNode){ // layer of the svg
+
+                    $attributes = $childNode->attributes();
+
+                    if($attributes['id'] == "regions"){
+
+
+
+                        $parentGroupNode = $childNode;
+
+
+                        foreach($parentGroupNode->children() as $regionNode){
+
+                            if($regionNode->getName() == "path"){ // draw the region-paths
+
+                                // save style from the svg to fill the raphaeljs attributes
+                                $pathAttributes = $regionNode->attributes();
+                                $this->drawPath($pathAttributes);
+
+                            }
+                            else if($regionNode->getName() == "g"){ // draw the paths of groups
+                                $pathGroup = $regionNode;
+                                $this->drawGroup($pathGroup);
+
+                            }
+                        }
+
+
+                        $transformation = null;
+
+                        if($attributes['transform'] != null){
+                            $transformation = $this->parseTransformation($attributes['transform']);
+                        }
+                        if($transformation != null){
+                        ?>
+                        // modify transformation for the region set
+                        regionSet.transform("<?php echo $transformation; ?>");
+
+                        regionSet.forEach(function(el){
+                            if(el.type == "set"){
+                                console.log("insel gefunden");
+
+                                //var m = elP.matrix;
+                                //if(m){
+                                  //  console.log("propertie " + m.a + ", " + m.b + ", "+ m.c + ", "+ m.d + ", "+ m.e + ", "+ m.f );
+                                //}
+                                //m = regionSet.matrix();
+                                /*if(m){
+                                    console.log("funktion " + m);
+                                }*/
+
+                                //m = Raphael.toMatrix(el, transformationMatrix.toTransformString())
+                                //transformationMatrix = Raphael.toMatrix(el, transformationMatrix);
+                                m= elP.matrix.clone();
+                                m.add(transformationMatrix);
+
+                                el.transform(m.toTransformString());
+                            }
+                        });
+                            <?php
+                        }
+
+                    }
+
+                    }
+
+                //for($i = 0; $i < NUM_OF_REGIONS; $i++) {
+                    ?>
+ /*
+                    circle = paper.circle(  <?php //echo $this->coordinates[$i]['x']?>,
+                                            <?php //echo $this->coordinates[$i]['y']?>,
+                                            <?php //echo $this->coordinates[$i]['radius']?>)
+                        .attr('fill', "<?php //echo $regions[$i]->getColor(); ?>");
+
+                    circle.data('region', <?php //echo $regions[$i]->getRegionId(); ?>);
+                    circle.data('regionOfPlayer', <?php //echo $regions[$i]->getPlayerId(); ?>);
+
+                    circle.attr("title", "<?php //echo $regions[$i]->getRegionId(); ?>");
+
+                    text = paper.text(  <?php //echo $this->coordinates[$i]['x']?>,
+                                        <?php //echo $this->coordinates[$i]['y']?>, '');
+                    text.data('text', '<?php //echo $regions[$i]->getRegionId(); ?>');
+                    text.data('value', '<?php //echo $regions[$i]->getPayment()->__toString(); ?>');
+ */
+                    <?php
+                //}
+                ?>
+
+
+        </script>
+        <?php
+        }
+
+        private function parseIdAndTitle($inputString){
+
+            $inputString = explode("_", $inputString);
+
+
+            $inputString[0] = intval($inputString[0]);
+
+            return $inputString;
+
+        }
+
+        private function parseStyle($pathAttributes){
+
+            return "{".str_replace(";", ",", $pathAttributes['style'])."}";
+        }
+
+        private function parseTransformation($inputTransformation){
+
+            $count = 0;
+            $inputTransformation = str_replace("translate(","", $inputTransformation, $count);
+
+            if($count > 0){
+                $inputTransformation = str_replace(")","", $inputTransformation);
+                return "t".$inputTransformation;
+            }
+
+            $inputTransformation = str_replace("matrix(","", $inputTransformation, $count);
+            if($count > 0){
+                $inputTransformation = str_replace(")","", $inputTransformation);
+                $inputTransformation = explode(",", $inputTransformation);
+
+                for($i = 0; $i < count($inputTransformation); ++$i){
+                    $inputTransformation[$i] = floatval($inputTransformation[$i]);
+                }
+
+                return $inputTransformation;
+            }
+            return ""; // einheitsmatrix
+
+        }
+
+        public function drawPath($pathAttributes){
+            if($this->style == null){
+                $this->style = $this->parseStyle($pathAttributes);
+            }
+            $pathCoordinates = $pathAttributes['d'];
+
+            $regionId = null;
+            $regionTitle = null;
+            $region = null;
+            if($pathAttributes['id'] != null){
+                $uniqueName = $this->parseIdAndTitle($pathAttributes['id']);
+                $regionId = $uniqueName[0];
+                $regionTitle = $uniqueName[1];
+                $region = $this->regions[$regionId];
+            }
+
+        ?>
+            path = paper.path("<?php echo $pathCoordinates; ?>");
+            path.attr("<?php echo $this->style; ?>");
+            path.attr('fill', "<?php  echo isset($region) ? $region->getColor() : "#000000"; ?>");
+
+            path.data('region', <?php echo $regionId; ?>);
+            path.data('regionOfPlayer', <?php  echo isset($region) ? $region->getPlayerId() : "-1"; ?>);
+
+            path.attr("title", "<?php echo $regionTitle; ?>");
+            elP = path;
+            regionSet.push(path);
+        <?php
+        }
+
+        public function drawGroup($regionPaths){
+
+            ?>
+            var groupSet = paper.set();
+            <?php
+            $groupAttributes = $regionPaths->attributes();
+
+            $transformation = null;
+            if($groupAttributes['transform'] != null){
+                $transformation = $this->parseTransformation($groupAttributes['transform']);
+            }
+
+            foreach($regionPaths->children() as $regionPath ){
+
+                $pathAttributes = $regionPath->attributes();
+
+
+
+                if($this->style == null){
+                    $this->style = $this->parseStyle($pathAttributes);
+                }
+                $pathCoordinates = $pathAttributes['d'];
+
+
+
+                ?>
+                    path = paper.path("<?php echo $pathCoordinates; ?>");
+                    path.attr("<?php echo $this->style; ?>");
+                    groupSet.push(path);
+
+                <?php
+                if($transformation != null){
+                    ?>
+                    transformationMatrix = Raphael.matrix(  <?php echo $transformation[0]; ?>,
+                                                                <?php echo $transformation[1]; ?>,
+                                                                <?php echo $transformation[2]; ?>,
+                                                                <?php echo $transformation[3]; ?>,
+                                                                <?php echo $transformation[4]; ?>,
+                                                                <?php echo $transformation[5]; ?>);
+
+                    <?php
+                }
+            }
+
+                $regionId = null;
+                $regionTitle = null;
+                $region = null;
+                if($groupAttributes['id'] != null){
+                    $uniqueName = $this->parseIdAndTitle($groupAttributes['id']);
+                    $regionId = $uniqueName[0];
+                    $regionTitle = $uniqueName[1];
+                    $region = $this->regions[$regionId];
+                }
+
+            ?>
+                    groupSet.attr('fill', "<?php  echo isset($region) ? $region->getColor() : "#000000"; ?>");
+
+                    groupSet.data('region', <?php echo $regionId; ?>);
+                    groupSet.data('regionOfPlayer', <?php  echo isset($region) ? $region->getPlayerId() : "-1"; ?>);
+
+                    groupSet.attr("title", "<?php echo $regionTitle; ?>");
+                    regionSet.push(groupSet);
+
+            <?php
+
+
+        }
+
+    }
+
+?>
