@@ -73,7 +73,7 @@ $(document).ready(function(){
         if(activeElement.type == "text"){
             paper.forEach(function(el){
 
-               if(el.type == "circle"){
+               if(el.type == "path"){
 
                    if(el.data('region') == activeElement.data('text')){
                        activeElement = el;
@@ -121,7 +121,7 @@ $(document).ready(function(){
         event.stopPropagation();
         if(event.target == paper.canvas || event.target.nodeName == "INPUT"){
             paper.forEach(function(el){
-                if(el.type == "circle"){
+                if(el.type == "path"){
                     el.attr('stroke', "#000000").attr('stroke-width',1).attr('fill-opacity', 1);
                 }
             });
@@ -157,7 +157,7 @@ $(document).ready(function(){
         activeNeighbours = new Array();
         paper.forEach(function (el) {
 
-            if(el.type == "circle"){
+            if(el.type == "path"){
                 el.attr('fill-opacity', 0.3);
             }
 

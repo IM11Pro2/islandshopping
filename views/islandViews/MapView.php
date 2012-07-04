@@ -5,8 +5,6 @@
     class MapView {
 
         private $regions;
-        private $coordinates;
-
         private $xmlNodes;
         private $style;
 
@@ -18,8 +16,6 @@
 
         public function printDummyMap() {
             $this->regions = $_SESSION['map']->getRegions();
-            //$this->regionsArray = $regions;
-
             ?>
         <script type="text/javascript">
             var paper = Raphael('canvas', 700, 800);
@@ -28,7 +24,8 @@
             var transformationMatrix;
             var path;
             var text;
-            var elP;
+
+
                 <?php
 
 
@@ -74,23 +71,28 @@
 
                         regionSet.forEach(function(el){
                             if(el.type == "set"){
-                                console.log("insel gefunden");
+                                el.forEach(function(elm){
 
-                                //var m = elP.matrix;
-                                //if(m){
-                                  //  console.log("propertie " + m.a + ", " + m.b + ", "+ m.c + ", "+ m.d + ", "+ m.e + ", "+ m.f );
-                                //}
-                                //m = regionSet.matrix();
-                                /*if(m){
-                                    console.log("funktion " + m);
-                                }*/
+                                    if(elm.type == "set"){
 
-                                //m = Raphael.toMatrix(el, transformationMatrix.toTransformString())
-                                //transformationMatrix = Raphael.toMatrix(el, transformationMatrix);
-                                m= elP.matrix.clone();
-                                m.add(transformationMatrix);
+                                        elm.forEach(function(islands){
+                                            var m = islands.matrix.clone();
+                                            m.add(transformationMatrix);
+                                            islands.transform(m.toTransformString());
+                                        });
 
-                                el.transform(m.toTransformString());
+                                    }
+                                    else{
+                                        var m = elm.matrix.clone();
+                                        m.add(transformationMatrix);
+                                        elm.transform(m.toTransformString());
+                                    }
+
+
+                                });
+
+
+
                             }
                         });
                             <?php
@@ -193,16 +195,16 @@
             path.data('regionOfPlayer', <?php  echo isset($region) ? $region->getPlayerId() : "-1"; ?>);
 
             path.attr("title", "<?php echo $regionTitle; ?>");
-            elP = path;
             regionSet.push(path);
         <?php
         }
 
         public function drawGroup($regionPaths){
 
-            ?>
+        ?>
             var groupSet = paper.set();
-            <?php
+
+        <?php
             $groupAttributes = $regionPaths->attributes();
 
             $transformation = null;
@@ -212,56 +214,90 @@
 
             foreach($regionPaths->children() as $regionPath ){
 
-                $pathAttributes = $regionPath->attributes();
 
-
-
-                if($this->style == null){
-                    $this->style = $this->parseStyle($pathAttributes);
-                }
-                $pathCoordinates = $pathAttributes['d'];
-
-
-
-                ?>
-                    path = paper.path("<?php echo $pathCoordinates; ?>");
-                    path.attr("<?php echo $this->style; ?>");
-                    groupSet.push(path);
-
-                <?php
-                if($transformation != null){
+                if($regionPath->getName() == "g"){
+                    //island group
                     ?>
-                    transformationMatrix = Raphael.matrix(  <?php echo $transformation[0]; ?>,
-                                                                <?php echo $transformation[1]; ?>,
-                                                                <?php echo $transformation[2]; ?>,
-                                                                <?php echo $transformation[3]; ?>,
-                                                                <?php echo $transformation[4]; ?>,
-                                                                <?php echo $transformation[5]; ?>);
+                    var islandGroup = paper.set();
+                   <?php
+                    $islands = $regionPath->children();
+
+
+                    foreach($islands as $islandPath){
+
+                        $islandAttributes = $islandPath->attributes();
+                        $islandCoords = $islandAttributes['d'];
+                        ?>
+                        path = paper.path("<?php echo $islandCoords; ?>");
+                        path.attr("<?php echo $this->style; ?>");
+                        islandGroup.push(path);
+                        <?php
+                    }
+
+                    ?>
+                        groupSet.push(islandGroup);
+                    <?php
+
+
+                }
+                else if($regionPath->getName() == "path"){
+
+                    // region
+                    $pathAttributes = $regionPath->attributes();
+
+                    if($this->style == null){
+                        $this->style = $this->parseStyle($pathAttributes);
+                    }
+                    $pathCoordinates = $pathAttributes['d'];
+
+
+
+                    ?>
+                        path = paper.path("<?php echo $pathCoordinates; ?>");
+                        path.attr("<?php echo $this->style; ?>");
+                        groupSet.push(path);
 
                     <?php
+
+                    if($transformation != null){
+                        ?>
+                        transformationMatrix = Raphael.matrix(  <?php echo $transformation[0]; ?>,
+                                                                    <?php echo $transformation[1]; ?>,
+                                                                    <?php echo $transformation[2]; ?>,
+                                                                    <?php echo $transformation[3]; ?>,
+                                                                    <?php echo $transformation[4]; ?>,
+                                                                    <?php echo $transformation[5]; ?>);
+
+                        <?php
+                    }
+
+                    $regionId = null;
+                    $regionTitle = null;
+                    $region = null;
+                    if($groupAttributes['id'] != null){
+                        $uniqueName = $this->parseIdAndTitle($groupAttributes['id']);
+                        $regionId = $uniqueName[0];
+                        $regionTitle = $uniqueName[1];
+                        $region = $this->regions[$regionId];
+                    }
+
+
                 }
+
             }
-
-                $regionId = null;
-                $regionTitle = null;
-                $region = null;
-                if($groupAttributes['id'] != null){
-                    $uniqueName = $this->parseIdAndTitle($groupAttributes['id']);
-                    $regionId = $uniqueName[0];
-                    $regionTitle = $uniqueName[1];
-                    $region = $this->regions[$regionId];
-                }
-
             ?>
-                    groupSet.attr('fill', "<?php  echo isset($region) ? $region->getColor() : "#000000"; ?>");
+            groupSet.attr('fill', "<?php  echo isset($region) ? $region->getColor() : "#000000"; ?>");
 
-                    groupSet.data('region', <?php echo $regionId; ?>);
-                    groupSet.data('regionOfPlayer', <?php  echo isset($region) ? $region->getPlayerId() : "-1"; ?>);
+            groupSet.data('region', <?php echo $regionId; ?>);
+            groupSet.data('regionOfPlayer', <?php  echo isset($region) ? $region->getPlayerId() : "-1"; ?>);
 
-                    groupSet.attr("title", "<?php echo $regionTitle; ?>");
-                    regionSet.push(groupSet);
+            groupSet.attr("title", "<?php echo $regionTitle; ?>");
+            regionSet.push(groupSet);
 
-            <?php
+    <?php
+
+
+
 
 
         }
