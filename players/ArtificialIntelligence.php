@@ -32,7 +32,9 @@
 
             }
 
-            $randomPayoff = rand(0, count($possiblePayoffDecisions)-1);
+            if(count($possiblePayoffDecisions) > 0){
+                $randomPayoff = rand(0, (count($possiblePayoffDecisions)-1));
+            }
 
             return $possiblePayoffDecisions[$randomPayoff];
         }
