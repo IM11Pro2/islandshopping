@@ -129,19 +129,21 @@
         <?php
         }
 
-        private function parseIdAndTitle($inputString){
 
+        private function parseIdAndTitle($inputString){
+            // split id and name from the input eg. 00_Evros
             $inputString = explode("_", $inputString);
 
-
+            // remove the first digit if its a zero
             $inputString[0] = intval($inputString[0]);
 
+            // return the identifier array [0] is id, [1] is the name of the region
             return $inputString;
 
         }
 
         private function parseStyle($pathAttributes){
-
+            // create an js style object from the svg
             return "{".str_replace(";", ",", $pathAttributes['style'])."}";
         }
 
@@ -295,12 +297,29 @@
             regionSet.push(groupSet);
 
     <?php
+        }
+        private function parseElement($svgElement){
 
+            if($svgElement->getName() == "g"){
+                foreach($svgElement->children() as $svgChildElement){
 
+                    parseElement($svgChildElement);
 
+                }
+            }
+            else if($svgElement->getName() == "path"){
 
+            }
 
         }
+
+        private function parsePath(){
+
+        }
+
+        /*private function drawPath(){
+
+        }*/
 
     }
 
