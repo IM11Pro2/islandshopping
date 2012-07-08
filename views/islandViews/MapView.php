@@ -24,13 +24,19 @@
             var transformationMatrix;
             var path;
             var text;
-            var group;
+            //var group;
 
+            function setMatrices(groupSet, a,b,c,d,e,f){
+                param = {a : a, b : b, c : c, d : d, e : e, f : f};
+                groupSet.forEach(function(el, param){
+                    el.matrix.add(param.a,param.b,param.c,param.d,param.e,param.f);
+                });
+            }
 
                 <?php
 
 
-                $this->parseElement($this->xmlNodes);
+                $this->parseElement($this->xmlNodes, 0);
 
 
                 //for($i = 0; $i < NUM_OF_REGIONS; $i++) {
@@ -81,56 +87,69 @@
         private function parseTransformation($inputTransformation){
 
             $count = 0;
-            $inputTransformation = str_replace("translate(","", $inputTransformation, $count);
+            $outputTransformation = str_replace("translate(","", $inputTransformation, $count);
 
             if($count > 0){
-                $inputTransformation = str_replace(")","", $inputTransformation);
-                return "t".$inputTransformation;
+                $outputTransformation = str_replace(")","", $outputTransformation);
+                $outputTransformation = explode(",", $outputTransformation);
+
+                for($i = 0; $i < count($outputTransformation); ++$i){
+                    $outputTransformation[$i] = floatval($outputTransformation[$i]);
+                }
+                return $outputTransformation;
             }
 
-            $inputTransformation = str_replace("matrix(","", $inputTransformation, $count);
+            $outputTransformation = str_replace("matrix(","", $inputTransformation, $count);
             if($count > 0){
-                $inputTransformation = str_replace(")","", $inputTransformation);
-                $inputTransformation = explode(",", $inputTransformation);
+                $outputTransformation = str_replace(")","", $outputTransformation);
+                $outputTransformation = explode(",", $outputTransformation);
 
-                for($i = 0; $i < count($inputTransformation); ++$i){
-                    $inputTransformation[$i] = floatval($inputTransformation[$i]);
+                for($i = 0; $i < count($outputTransformation); ++$i){
+                    $outputTransformation[$i] = floatval($outputTransformation[$i]);
                 }
 
-                return $inputTransformation;
+                return $outputTransformation;
             }
-            return ""; // einheitsmatrix
+
 
         }
 
 
 
-        private function parseElement($svgElement, $groupName = "group"){
+        private function parseElement($svgElement, $index, $groupName = "group"){
 
             if($svgElement->getName() == "svg"){
                 foreach($svgElement->children() as $svgChildElement){
-                    $this->parseElement($svgChildElement);
+                    $this->parseElement($svgChildElement, ++$index);
                 }
-            }
-            if($svgElement->getName() == "g"){
+            }else if($svgElement->getName() == "g"){
 
-
-                echo "paper.setStart();";
-
+                echo "paper.setStart();\n";
                 foreach($svgElement->children() as $svgChildElement){
-                    $groupAttributes = $svgChildElement->attributes();
-                    $groupId = $this->parseIdAndTitle($groupAttributes['id']);
-                    $this->parseElement($svgChildElement, isset($groupId) ? $groupId[1] : "group");
+                    $childAttributes = $svgChildElement->attributes();
+                    $childId = $this->parseIdAndTitle($childAttributes['id']);
+                    $this->parseElement($svgChildElement, ++$index, isset($childId[1]) ? $childId[1] : "group");
+                }
+                echo "var ".$groupName."".$index." = paper.setFinish();\n";
+
+                $groupAttributes = $svgElement->attributes();
+                $transformation = $this->parseTransformation($groupAttributes['transform']);
+
+                if(isset($transformation)){
+                    $matrixParam = count($transformation) > 2 ? implode(",",$transformation) : "1,0,0,1,".$transformation[0].",".$transformation[1] ;
+
+                    ?>
+                    console.log("<?php echo $groupName."".$index; ?>");
+                    console.log(<?php echo $groupName."".$index; ?>);
+                    //setMatrices(<?php echo $groupName."".$index.",".$matrixParam; ?>);
+                <?php
                 }
 
-                echo "var ".$groupName." = paper.setFinish();";
 
             }
 
             else if($svgElement->getName() == "path"){
-
                 $this->parsePath($svgElement);
-
             }
 
         }
@@ -146,8 +165,9 @@
         private function drawPath($coords, $style){ ?>
             path = paper.path("<?php echo $coords; ?>");
             path.attr("<?php echo $style; ?>");
+        <?php
 
-        <?php }
+        }
 
     }
 
