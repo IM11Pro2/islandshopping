@@ -35,6 +35,11 @@
             if(count($possiblePayoffDecisions) > 0){
                 $randomPayoff = rand(0, (count($possiblePayoffDecisions)-1));
             }
+            else{
+                //TODO
+                // $randomPayoff=;
+                return null;
+            }
 
             return $possiblePayoffDecisions[$randomPayoff];
         }

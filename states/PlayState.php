@@ -18,6 +18,7 @@
         private $interestsActivatedByHuman;
 
         private $decisionCounter;
+        private $humanDecisionCounter;
 
         function init() {
             $this->incidentGenerator = new IncidentGenerator();
@@ -32,10 +33,10 @@
 
                 $bank = null;
                 if($i == 0){
-                    $bank = new Bank($this->playerList[$i]->getCountry(), Bank::DEPOSIT);
+                    $bank = new Bank($this->playerList[$i]->getCountry(), Bank::PAY_OFF); // da war deposit
                 }
                 else{
-                    $bank = new Bank($this->playerList[$i]->getCountry(), Bank::DEPOSIT);
+                    $bank = new Bank($this->playerList[$i]->getCountry(), Bank::DEPOSIT); // da war deposit
                 }
                 array_push($this->bankList, $bank);
 
@@ -150,18 +151,32 @@
 
 
                     $bankCapital = $this->bankList[$playerId]->getCapital();
+
+                    if($playerId == 0 && $_SESSION['activePlayers'][$playerId]->getPlayRound() <= PAYOFF_ROUNDS){
         
+                        if($this->humanDecisionCounter < PAYOFF_REGIONS_PER_ROUND-1){
+                            $this->humanDecisionCounter++;
+                        }
+                        else {
+                            $this->humanDecisionCounter = 0;
+                        }
+                    }
+                    else {
+                        $this->humanDecisionCounter = null;
+                    }
+
                     $this->handleResponse(array("attackCountry" => false,
-                                            "spendMoney" => true,
-                                            "nextPlayer" => false,
-                                            "playerId" => $playerId,
-                                            "activeRegion"=> $regionId,
-                                            "action" => $action,
-                                            "payment"     => array("value"    => $paymentValue,
-                                                                  "currency" => $country->getPayment()->getCurrency()),
-                                            "bankCapital" => $bankCapital,
-                                            "bankName" => $country->getName()."Bank"), $this->interestsActivatedByHuman);
-                }
+                                                "spendMoney" => true,
+                                                "nextPlayer" => false,
+                                                "playerId" => $playerId,
+                                                "activeRegion"=> $regionId,
+                                                "action" => $action,
+                                                "numberOfHumanPayoffs" => $this->humanDecisionCounter,
+                                                "payment"     => array("value"    => $paymentValue,
+                                                                      "currency" => $country->getPayment()->getCurrency()),
+                                                "bankCapital" => $bankCapital,
+                                                "bankName" => $country->getName()."Bank"), $this->interestsActivatedByHuman);
+        }
 
         function nextPlayer() {
             header('Content-type: application/json');
@@ -199,7 +214,7 @@
             if($this->playerList[$aiPlayerId]->getPlayerState() != IPlayer::GAME_OVER){
 
                foreach($this->bankList as $bank){
-                    $bank->setState(Bank::DEPOSIT);
+                    $bank->setState(Bank::DEPOSIT); // da war deposit
                }
 
                $map = $_SESSION['map'];
@@ -229,7 +244,20 @@
                         $decision = $aiPlayer->makeDecision($allAiPlayerRegions, $regions);
                     }
 
-                    $this->doDecision($aiPlayerId, $decision);
+
+                    /**
+                     * VORSICHT!!!!!!!!!!!!!!! WEISS NICHT OB DAS KLUG IST!!!!!!!!!!!
+                     */
+                    if($decision != null){
+                        $this->doDecision($aiPlayerId, $decision);
+                    }
+                    else {
+                        $this->nextPlayer();
+                    }
+                    /**
+                     *
+                     * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                     */
 
                 }
             }
@@ -341,7 +369,8 @@
                                 $_SESSION['state']->activateAI($nextPlayerId);
                            }
                            else {
-                               $_SESSION['state']->handleResponse(array("humanPlayer" => true), false);
+                               $_SESSION['state']->bankList[$nextPlayerId]->setState(Bank::PAY_OFF);
+                               $_SESSION['state']->handleResponse(array("humanPlayer" => true, "round" =>  $_SESSION['state']->playerList[$nextPlayerId]->getPlayRound()), false);
                            }
                        }
                    }

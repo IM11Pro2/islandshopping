@@ -56,19 +56,20 @@
         <br/>
         <form>
             <label>
-            <input type="radio" name="bankstate" value="<?php echo Bank::PAY_OFF ?>" <?php echo ($bankState == Bank::PAY_OFF) ? "checked=checked" :"" ?>>
+            <input type="radio" id="payoff" name="bankstate" value="<?php echo Bank::PAY_OFF ?>" <?php echo ($bankState == Bank::PAY_OFF) ? "checked=checked" :"" ?>>
             PayOff</input>
             </label>
 
             <label>
-            <input type="radio" name="bankstate" value="<?php echo Bank::DEPOSIT ?>" <?php echo ($bankState == Bank::DEPOSIT) ? "checked=checked" :"" ?>>
-            Deposite</input>
+                <input type="radio" id="attack" name="bankstate" value="<?php echo Bank::ATTACK ?>" <?php echo ($bankState == Bank::ATTACK) ? "checked=checked" :"" ?>>
+                Attack</input>
             </label>
 
             <label>
-            <input type="radio" name="bankstate" value="<?php echo Bank::ATTACK ?>" <?php echo ($bankState == Bank::ATTACK) ? "checked=checked" :"" ?>>
-            Attack</input>
+                <input type="radio" id="deposit" name="bankstate" value="<?php echo Bank::DEPOSIT ?>" <?php echo ($bankState == Bank::DEPOSIT) ? "checked=checked" :"" ?>>
+                Deposit</input>
             </label>
+
         </form>
         <?php
         }

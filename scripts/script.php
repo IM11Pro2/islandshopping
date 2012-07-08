@@ -25,6 +25,7 @@ function sendAjaxRequest(url, data, getAsJSON){
 
 $(document).ready(function(){
 
+
     activeRegion = false;
 
     $('input:checkbox[name="enemyCountries[]"]').click(function(event){
@@ -32,7 +33,6 @@ $(document).ready(function(){
             sendAjaxRequest("../states/MenuState.php", {handle: "MenuState", enemycountry: $(this).parent().text()}, false);
         }
     });
-
 
     $('input:radio[name="playerCountry"]').click(function(event) {
         if($('input:checked').length > 0){
@@ -61,7 +61,7 @@ $(document).ready(function(){
     });
 
     $('body').on('click',':button[name="NextPlayerSubmit"]',function (event) {
-        $('input:radio[name="bankstate"][value="<?php echo Bank::DEPOSIT ?>"]').attr('checked','checked');
+        $('input:radio[name="bankstate"][value="<?php echo Bank::PAY_OFF ?>"]').attr('checked','checked');
         resetElements(event);
         sendAjaxRequest("../states/PlayState.php", {handle: "PlayState", nextPlayer: "nextPlayer"}, false);
     });
@@ -83,6 +83,7 @@ $(document).ready(function(){
             });
         }
 
+        //$(document).unbind('click');
 
         if(activeElement.data('regionOfPlayer') == 0){
 
@@ -119,7 +120,7 @@ $(document).ready(function(){
 
     function resetElements(event){
         event.stopPropagation();
-        if(event.target == paper.canvas || event.target.nodeName == "INPUT"){
+        if(event.target == paper.canvas || event.target.nodeName == "INPUT"){ // input = radiobutton
             paper.forEach(function(el){
                 if(el.type == "circle"){
                     el.attr('stroke', "#000000").attr('stroke-width',1).attr('fill-opacity', 1);
@@ -148,6 +149,8 @@ $(document).ready(function(){
         paper.forEach(function (el) {
             el.unclick(activeElementHandler);
         });
+
+        //$('input:radio[name="bankstate"]').unbind('click');
 
         $(paper.canvas).off('click',resetElements);
     }
@@ -184,6 +187,11 @@ $(document).ready(function(){
         });
     }
 
+    function sendNextPlayerRequest(){
+        message_box.show_message('PAYOFF ROUND: ', 'Nächster Spieler! ', false);
+        sendAjaxRequest("../states/PlayState.php", {handle: "PlayState", nextPlayer: "nextPlayer"}, false);
+    }
+
     function updateMap(regionInfo){
         if(regionInfo.activeRegion.hasWon){
 
@@ -214,12 +222,26 @@ $(document).ready(function(){
             });
         }
     }
-    
-    function switchToNextPlayer(nextPlayer) {
-        //if(nextPlayer.nextPlayerId != "0"){
-            //sendNewAIRequest();
-        //}
-            //alert("nextPlayerId: " + nextPlayer.nextPlayerId);
+
+    function checkPayoffRounds(actualRound){
+        // first PAYOFF_ROUNDS "attack" and "deposit" are disabled
+        if(actualRound <= <?php echo PAYOFF_ROUNDS ?>){
+            disableActionPossibilities();
+        }
+        // after the PAYOFF_ROUNDS "attack" and "deposit" are enabled
+        else if(actualRound == <?php echo PAYOFF_ROUNDS ?>+1){
+            enableActionPossibilities();
+        }
+    }
+
+    function disableActionPossibilities() {
+        $('#deposit').attr("disabled",true);
+        $('#attack').attr("disabled",true);
+    }
+
+    function enableActionPossibilities() {
+        $('#deposit').attr("disabled",false);
+        $('#attack').attr("disabled",false);
     }
     
     function renderIncidentInfo(incident){
@@ -293,6 +315,7 @@ $(document).ready(function(){
 
             if(hasParamValue(settings.url,"endState","Map")){
                 activateRegions();
+                checkPayoffRounds(0);
             }
         }
         if(settings.url.indexOf("randomizeMap")!= -1){
@@ -305,12 +328,19 @@ $(document).ready(function(){
         if(settings.url.indexOf("getCountry")!= -1 ){ // || settings.url.indexOf("nextPlayer")!= -1
             var payment = $.parseJSON(xhr.responseText);
             addBasicCapitalToRegion(payment);
+
+            if(payment.numberOfHumanPayoffs == 0){
+                sendNextPlayerRequest();
+            }
+
         }
 
         if((settings.url.indexOf("region")!= -1 && settings.url.indexOf("enemy")!= -1 )){ //|| settings.url.indexOf("nextPlayer")!= -1
             var regionInfo = $.parseJSON(xhr.responseText);
             updateMap(regionInfo);
         }
+
+
 
         if(settings.url.indexOf("nextPlayer")!= -1 || settings.url.indexOf("newAIRequest")!= -1){
             if($.parseJSON(xhr.responseText).attackCountry){
@@ -331,7 +361,6 @@ $(document).ready(function(){
                 var nextPlayer = $.parseJSON(xhr.responseText);
                 //message_box.show_message('KI: ', 'Swiched Player to PlayerId ' + nextPlayer.nextPlayerId , true);
                 displayAIinfo('KI: ', 'Swiched Player to PlayerId ' + nextPlayer.nextPlayerId , true);
-                switchToNextPlayer(nextPlayer);
             }
             else if($.parseJSON(xhr.responseText).humanPlayer){
                 var humanPlayer = $.parseJSON(xhr.responseText);
@@ -347,6 +376,11 @@ $(document).ready(function(){
             var interestList = $.parseJSON(xhr.responseText);
             if(interestList.interests){
                 updateInterests(interestList.interests);
+            }
+
+            if($.parseJSON(xhr.responseText).round){
+                var actualRound = $.parseJSON(xhr.responseText);
+                checkPayoffRounds(actualRound.round);
             }
         }
 
