@@ -40,6 +40,7 @@ $(document).ready(function(){
         }
     });
 
+    /*
     $('body').on('click','input:radio[name="bankstate"]', changeBankState);
 
     function changeBankState(event){
@@ -47,7 +48,7 @@ $(document).ready(function(){
         if($('input:checked').length > 0){
             sendAjaxRequest("../bank/Bank.php", {handle: "bank", bankstate: $.trim($(this).val())}, false);
         }
-    }
+    }*/
 
     $(':button[name="MenuSubmit"]').click(function (event) {
         sendAjaxRequest("../states/MenuState.php", {handle: "MenuState", endState: "Menu"}, false);
@@ -62,14 +63,14 @@ $(document).ready(function(){
         sendAjaxRequest("../states/MapState.php", {handle: "MapState", randomizeMap: "randomizeMap"}, false);
     });
 
-    $('body').on('click',':button[name="NextPlayerSubmit"]',function (event) {
-        $('input:radio[name="bankstate"][value="<?php echo Bank::PAY_OFF ?>"]').attr('checked','checked');
+   /* $('body').on('click',':button[name="NextPlayerSubmit"]',function (event) {
+        $('input:radio[name="bankstate"][value="<?php //echo Bank::PAY_OFF ?>"]').attr('checked','checked');
         resetElements(event);
         deactivateAllMouseClicks();
         sendAjaxRequest("../states/PlayState.php", {handle: "PlayState", nextPlayer: "nextPlayer"}, false);
-    });
+    });*/
 
-    $('body').on('click', '#actionButton', function(){
+    $('body').on('click', '#actionButton', function(event){
         var activeListElement = $('#actionContainer .activeAction');
         activeListElement.removeClass('activeAction');
         var nextElement = activeListElement.next();
@@ -77,7 +78,14 @@ $(document).ready(function(){
             nextElement = $('#actionContainer li').first()
         }
         nextElement.addClass('activeAction');
-
+        resetElements(event);
+        switch($('#actionContainer li').index(nextElement)){
+            case 0: {   sendAjaxRequest("../bank/Bank.php", {handle: "bank", bankstate: "<?php echo Bank::PAY_OFF ?>"}, false); break;}
+            case 1: {   sendAjaxRequest("../bank/Bank.php", {handle: "bank", bankstate: "<?php echo Bank::ATTACK ?>"}, false); break;}
+            case 2: {   sendAjaxRequest("../bank/Bank.php", {handle: "bank", bankstate: "<?php echo Bank::DEPOSIT ?>"}, false); break;}
+            case 3: {   deactivateAllMouseClicks();
+                        sendAjaxRequest("../states/PlayState.php", {handle: "PlayState", nextPlayer: "nextPlayer"}, false); break;}
+        }
 
     });
 
@@ -109,15 +117,26 @@ $(document).ready(function(){
             path = activeElement;
             var regionId = activeElement.data('region');
             activeRegionId = regionId;
-            if($('input:radio[name="bankstate"]:checked').val() == "<?php echo Bank::PAY_OFF ?>" ){
-                sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getCountry: regionId, bankstate: "<?php echo Bank::PAY_OFF ?>"},true);
+            /*if($('input:radio[name="bankstate"]:checked').val() == "<?php //echo Bank::PAY_OFF ?>" ){
+                sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getCountry: regionId, bankstate: "<?php //echo Bank::PAY_OFF ?>"},true);
             }
-            else if($('input:radio[name="bankstate"]:checked').val() == "<?php echo Bank::DEPOSIT ?>"){
-                sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getCountry: regionId, bankstate: "<?php echo Bank::DEPOSIT ?>"},true);
+            else if($('input:radio[name="bankstate"]:checked').val() == "<?php //echo Bank::DEPOSIT ?>"){
+                sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getCountry: regionId, bankstate: "<?php //echo Bank::DEPOSIT ?>"},true);
             }
-            else if($('input:radio[name="bankstate"]:checked').val() == "<?php echo Bank::ATTACK ?>"){
+            else if($('input:radio[name="bankstate"]:checked').val() == "<?php //echo Bank::ATTACK ?>"){
                 activeRegion = true;
                 sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getNeigbours: regionId},true);
+            }*/
+            var actionItem = $('#actionContainer .activeAction');
+            if($('#actionContainer li').index(actionItem) == 0){
+                sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getCountry: regionId, bankstate: "<?php echo Bank::PAY_OFF ?>"},true);
+            }
+            else if($('#actionContainer li').index(actionItem) == 1){
+                activeRegion = true;
+                sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getNeigbours: regionId},true);
+            }
+            else if($('#actionContainer li').index(actionItem) == 2){
+                sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getCountry: regionId, bankstate: "<?php echo Bank::DEPOSIT ?>"},true);
             }
         }
         else if(activeRegion){
@@ -177,17 +196,22 @@ $(document).ready(function(){
    function deactivateAllMouseClicks() {
         deactivateRegions();
         $(':button[name="NextPlayerSubmit"]').attr('disabled', 'disabled');
-        $('body').off('click','input:radio[name="bankstate"]', changeBankState);
+        //$('#actionContainer li.activeAction').removeClass('activeAction');
+        $('#actionButton').attr('disabled', 'disabled');
+        /*$('body').off('click','input:radio[name="bankstate"]', changeBankState);
         $('body').on('click','input:radio[name="bankstate"]', function(){
             return false;
-        });
+        });*/
     }
 
     function activateAllMouseClicks() {
         activateRegions();
         $(':button[name="NextPlayerSubmit"]').removeAttr('disabled');
-        $('body').off('click','input:radio[name="bankstate"]');
-        $('body').on('click','input:radio[name="bankstate"]', changeBankState);
+        $('#actionButton').removeAttr('disabled');
+        $('#actionContainer li.activeAction').removeClass('activeAction');
+        $('#actionContainer li').first().addClass('activeAction');
+        //$('body').off('click','input:radio[name="bankstate"]');
+        //$('body').on('click','input:radio[name="bankstate"]', changeBankState);
 
     }
 

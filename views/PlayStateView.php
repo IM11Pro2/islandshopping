@@ -9,10 +9,8 @@
 
         function printView() {
             ?>
-        <h1>PLAY STATE VIEW</h1>
 
         <div class="left">
-            <h2>Map</h2>
             <div class="mapView">
                 <!-- Load svg -->
                 <div id="canvas">
@@ -24,7 +22,7 @@
 
             </div><!--end .mapView-->
 
-            <input type="button" name="NextPlayerSubmit" value="NextPlayer" />
+            <!-- <input type="button" name="NextPlayerSubmit" value="NextPlayer" /> -->
         </div> <!-- end .left -->
         <div class="right">
             <h2>Aktionen</h2>
