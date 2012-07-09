@@ -69,18 +69,6 @@ $(document).ready(function(){
         sendAjaxRequest("../states/PlayState.php", {handle: "PlayState", nextPlayer: "nextPlayer"}, false);
     });
 
-    $('body').on('click', '#actionButton', function(){
-        var activeListElement = $('#actionContainer .activeAction');
-        activeListElement.removeClass('activeAction');
-        var nextElement = activeListElement.next();
-        if(nextElement.length < 1){
-            nextElement = $('#actionContainer li').first()
-        }
-        nextElement.addClass('activeAction');
-
-
-    });
-
     function activeElementHandler(){
 
         var activeElement = this;
@@ -125,7 +113,10 @@ $(document).ready(function(){
 
                 if (activeElement.data("region") == activeNeighbours[i]){
                     sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", region: activeRegionId ,enemy: activeElement.data("region")},true);
+                    alert("ANGRIFF");
+
                 }
+
             }
         }
     }
