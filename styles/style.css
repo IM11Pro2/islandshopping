@@ -30,6 +30,22 @@ body{
   /*border: none;*/
 }
 
+#canvas{
+    background-image: linear-gradient(bottom, rgb(218,245,255) 0%, rgb(187,238,255) 100%);
+    background-image: -o-linear-gradient(bottom, rgb(218,245,255) 0%, rgb(187,238,255) 100%);
+    background-image: -moz-linear-gradient(bottom, rgb(218,245,255) 0%, rgb(187,238,255) 100%);
+    background-image: -webkit-linear-gradient(bottom, rgb(218,245,255) 0%, rgb(187,238,255) 100%);
+    background-image: -ms-linear-gradient(bottom, rgb(218,245,255) 0%, rgb(187,238,255) 100%);
+
+    background-image: -webkit-gradient(
+    	linear,
+    	left bottom,
+    	left top,
+    	color-stop(0, rgb(218,245,255)),
+    	color-stop(1, rgb(187,238,255))
+    );
+}
+
 .mapView {
     width: 700px;
     border-style:solid;
