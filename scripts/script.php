@@ -63,6 +63,7 @@ $(document).ready(function(){
     $('body').on('click',':button[name="NextPlayerSubmit"]',function (event) {
         $('input:radio[name="bankstate"][value="<?php echo Bank::PAY_OFF ?>"]').attr('checked','checked');
         resetElements(event);
+        //deactivateAllMouseClicks();
         sendAjaxRequest("../states/PlayState.php", {handle: "PlayState", nextPlayer: "nextPlayer"}, false);
     });
 
@@ -82,8 +83,6 @@ $(document).ready(function(){
                }
             });
         }
-
-        //$(document).unbind('click');
 
         if(activeElement.data('regionOfPlayer') == 0){
 
@@ -150,10 +149,22 @@ $(document).ready(function(){
             el.unclick(activeElementHandler);
         });
 
-        //$('input:radio[name="bankstate"]').unbind('click');
-
         $(paper.canvas).off('click',resetElements);
     }
+
+/*   function deactivateAllMouseClicks() {
+        //$(document).bind('click', function(e) {
+        $(document).click(function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            //return false;
+        });
+    }
+
+    function activateAllMouseClicks() {
+        $(document).unbind('click');
+    } */
 
     function highlightNeighbourRegions(regions){
 
@@ -189,6 +200,7 @@ $(document).ready(function(){
 
     function sendNextPlayerRequest(){
         message_box.show_message('PAYOFF ROUND: ', 'Nächster Spieler! ', false);
+        //deactivateAllMouseClicks();
         sendAjaxRequest("../states/PlayState.php", {handle: "PlayState", nextPlayer: "nextPlayer"}, false);
     }
 
@@ -341,7 +353,6 @@ $(document).ready(function(){
         }
 
 
-
         if(settings.url.indexOf("nextPlayer")!= -1 || settings.url.indexOf("newAIRequest")!= -1){
             if($.parseJSON(xhr.responseText).attackCountry){
                 var regionInfo = $.parseJSON(xhr.responseText);
@@ -364,6 +375,7 @@ $(document).ready(function(){
             }
             else if($.parseJSON(xhr.responseText).humanPlayer){
                 var humanPlayer = $.parseJSON(xhr.responseText);
+                //activateAllMouseClicks();
                 message_box.show_message('Info: ', 'Your turn! ', false);
                 //displayAIinfo('Info: ', 'Your turn! ', false);
             }

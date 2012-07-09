@@ -49,7 +49,8 @@
         }
 
         public function setCurrency($countryName) {
-            $this->currency = $this->countryCurrencies[$countryName][0];
+            //$this->currency = $this->countryCurrencies[$countryName][0];
+            $this->currency = $this->countryCurrencies[$countryName][2];
         }
 
         public function setCurrencyTranslation($countryName) {
