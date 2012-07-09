@@ -77,7 +77,8 @@
                                                 'font-size' : 16,
                                                 'font-family' : "QlassikBold"
                                              });
-                            textElement.insertAfter(path);
+                            el.toFront();
+                            textElement.toFront();
                         });
                             <?php
                         }
