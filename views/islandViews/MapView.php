@@ -26,7 +26,6 @@
             var text;
             var group;
 
-
                 <?php
 
 
@@ -72,7 +71,12 @@
 
                         regionSet.forEach(function(el){
                             var textElement = paper.getById(el.id+1);
-                            textElement.attr({x : (el.getBBox().x + el.getBBox().width/2) ,y : (el.getBBox().y + el.getBBox().height/2)});
+                            textElement.attr({  x : (el.getBBox().x + el.getBBox().width/2) ,
+                                                y : (el.getBBox().y + el.getBBox().height/2),
+                                                'fill' : "#000",
+                                                'font-size' : 16,
+                                                'font-family' : "QlassikBold"
+                                             });
                             textElement.insertAfter(path);
                         });
                             <?php
