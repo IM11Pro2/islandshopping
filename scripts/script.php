@@ -447,7 +447,7 @@ function disableEnemyCountry($playerCountry){
 function jsonpcallback(data) {
     alert(data["message"]);
 }
-
+/*
 function displayAIinfo(title, body, request){
 
     var listLength = $('#infoAI li').size();
@@ -472,7 +472,6 @@ function displayAIinfo(title, body, request){
 
             $('#infoAI li').first().fadeOut('fast', 'linear', function(){
 
-                //$('#infoAI li').first().text(body);
 
                 $(this).text(body).fadeIn(2000, 'swing', function(){
                     if(request){
@@ -484,9 +483,19 @@ function displayAIinfo(title, body, request){
         }
 
     });
+}*/
 
+function displayAIinfo(title, body, request){
 
+    $('#infoAI').prepend('<li></li>');
 
+    $('#infoAI li').first().hide();
+
+    $('#infoAI li:hidden').text(body).fadeIn(2000, 'swing', function(){
+        if(request){
+            sendAjaxRequest("../states/PlayState.php", {handle: "PlayState", newAIRequest:"newAIRequest"}, false);
+        }
+    });
 
 }
 

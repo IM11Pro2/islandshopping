@@ -67,6 +67,8 @@ body{
 /* AI-info*/
 #infoAI{
     list-style-type: none;
+    overflow: auto;
+    height: 150px;
 }
 
 /*Message Box */
