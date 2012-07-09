@@ -263,25 +263,14 @@
                                 $decision = null;
                                 break;
                         }
-
-                        //$decision = $aiPlayer->makeDecision($allAiPlayerRegions, $regions);
                     }
 
-
-                    /**
-                     * VORSICHT!!!!!!!!!!!!!!! WEISS NOCH NICHT OB DAS KLUG IST!!!!!!!!!!!
-                     */
                     if($decision != null){
                         $this->doDecision($aiPlayerId, $decision);
                     }
                     else {
                         $this->nextPlayer();
                     }
-                    /**
-                     *
-                     * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                     */
-
                 }
             }
             else {
@@ -331,33 +320,6 @@
                 }
             }
 
-            // BRAUCH ICH DAS NOCH?!?!?!?!?!?!
-/*            else if(array_key_exists("nextPlayer", $decision)) {
-                $this->bankList[$aiPlayerId]->setState(Bank::DEPOSIT);
-                $this->nextPlayer();
-            }*/
-
-
-
-            /*
-             *  --> Handling of "makeDecision"
-             *
-            else if(array_key_exists("attack", $decision)){
-                $this->bankList[$aiPlayerId]->setState(Bank::ATTACK);
-                $this->tryToBuyRegion($decision["actualRegionId"], $decision["attack"]);
-            }
-            else if(array_key_exists("payOff", $decision)) {
-                $this->bankList[$aiPlayerId]->setState(Bank::PAY_OFF);
-                $this->spendMoney($decision["payOff"], "payOff");
-            }
-            else if(array_key_exists("nextPlayer", $decision)) {
-                $this->bankList[$aiPlayerId]->setState(Bank::DEPOSIT);
-                $this->nextPlayer();
-            }
-            else if(array_key_exists("deposit", $decision)) {
-                $this->bankList[$aiPlayerId]->setState(Bank::DEPOSIT);
-                $this->spendMoney($decision["deposit"], "deposit");
-            } */
         }
 
         private function updateInterestBaseForPlayer(){
