@@ -91,6 +91,8 @@ $(document).ready(function(){
             });
 
             activeElement.attr('stroke-width', 3);
+            activeElement.insertAfter(path);
+            path = activeElement;
             var regionId = activeElement.data('region');
             activeRegionId = regionId;
             if($('input:radio[name="bankstate"]:checked').val() == "<?php echo Bank::PAY_OFF ?>" ){

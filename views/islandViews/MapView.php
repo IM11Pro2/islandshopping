@@ -24,20 +24,63 @@
             var transformationMatrix;
             var path;
             var text;
-            //var group;
+            var group;
 
-            function setMatrices(groupSet, a,b,c,d,e,f){
-                param = {a : a, b : b, c : c, d : d, e : e, f : f};
-                groupSet.forEach(function(el, param){
-                    el.matrix.add(param.a,param.b,param.c,param.d,param.e,param.f);
-                });
-            }
 
                 <?php
 
 
-                $this->parseElement($this->xmlNodes, 0);
+                $layerElements = $this->xmlNodes->g;
 
+                foreach($layerElements as $childNode){ // layer of the svg
+
+                    $attributes = $childNode->attributes();
+
+                    if($attributes['id'] == "regions"){
+
+
+
+                        $parentGroupNode = $childNode;
+
+
+                        foreach($parentGroupNode->children() as $regionNode){
+
+                            if($regionNode->getName() == "path"){ // draw the region-paths
+
+                                // save style from the svg to fill the raphaeljs attributes
+                                $pathAttributes = $regionNode->attributes();
+                                $this->drawPath($pathAttributes);
+
+                            }
+                            else if($regionNode->getName() == "g"){ // draw the paths of groups
+                                $pathGroup = $regionNode;
+                                $this->drawGroup($pathGroup);
+
+                            }
+                        }
+
+
+                        $transformation = null;
+
+                        if($attributes['transform'] != null){
+                            $transformation = $this->parseTransformation($attributes['transform']);
+                        }
+                        if($transformation != null){
+                        ?>
+                        // modify transformation for the region set
+                        regionSet.transform("<?php echo $transformation; ?>");
+
+                        regionSet.forEach(function(el){
+                            var textElement = paper.getById(el.id+1);
+                            textElement.attr({x : (el.getBBox().x + el.getBBox().width/2) ,y : (el.getBBox().y + el.getBBox().height/2)});
+                            textElement.insertAfter(path);
+                        });
+                            <?php
+                        }
+
+                    }
+
+                    }
 
                 //for($i = 0; $i < NUM_OF_REGIONS; $i++) {
                     ?>
@@ -67,15 +110,15 @@
         }
 
 
-        private function parseIdAndTitle($inputId){
+        private function parseIdAndTitle($inputString){
             // split id and name from the input eg. 00_Evros
-            $inputId = explode("_", $inputId);
+            $inputString = explode("_", $inputString);
 
             // remove the first digit if its a zero
-            $inputId[0] = intval($inputId[0]);
+            $inputString[0] = intval($inputString[0]);
 
             // return the identifier array [0] is id, [1] is the name of the region
-            return $inputId;
+            return $inputString;
 
         }
 
@@ -87,87 +130,161 @@
         private function parseTransformation($inputTransformation){
 
             $count = 0;
-            $outputTransformation = str_replace("translate(","", $inputTransformation, $count);
+            $inputTransformation = str_replace("translate(","", $inputTransformation, $count);
 
             if($count > 0){
-                $outputTransformation = str_replace(")","", $outputTransformation);
-                $outputTransformation = explode(",", $outputTransformation);
-
-                for($i = 0; $i < count($outputTransformation); ++$i){
-                    $outputTransformation[$i] = floatval($outputTransformation[$i]);
-                }
-                return $outputTransformation;
+                $inputTransformation = str_replace(")","", $inputTransformation);
+                return "t".$inputTransformation;
             }
 
-            $outputTransformation = str_replace("matrix(","", $inputTransformation, $count);
+            $inputTransformation = str_replace("matrix(","", $inputTransformation, $count);
             if($count > 0){
-                $outputTransformation = str_replace(")","", $outputTransformation);
-                $outputTransformation = explode(",", $outputTransformation);
+                $inputTransformation = str_replace(")","", $inputTransformation);
+                $inputTransformation = explode(",", $inputTransformation);
 
-                for($i = 0; $i < count($outputTransformation); ++$i){
-                    $outputTransformation[$i] = floatval($outputTransformation[$i]);
+                for($i = 0; $i < count($inputTransformation); ++$i){
+                    $inputTransformation[$i] = floatval($inputTransformation[$i]);
                 }
 
-                return $outputTransformation;
+                return $inputTransformation;
             }
-
+            return ""; // einheitsmatrix
 
         }
 
+        public function drawPath($pathAttributes){
+            if($this->style == null){
+                $this->style = $this->parseStyle($pathAttributes);
+            }
+            $pathCoordinates = $pathAttributes['d'];
 
+            $regionId = null;
+            $regionTitle = null;
+            $region = null;
+            if($pathAttributes['id'] != null){
+                $uniqueName = $this->parseIdAndTitle($pathAttributes['id']);
+                $regionId = $uniqueName[0];
+                $regionTitle = $uniqueName[1];
+                $region = $this->regions[$regionId];
+            }
 
-        private function parseElement($svgElement, $index, $groupName = "group"){
+        ?>
+            path = paper.path("<?php echo $pathCoordinates; ?>");
+            path.attr("<?php echo $this->style; ?>");
+            path.attr('fill', "<?php  echo isset($region) ? $region->getColor() : "#000000"; ?>");
 
-            if($svgElement->getName() == "svg"){
-                foreach($svgElement->children() as $svgChildElement){
-                    $this->parseElement($svgChildElement, ++$index);
-                }
-            }else if($svgElement->getName() == "g"){
+            path.data('region', <?php echo $regionId; ?>);
+            path.data('regionOfPlayer', <?php  echo isset($region) ? $region->getPlayerId() : "-1"; ?>);
 
-                echo "paper.setStart();\n";
-                foreach($svgElement->children() as $svgChildElement){
-                    $childAttributes = $svgChildElement->attributes();
-                    $childId = $this->parseIdAndTitle($childAttributes['id']);
-                    $this->parseElement($svgChildElement, ++$index, isset($childId[1]) ? $childId[1] : "group");
-                }
-                echo "var ".$groupName."".$index." = paper.setFinish();\n";
+            path.attr("title", "<?php echo $regionTitle; ?>");
 
-                $groupAttributes = $svgElement->attributes();
+            text = paper.text( 0 , 0, '');
+
+            text.data('text', '<?php echo $regionId; ?>');
+            text.data('value', '<?php echo $region->getPayment()->__toString(); ?>');
+            regionSet.push(path);
+        <?php
+        }
+
+        public function drawGroup($regionPaths){
+
+        ?>
+            var groupSet = paper.set();
+
+        <?php
+            $groupAttributes = $regionPaths->attributes();
+
+            $transformation = null;
+            if($groupAttributes['transform'] != null){
                 $transformation = $this->parseTransformation($groupAttributes['transform']);
+            }
 
-                if(isset($transformation)){
-                    $matrixParam = count($transformation) > 2 ? implode(",",$transformation) : "1,0,0,1,".$transformation[0].",".$transformation[1] ;
+            foreach($regionPaths->children() as $regionPath ){
+
+
+                if($regionPath->getName() == "g"){
+                    //island group
+                    ?>
+                    var islandGroup = paper.set();
+                   <?php
+                    $islands = $regionPath->children();
+
+
+                    foreach($islands as $islandPath){
+
+                        $islandAttributes = $islandPath->attributes();
+                        $islandCoords = $islandAttributes['d'];
+                        ?>
+                        path = paper.path("<?php echo $islandCoords; ?>");
+                        path.attr("<?php echo $this->style; ?>");
+                        islandGroup.push(path);
+                        <?php
+                    }
 
                     ?>
-                    console.log("<?php echo $groupName."".$index; ?>");
-                    console.log(<?php echo $groupName."".$index; ?>);
-                    //setMatrices(<?php echo $groupName."".$index.",".$matrixParam; ?>);
-                <?php
+                        groupSet.push(islandGroup);
+                    <?php
+
+
+                }
+                else if($regionPath->getName() == "path"){
+
+                    // region
+                    $pathAttributes = $regionPath->attributes();
+
+                    if($this->style == null){
+                        $this->style = $this->parseStyle($pathAttributes);
+                    }
+                    $pathCoordinates = $pathAttributes['d'];
+
+
+
+                    ?>
+                        path = paper.path("<?php echo $pathCoordinates; ?>");
+                        path.attr("<?php echo $this->style; ?>");
+                        groupSet.push(path);
+
+                    <?php
+
+                    if($transformation != null){
+                        ?>
+                        transformationMatrix = Raphael.matrix(  <?php echo $transformation[0]; ?>,
+                                                                    <?php echo $transformation[1]; ?>,
+                                                                    <?php echo $transformation[2]; ?>,
+                                                                    <?php echo $transformation[3]; ?>,
+                                                                    <?php echo $transformation[4]; ?>,
+                                                                    <?php echo $transformation[5]; ?>);
+
+                        <?php
+                    }
+
+                    $regionId = null;
+                    $regionTitle = null;
+                    $region = null;
+                    if($groupAttributes['id'] != null){
+                        $uniqueName = $this->parseIdAndTitle($groupAttributes['id']);
+                        $regionId = $uniqueName[0];
+                        $regionTitle = $uniqueName[1];
+                        $region = $this->regions[$regionId];
+                    }
+
+
                 }
 
-
             }
+            ?>
+            groupSet.attr('fill', "<?php  echo isset($region) ? $region->getColor() : "#000000"; ?>");
 
-            else if($svgElement->getName() == "path"){
-                $this->parsePath($svgElement);
-            }
+            groupSet.data('region', <?php echo $regionId; ?>);
+            groupSet.data('regionOfPlayer', <?php  echo isset($region) ? $region->getPlayerId() : "-1"; ?>);
 
+            groupSet.attr("title", "<?php echo $regionTitle; ?>");
+            regionSet.push(groupSet);
+
+    <?php
         }
 
-        private function parsePath($svgElement){
-            $pathAttributes = $svgElement->attributes();
-            $style = $this->parseStyle($pathAttributes);
-            $coords = $pathAttributes['d'];
-            $this->drawPath($coords, $style);
 
-        }
-
-        private function drawPath($coords, $style){ ?>
-            path = paper.path("<?php echo $coords; ?>");
-            path.attr("<?php echo $style; ?>");
-        <?php
-
-        }
 
     }
 
