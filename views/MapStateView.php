@@ -17,24 +17,25 @@
 
         function printView() {
             ?>
+        <div class="left">
+            <div class="mapView">
+                <!-- Load svg -->
+                <div id="canvas">
+                <?php
+                    //$dummyView = new DummyView();
+                    $dummyView = new MapView();
+                    $dummyView->printDummyMap();
+                ?>
+                </div>
+            </div><!--end .mapView-->
+        </div> <!-- end .left -->
+        <div class="right">
+            <h2>Aktionen</h2>
+            <input type="button" name="MapRandom" value="Nächste Map" />
+            <input type="button" name="MapSubmit" value="Start" />
+        </div><!--end .right-->
 
-
-            <h1>MAP STATE VIEW</h1>
-
-        <div class="mapView">
-            <!-- Load svg -->
-            <div id="canvas">
-            <?php
-                //$dummyView = new DummyView();
-                $dummyView = new MapView();
-                $dummyView->printDummyMap();
-            ?>
-            </div>
-        </div><!--end .mapView-->
-
-        <input type="button" name="MapRandom" value="Nächste Map">
-        <input type="button" name="MapSubmit" value="Start">
-
+        <div class="clear"></div>
         <?php
         }
 
