@@ -18,7 +18,7 @@
         private $interestsActivatedByHuman;
 
         private $decisionCounter;
-        private $humanDecisionCounter;
+        private $humanPayoffCounter;
 
         function init() {
             $this->incidentGenerator = new IncidentGenerator();
@@ -154,15 +154,15 @@
 
                     if($playerId == 0 && $_SESSION['activePlayers'][$playerId]->getPlayRound() <= PAYOFF_ROUNDS){
         
-                        if($this->humanDecisionCounter < PAYOFF_REGIONS_PER_ROUND-1){
-                            $this->humanDecisionCounter++;
+                        if($this->humanPayoffCounter < PAYOFF_REGIONS_PER_ROUND-1){
+                            $this->humanPayoffCounter++;
                         }
                         else {
-                            $this->humanDecisionCounter = 0;
+                            $this->humanPayoffCounter = 0;
                         }
                     }
                     else {
-                        $this->humanDecisionCounter = null;
+                        $this->humanPayoffCounter = null;
                     }
 
                     $this->handleResponse(array("attackCountry" => false,
@@ -171,7 +171,7 @@
                                                 "playerId" => $playerId,
                                                 "activeRegion"=> $regionId,
                                                 "action" => $action,
-                                                "numberOfHumanPayoffs" => $this->humanDecisionCounter,
+                                                "numberOfHumanPayoffs" => $this->humanPayoffCounter,
                                                 "payment"     => array("value"    => $paymentValue,
                                                                       "currency" => $country->getPayment()->getCurrency()),
                                                 "bankCapital" => $bankCapital,
