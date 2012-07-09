@@ -57,17 +57,17 @@
         <form>
             <label>
             <input type="radio" id="payoff" name="bankstate" value="<?php echo Bank::PAY_OFF ?>" <?php echo ($bankState == Bank::PAY_OFF) ? "checked=checked" :"" ?>>
-            PayOff</input>
+            Geld verteilen </input>
             </label>
 
             <label>
                 <input type="radio" id="attack" name="bankstate" value="<?php echo Bank::ATTACK ?>" <?php echo ($bankState == Bank::ATTACK) ? "checked=checked" :"" ?>>
-                Attack</input>
+                Shoppen</input>
             </label>
 
             <label>
                 <input type="radio" id="deposit" name="bankstate" value="<?php echo Bank::DEPOSIT ?>" <?php echo ($bankState == Bank::DEPOSIT) ? "checked=checked" :"" ?>>
-                Deposit</input>
+                Bank einzahlen</input>
             </label>
 
         </form>

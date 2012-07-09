@@ -105,7 +105,7 @@ $(document).ready(function(){
             }
             else if($('input:radio[name="bankstate"]:checked').val() == "<?php echo Bank::ATTACK ?>"){
                 activeRegion = true;
-                sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getNeigbours: regionId},true);
+                sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getNeighbours: regionId},true);
             }
         }
         else if(activeRegion){
@@ -113,10 +113,7 @@ $(document).ready(function(){
 
                 if (activeElement.data("region") == activeNeighbours[i]){
                     sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", region: activeRegionId ,enemy: activeElement.data("region")},true);
-                    alert("ANGRIFF");
-
                 }
-
             }
         }
     }
@@ -305,7 +302,7 @@ $(document).ready(function(){
             if(i > 0){
                 text += " and ";
             }
-            text += ('<span style="color:'+interests[i].color+'" >'+interests[i].countryName + '</span> got ' + interests[i].interest + ' interest');
+            text += ('<span style="color:'+interests[i].color+'" >'+interests[i].countryName + '</span> bekam ' + interests[i].interest + ' Zinsen');
 
             $('#'+interests[i].bankName).text(interests[i].bankCapital);
         }
@@ -347,7 +344,7 @@ $(document).ready(function(){
         if(settings.url.indexOf("randomizeMap")!= -1){
             $('#content').html(xhr.responseText);
         }
-        if(settings.url.indexOf("getNeigbours")!= -1){
+        if(settings.url.indexOf("getNeighbours")!= -1){
             var regions = $.parseJSON(xhr.responseText);
             highlightNeighbourRegions(regions);
         }
@@ -372,24 +369,54 @@ $(document).ready(function(){
                 var regionInfo = $.parseJSON(xhr.responseText);
                 /*message_box.show_message('KI ' + regionInfo.playerId + ': ', regionInfo.activeRegion.regionId + ' attacked '
                     + regionInfo.enemyRegion.regionId + " and has won: " + regionInfo.activeRegion.hasWon,  true);*/
-                displayAIinfo('KI ' + regionInfo.playerId + ': ', regionInfo.activeRegion.regionId + ' attacked '
-                    + regionInfo.enemyRegion.regionId + " and has won: " + regionInfo.activeRegion.hasWon,  true);
+                var hasBought = ((!regionInfo.activeRegion.hasWon) ? " nicht kaufen" : " kaufen");
+                var regionTitle;
+
+                // Search name of region
+                paper.forEach(function(el){
+
+                   if(el.type == "path"){
+
+                       if(el.data('region') == regionInfo.enemyRegion.regionId){
+                          regionTitle = el.attr('title');
+                       }
+
+                   }
+                });
+
+
+                displayAIinfo(regionInfo.playerCountry + ' konnte ' + regionTitle + hasBought,  true);
                 updateMap(regionInfo);
             }
             else if($.parseJSON(xhr.responseText).spendMoney){
                 var payment = $.parseJSON(xhr.responseText);
-                displayAIinfo('KI ' + payment.playerId + ': ', payment.activeRegion + ' spent money '+ payment.action , true);
+                var spentAction = ((payment.action=="payOff") ? " hat Geld bekommen" : " hat Geld auf die Bank eingezahlt")
+                var regionTitle;
+
+                // Search name of region
+                paper.forEach(function(el){
+
+                   if(el.type == "path"){
+
+                       if(el.data('region') == payment.activeRegion){
+                          regionTitle = el.attr('title');
+                       }
+
+                   }
+                });
+
+                displayAIinfo(regionTitle + spentAction , true);
                 //message_box.show_message('KI ' + payment.playerId + ': ', payment.activeRegion + ' spent money '+ payment.action , true);
                 addBasicCapitalToRegion(payment);
             }
             else if($.parseJSON(xhr.responseText).nextPlayer){
                 var nextPlayer = $.parseJSON(xhr.responseText);
                 //message_box.show_message('KI: ', 'Swiched Player to PlayerId ' + nextPlayer.nextPlayerId , true);
-                displayAIinfo('KI: ', 'Swiched Player to PlayerId ' + nextPlayer.nextPlayerId , true);
+                displayAIinfo(nextPlayer.playerCountry + ' ist dran' , true);
             }
             else if($.parseJSON(xhr.responseText).humanPlayer){
                 var humanPlayer = $.parseJSON(xhr.responseText);
-                message_box.show_message('Info: ', 'Your turn! ', false);
+                message_box.show_message('Info: ', 'Du bist an der Reihe! ', false);
                 activateAllMouseClicks();
                 //displayAIinfo('Info: ', 'Your turn! ', false);
             }
@@ -485,7 +512,7 @@ function displayAIinfo(title, body, request){
     });
 }*/
 
-function displayAIinfo(title, body, request){
+function displayAIinfo(body, request){
 
     $('#infoAI').prepend('<li></li>');
 

@@ -105,6 +105,7 @@
                                                     "spendMoney" => false,
                                                     "nextPlayer" => false,
                                                     "playerId" => $playerId,
+                                                    "playerCountry" => $this->playerList[$playerId]->getCountry()->getName(),
                                                     "activeRegion" => array("hasWon"=> $hasPlayerWon,
                                                                             "payment" => $activePayment->__toString(),
                                                                             "regionId" => $regionId,
@@ -127,6 +128,7 @@
                                                     "spendMoney" => false,
                                                     "nextPlayer" => false,
                                                     "playerId" => $playerId,
+                                                    "playerCountry" => $this->playerList[$playerId]->getCountry()->getName(),
                                                     "enemyRegion" => array("regionId" => $enemyId),
                                                     "activeRegion" => array("hasWon"=> $hasPlayerWon,
                                                                             "payment" => $activePayment->__toString(),
@@ -200,6 +202,7 @@
                                    "spendMoney" => false,
                                    "nextPlayer" => true,
                                    "nextPlayerId" => $nextPlayerId,
+                                    "playerCountry" => $this->playerList[$nextPlayerId]->getCountry()->getName(),
                                    ), true);
         }
 
@@ -350,11 +353,11 @@
        
                        session_id($_GET[session_name()]);
        
-                       if(isset($_GET['getNeigbours'])) {
+                       if(isset($_GET['getNeighbours'])) {
        
                            header('Content-type: application/json');
        
-                           $regionId = trim($_GET['getNeigbours']);
+                           $regionId = trim($_GET['getNeighbours']);
        
                            $map = $_SESSION['map'];
                            $regions = $map->getRegions();
