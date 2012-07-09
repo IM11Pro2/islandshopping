@@ -24,11 +24,20 @@
 
             </div><!--end .mapView-->
 
-            <input type="button" name="NextPlayerSubmit" value="NextPlayer">
+            <input type="button" name="NextPlayerSubmit" value="NextPlayer" />
         </div> <!-- end .left -->
         <div class="right">
+            <h2>Aktionen</h2>
+            <div>
+                <ol id="actionContainer">
+                    <li class="activeAction">Payoff</li>
+                    <li>Shoppen</li>
+                    <li>Deposit</li>
+                    <li>Nächster Spieler</li>
+                </ol>
+                <input type="button" name="actionButton" value="Aktion weiter" id="actionButton"/>
+            </div>
             <h2>Bank</h2>
-
             <div class="bankView">
                 <?php
                     $bankView = new BankView();

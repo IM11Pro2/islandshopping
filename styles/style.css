@@ -71,6 +71,7 @@ body{
     height: 150px;
 }
 
+
 /*Message Box */
 #darkbg {
 	display: none;
@@ -109,3 +110,12 @@ body{
 	margin-right: 10px;
 }
 /* End Message Box */
+
+#actionContainer{
+    color: #dcdcdc;
+}
+
+.activeAction{
+    color: #000000;
+    background-color: #b0e0e6;
+}
