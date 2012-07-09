@@ -40,12 +40,14 @@ $(document).ready(function(){
         }
     });
 
-    $('body').on('click','input:radio[name="bankstate"]', function(event) {
+    $('body').on('click','input:radio[name="bankstate"]', changeBankState);
+
+    function changeBankState(event){
         resetElements(event);
         if($('input:checked').length > 0){
             sendAjaxRequest("../bank/Bank.php", {handle: "bank", bankstate: $.trim($(this).val())}, false);
         }
-    });
+    }
 
     $(':button[name="MenuSubmit"]').click(function (event) {
         sendAjaxRequest("../states/MenuState.php", {handle: "MenuState", endState: "Menu"}, false);
@@ -63,7 +65,7 @@ $(document).ready(function(){
     $('body').on('click',':button[name="NextPlayerSubmit"]',function (event) {
         $('input:radio[name="bankstate"][value="<?php echo Bank::PAY_OFF ?>"]').attr('checked','checked');
         resetElements(event);
-        //deactivateAllMouseClicks();
+        deactivateAllMouseClicks();
         sendAjaxRequest("../states/PlayState.php", {handle: "PlayState", nextPlayer: "nextPlayer"}, false);
     });
 
@@ -133,12 +135,18 @@ $(document).ready(function(){
     }
 
 
-    function activateRegions(){
+    function initTextValues(){
         paper.forEach(function (el) {
-
-            el.click(activeElementHandler);
             var value =  el.data('value');
             el.attr('text', value);
+
+        });
+
+    }
+
+    function activateRegions(){
+        paper.forEach(function (el) {
+            el.click(activeElementHandler);
 
         });
 
@@ -154,19 +162,22 @@ $(document).ready(function(){
         $(paper.canvas).off('click',resetElements);
     }
 
-/*   function deactivateAllMouseClicks() {
-        //$(document).bind('click', function(e) {
-        $(document).click(function(e) {
-            e.stopPropagation();
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            //return false;
+   function deactivateAllMouseClicks() {
+        deactivateRegions();
+        $(':button[name="NextPlayerSubmit"]').attr('disabled', 'disabled');
+        $('body').off('click','input:radio[name="bankstate"]', changeBankState);
+        $('body').on('click','input:radio[name="bankstate"]', function(){
+            return false;
         });
     }
 
     function activateAllMouseClicks() {
-        $(document).unbind('click');
-    } */
+        activateRegions();
+        $(':button[name="NextPlayerSubmit"]').removeAttr('disabled');
+        $('body').off('click','input:radio[name="bankstate"]');
+        $('body').on('click','input:radio[name="bankstate"]', changeBankState);
+
+    }
 
     function highlightNeighbourRegions(regions){
 
@@ -202,7 +213,7 @@ $(document).ready(function(){
 
     function sendNextPlayerRequest(){
         message_box.show_message('PAYOFF ROUND: ', 'Nächster Spieler! ', false);
-        //deactivateAllMouseClicks();
+        deactivateAllMouseClicks();
         sendAjaxRequest("../states/PlayState.php", {handle: "PlayState", nextPlayer: "nextPlayer"}, false);
     }
 
@@ -329,6 +340,7 @@ $(document).ready(function(){
 
             if(hasParamValue(settings.url,"endState","Map")){
                 activateRegions();
+                initTextValues();
                 checkPayoffRounds(0);
             }
         }
@@ -377,8 +389,8 @@ $(document).ready(function(){
             }
             else if($.parseJSON(xhr.responseText).humanPlayer){
                 var humanPlayer = $.parseJSON(xhr.responseText);
-                //activateAllMouseClicks();
                 message_box.show_message('Info: ', 'Your turn! ', false);
+                activateAllMouseClicks();
                 //displayAIinfo('Info: ', 'Your turn! ', false);
             }
 
