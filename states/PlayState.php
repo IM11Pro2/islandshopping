@@ -20,6 +20,8 @@
         private $decisionCounter;
         private $humanPayoffCounter;
 
+        private $decisionPhase;
+
         function init() {
             $this->incidentGenerator = new IncidentGenerator();
             $_SESSION['incidentGenerator'] = $this->incidentGenerator;
@@ -48,6 +50,9 @@
             $this->speculationValues = getSpeculationValues();
 
             $this->decisionCounter = 0;
+            $this->humanPayoffCounter = 0;
+
+            $this->decisionPhase ="payOff";
 
             GameEventManager::getInstance()->addEventListener($this, GlobalBankEvent::TYPE);
             GameEventManager::getInstance()->addEventListener($this, GlobalRegionEvent::TYPE);
@@ -189,6 +194,8 @@
 
             $this->playerList[$nextPlayerId]->setPlayerState(IPlayer::ACTIVE);
 
+            $this->decisionPhase = "payOff";
+
             $this->handleResponse(array("attackCountry" => false,
                                    "spendMoney" => false,
                                    "nextPlayer" => true,
@@ -237,16 +244,32 @@
                    }
                    $regions = $map->getRegions();
 
+                    // at the beginning, there is only payoff possible for every player
                     if($aiPlayer->getPlayRound() <= PAYOFF_ROUNDS ){
                         $decision = $aiPlayer->makeInitPayOff($allAiPlayerRegions, $regions);
                     }
                     else {
-                        $decision = $aiPlayer->makeDecision($allAiPlayerRegions, $regions);
+                        switch($this->decisionPhase){
+                            case "payOff":
+                                $decision = $aiPlayer->payOffDecision($allAiPlayerRegions, $regions);
+                                break;
+                            case "attack":
+                                $decision = $aiPlayer->attackDecision($allAiPlayerRegions, $regions);
+                                break;
+                            case "deposit":
+                                $decision = $aiPlayer->depositDecision($allAiPlayerRegions, $regions);
+                                break;
+                            case "nextPlayer":
+                                $decision = null;
+                                break;
+                        }
+
+                        //$decision = $aiPlayer->makeDecision($allAiPlayerRegions, $regions);
                     }
 
 
                     /**
-                     * VORSICHT!!!!!!!!!!!!!!! WEISS NICHT OB DAS KLUG IST!!!!!!!!!!!
+                     * VORSICHT!!!!!!!!!!!!!!! WEISS NOCH NICHT OB DAS KLUG IST!!!!!!!!!!!
                      */
                     if($decision != null){
                         $this->doDecision($aiPlayerId, $decision);
@@ -280,6 +303,45 @@
                 }
 
             }
+
+            else if(array_key_exists("payOff", $decision)) {
+                $this->bankList[$aiPlayerId]->setState(Bank::PAY_OFF);
+                $this->spendMoney($decision["payOff"], "payOff");
+
+                if($decision["nextPhase"]){
+                    $this->decisionPhase = "attack";
+                }
+            }
+            else if(array_key_exists("attack", $decision)){
+                $this->decisionPhase = "attack";
+                $this->bankList[$aiPlayerId]->setState(Bank::ATTACK);
+                $this->tryToBuyRegion($decision["actualRegionId"], $decision["attack"]);
+
+                if($decision["nextPhase"]){
+                    $this->decisionPhase = "deposit";
+                }
+            }
+            else if(array_key_exists("deposit", $decision)) {
+                $this->decisionPhase = "deposit";
+                $this->bankList[$aiPlayerId]->setState(Bank::DEPOSIT);
+                $this->spendMoney($decision["deposit"], "deposit");
+
+                if($decision["nextPhase"]){
+                    $this->decisionPhase = "nextPlayer";
+                }
+            }
+
+            // BRAUCH ICH DAS NOCH?!?!?!?!?!?!
+/*            else if(array_key_exists("nextPlayer", $decision)) {
+                $this->bankList[$aiPlayerId]->setState(Bank::DEPOSIT);
+                $this->nextPlayer();
+            }*/
+
+
+
+            /*
+             *  --> Handling of "makeDecision"
+             *
             else if(array_key_exists("attack", $decision)){
                 $this->bankList[$aiPlayerId]->setState(Bank::ATTACK);
                 $this->tryToBuyRegion($decision["actualRegionId"], $decision["attack"]);
@@ -295,7 +357,7 @@
             else if(array_key_exists("deposit", $decision)) {
                 $this->bankList[$aiPlayerId]->setState(Bank::DEPOSIT);
                 $this->spendMoney($decision["deposit"], "deposit");
-            }
+            } */
         }
 
         private function updateInterestBaseForPlayer(){

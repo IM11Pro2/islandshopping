@@ -47,7 +47,7 @@
         );
     }
 
-    define("PAYOFF_ROUNDS", 2);
+    define("PAYOFF_ROUNDS", 1);
     define("PAYOFF_REGIONS_PER_ROUND", 2);
 
     define("INTEREST_RATE", 0.10);
