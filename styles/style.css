@@ -7,8 +7,35 @@ body{
     font-family: QlassikBold;
 }
 
+h1.menu{
+    font-size: 48pt;
+    padding: 0px 0px 10px 300px;
+    margin: 50px 20px 40px 20px;
+    border-bottom: solid 4px #bbeeff;
+}
+h2.menu{
+    margin: 20px auto 0px 20px;
+}
+
+h3{
+    font-size: 14pt;
+    margin: 14px 0px 3px 0px;
+}
+
+h2.bank{
+    margin: 19px 0px 0px 0px;
+}
+
+fieldset{
+    font-size: 14pt;
+    border: none;
+    /*border-bottom: solid #bbeeff 1px;*/
+    margin: 10px;
+}
+
 .right{
     float: right;
+    padding: 0px 6px 0px 0px;
 }
 
 .left{
@@ -21,12 +48,19 @@ body{
     clear:both;
 }
 
+.interests{
+    text-align: right;
+}
+#menuSubmit{
+    margin: 0px auto 10px 260px;
+}
+
 #container {
   width: 986px;
   margin: 0px auto 50px auto;
   /*padding: 15px;*/
   background-color: #FFFFFF;
-    border: 1px solid lightgray;
+    border: 1px solid #000000;
     position: relative;
   /*top: -254px;*/
   /*border: none;*/
@@ -49,21 +83,33 @@ body{
 }
 
 .mapView {
-    width: 700px;
+    /*width: 700px;
     border-style:solid;
-    border-width:1px;
+    border-width:1px;*/
+    border-right: solid 1px #000000;
 }
-
+/*
 .bankView, .infoView {
-    width: 270px;
+    width: 256px;
     border-style:solid;
     border-width:1px;
     padding: 0 5px;
-}
+}*/
 
 /* interest-info*/
 #interestInfo{
     display: none;
+}
+
+.infoBox{
+    width: 256px;
+    padding: 0px 0px 15px 0px;
+    border-bottom: lightgray solid 1px;
+}
+
+.infoBox.last{
+    padding: 0px 0px 0px 0px;
+    border-bottom: none;
 }
 
 /* AI-info*/
@@ -119,6 +165,8 @@ body{
 
 #actionContainer{
     color: #dcdcdc;
+    padding: 0px 0px 0px 20px;
+    margin: 0px 0px 16px 0px;
 
 }
 #actionContainer > li{

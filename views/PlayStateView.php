@@ -26,7 +26,7 @@
         </div> <!-- end .left -->
         <div class="right">
             <h2>Aktionen</h2>
-            <div>
+            <div class="infoBox">
                 <ol id="actionContainer">
                     <li class="activeAction">Geld verteilen</li>
                     <li>Shoppen</li>
@@ -35,8 +35,8 @@
                 </ol>
                 <input type="button" name="actionButton" value="Aktion weiter" id="actionButton" disabled="disabled"/>
             </div>
-            <h2>Bank</h2>
-            <div class="bankView">
+            <h2 class="bank">Bank</h2>
+            <div class="infoBox">
                 <?php
                     $bankView = new BankView();
                     $bankView->printBankView();
@@ -44,7 +44,7 @@
             </div>
             <br />
             <h2>Info</h2>
-            <div class="infoView">
+            <div class="infoBox last">
                 <ul id="infoAI">
                 </ul>
             </div>
