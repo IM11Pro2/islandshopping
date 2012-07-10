@@ -79,6 +79,12 @@
                     $activeRegion = $map->getRegion($regionId);
                     $activePayment = $map->getRegion($regionId)->getPayment();
 
+                    $originalPayment = new Payment();
+                    $originalPayment->setValue($activePayment->getValue());
+                    $originalPayment->setCurrency($activeRegion->getCountry()->getName());
+                    $originalPayment->setCurrencyTranslation($activeRegion->getCountry()->getName());
+                    //$originalPayment->reduceValue(2*BASIC_CAPITAL_REGION); // oder 2mal oder gar nicht?!?!
+
                     $playerId = $activeRegion->getPlayerId();
 
                     $enemyRegion = $map->getRegion($enemyId);
@@ -90,6 +96,21 @@
                     $speculationValue = $this->speculationValues[mt_rand(0,count($this->speculationValues)-1)];
 
                     $hasPlayerWon = $activePayment->isBuyable($enemyPayment, $speculationValue);
+
+
+                    // for calculation info
+                    $playerTranslation = $this->playerList[$playerId]->getCountry()->getPayment()->getCurrencyTranslation();
+                    $enemyTranslation = $this->playerList[$enemyPlayerId]->getCountry()->getPayment()->getCurrencyTranslation();
+
+                    $specificTranslation = 1/$playerTranslation * $enemyTranslation;
+
+                    $calculation = ($originalPayment->getValue() - 2*BASIC_CAPITAL_REGION) * $specificTranslation * $speculationValue;
+                    $enemyCurrency = $enemyPayment->getCurrency();
+                    $playerCurrency = $originalPayment->getCurrency();
+
+                    $specificTranslation = number_format($specificTranslation, 2);
+                    $calculation = number_format($calculation, 2);
+                    $basicCapital = number_format((BASIC_CAPITAL_REGION * $playerTranslation),2);
         
                     if($hasPlayerWon){
 
@@ -101,11 +122,19 @@
 
                         $enemyBankCapital = $this->bankList[$enemyPlayerId]->getCapital();
 
+                        $blaText = $originalPayment->__toString();
+
                         $this->handleResponse(array("attackCountry" => true,
                                                     "spendMoney" => false,
                                                     "nextPlayer" => false,
                                                     "playerId" => $playerId,
                                                     "playerCountry" => $this->playerList[$playerId]->getCountry()->getName(),
+                                                    "calculation" => array("originalPayment" => $originalPayment->__toString(),
+                                                                            "translation" => $specificTranslation,
+                                                                            "calculation" => $calculation,
+                                                                            "basicCapital" => $basicCapital,
+                                                                            "ownCurrency" => $playerCurrency,
+                                                                            "enemyCurrency" => $enemyCurrency),
                                                     "activeRegion" => array("hasWon"=> $hasPlayerWon,
                                                                             "payment" => $activePayment->__toString(),
                                                                             "regionId" => $regionId,
@@ -124,12 +153,19 @@
                     else{
                         //echo json_encode( array("activeRegion" => array("hasWon"=> $hasPlayerWon)));
                         $activePayment->setValue(BASIC_CAPITAL_REGION);
+                        $blaText = $originalPayment->__toString();
                         $this->handleResponse(array("attackCountry" => true,
                                                     "spendMoney" => false,
                                                     "nextPlayer" => false,
                                                     "playerId" => $playerId,
                                                     "playerCountry" => $this->playerList[$playerId]->getCountry()->getName(),
                                                     "enemyRegion" => array("regionId" => $enemyId),
+                                                    "calculation" => array("originalPayment" => $originalPayment->__toString(),
+                                                                        "translation" => $specificTranslation,
+                                                                        "calculation" => $calculation,
+                                                                        "basicCapital" => $basicCapital,
+                                                                        "ownCurrency" => $playerCurrency,
+                                                                         "enemyCurrency" => $enemyCurrency),
                                                     "activeRegion" => array("hasWon"=> $hasPlayerWon,
                                                                             "payment" => $activePayment->__toString(),
                                                                             "regionId" => $regionId,
@@ -147,10 +183,12 @@
 
                     if($action == "payOff" ||  (isset($_GET['bankstate']) && trim($_GET['bankstate']) == Bank::PAY_OFF)  ) {
                         $this->bankList[$playerId]->payOff($regions[$regionId]->getPayment());
+                        $action = "payOff";
 
                     }
                    else if($action == "deposit" ||  (isset($_GET['bankstate']) && trim($_GET['bankstate']) == Bank::DEPOSIT)  ) {
                        $this->bankList[$playerId]->deposit($regions[$regionId]->getPayment(), false);
+                       $action = "deposit";
                     }
 
                     $country = $regions[$regionId]->getCountry();

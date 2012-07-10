@@ -46,6 +46,9 @@
 
         public function reduceValue($value) {
                 $this->value -= $value;
+                if($this->value < 0){
+                    $this->value = 0;
+                }
         }
 
         public function setCurrency($countryName) {
