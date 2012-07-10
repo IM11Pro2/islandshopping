@@ -294,6 +294,7 @@ $(document).ready(function(){
         // after the PAYOFF_ROUNDS "attack" and "deposit" are enabled
         else if(actualRound == <?php echo PAYOFF_ROUNDS ?>+1){
             enableActionPossibilities();
+            $('#actionButton').removeAttr('disabled');
         }
     }
 
@@ -417,11 +418,14 @@ $(document).ready(function(){
                 paper.forEach(function(el){
 
                    if(el.type == "path"){
-
+                       el.attr("stroke-width", 1);
                        if(el.data('region') == regionInfo.enemyRegion.regionId){
                           regionTitle = el.attr('title');
+                          el.attr("stroke-width", 3);
                        }
-
+                       if(el.data('region') == regionInfo.activeRegion.regionId){
+                         el.attr("stroke-width", 3);
+                      }
                    }
                 });
 
@@ -438,9 +442,12 @@ $(document).ready(function(){
                 paper.forEach(function(el){
 
                    if(el.type == "path"){
-
+                       el.attr("stroke-width", 1);
                        if(el.data('region') == payment.activeRegion){
                           regionTitle = el.attr('title');
+                          el.attr("stroke-width", 3);
+                          el.toFront();
+                          paper.getById(el.id+1).toFront();
                        }
 
                    }
@@ -453,10 +460,23 @@ $(document).ready(function(){
             else if($.parseJSON(xhr.responseText).nextPlayer){
                 var nextPlayer = $.parseJSON(xhr.responseText);
                 //message_box.show_message('KI: ', 'Swiched Player to PlayerId ' + nextPlayer.nextPlayerId , true);
+                paper.forEach(function(el){
+
+                   if(el.type == "path"){
+                       el.attr("stroke-width", 1);
+                   }
+                });
                 displayAIinfo(nextPlayer.playerCountry + ' ist dran' , true);
             }
             else if($.parseJSON(xhr.responseText).humanPlayer){
                 var humanPlayer = $.parseJSON(xhr.responseText);
+
+                paper.forEach(function(el){
+
+                   if(el.type == "path"){
+                       el.attr("stroke-width", 1);
+                   }
+                });
                 message_box.show_message('Info: ', 'Du bist an der Reihe! ', false);
                 activateAllMouseClicks();
                 //displayAIinfo('Info: ', 'Your turn! ', false);
@@ -559,7 +579,7 @@ function displayAIinfo(body, request){
 
     $('#infoAI li').first().hide();
 
-    $('#infoAI li:hidden').text(body).fadeIn(2000, 'swing', function(){
+    $('#infoAI li:hidden').text(body).fadeIn(1000, 'swing', function(){
         if(request){
             sendAjaxRequest("../states/PlayState.php", {handle: "PlayState", newAIRequest:"newAIRequest"}, false);
         }

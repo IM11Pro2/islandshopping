@@ -33,7 +33,7 @@
                     <li>Deposit</li>
                     <li>Nächster Spieler</li>
                 </ol>
-                <input type="button" name="actionButton" value="Aktion weiter" id="actionButton"/>
+                <input type="button" name="actionButton" value="Aktion weiter" id="actionButton" disabled="disabled"/>
             </div>
             <h2>Bank</h2>
             <div class="bankView">
