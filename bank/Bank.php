@@ -109,6 +109,7 @@
 
             return array("interest" => $interestPayment->__toString(),
                               "bankName"  => $this->getCountry()->getName()."Bank",
+                              "bankInterest"  => $this->getCountry()->getName()."Interest",
                                "countryName" => $this->getCountry()->getName(),
                                 "color" => $this->getCountry()->getColor(),
                               "bankCapital" => $this->getCapital() /*, Just for debugging

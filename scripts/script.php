@@ -343,20 +343,21 @@ $(document).ready(function(){
     }
 
     function updateInterests(interests){
-        var text = "";
+        //var text = "";
 
         for(var i = 0; i < interests.length; i++){
-            if(i > 0){
+            /*if(i > 0){
                 text += " and ";
             }
             text += ('<span style="color:'+interests[i].color+'" >'+interests[i].countryName + '</span> bekam ' + interests[i].interest + ' Zinsen');
-
+            */
+            $('#'+interests[i].bankInterest).text("+"+interests[i].interest);
             $('#'+interests[i].bankName).text(interests[i].bankCapital);
         }
 
 
 
-        $('#interestInfo').html(text).fadeIn('slow', function(){});
+        //$('#interestInfo').html(text).fadeIn('slow', function(){});
 
     };
 

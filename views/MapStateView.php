@@ -31,8 +31,25 @@
         </div> <!-- end .left -->
         <div class="right">
             <h2>Aktionen</h2>
+            <div class="infoBox">
             <input type="button" name="MapRandom" value="Nächste Map" />
             <input type="button" name="MapSubmit" value="Start" />
+            </div>
+            <h2>Spieler</h2>
+            <div class="infoBox">
+            <?php
+                foreach($_SESSION['activePlayers'] as $player){
+                    if($player->getPlayerId() == 0){
+
+                        echo "<span style=\"background:".$player->getCountry()->getColor().";\">&nbsp;&nbsp;</span> Spieler Land: ".$player->getCountry()->getName()."<br/>";
+
+                    }
+                    else{
+                        echo "<span style=\"background:".$player->getCountry()->getColor().";\">&nbsp;&nbsp;</span> KI".($player->getPlayerId())." Land: ".$player->getCountry()->getName()."<br/>";
+                    }
+                }
+            ?>
+            </div>
         </div><!--end .right-->
 
         <div class="clear"></div>

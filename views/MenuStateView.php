@@ -12,7 +12,7 @@
             ?>
         <div id="container">
             <div id="content">
-                <h1> Islandshopping v3.1 </h1>
+                <h1> Islandshopping</h1>
                 <form name="menuForm1" method="POST">
                     <h2>Welches Land m&ouml;chtest du sein ?</h2>
                     <?php
