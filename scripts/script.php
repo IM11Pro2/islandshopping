@@ -146,7 +146,7 @@ $(document).ready(function(){
 
                 if (activeElement.data("region") == activeNeighbours[i]){
                     sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", region: activeRegionId ,enemy: activeElement.data("region")},true);
-                    alert("ANGRIFF");
+                    //alert("ANGRIFF");
 
                 }
 
@@ -250,7 +250,7 @@ $(document).ready(function(){
     }
 
     function sendNextPlayerRequest(){
-        message_box.show_message('PAYOFF ROUND: ', 'Nächster Spieler! ', false);
+        message_box.show_message('Startgeld verteilen: ', 'Nächster Spieler! ', false);
         deactivateAllMouseClicks();
         sendAjaxRequest("../states/PlayState.php", {handle: "PlayState", nextPlayer: "nextPlayer"}, false);
     }
@@ -391,7 +391,13 @@ $(document).ready(function(){
         }
         if(settings.url.indexOf("getCountry")!= -1 ){ // || settings.url.indexOf("nextPlayer")!= -1
             var payment = $.parseJSON(xhr.responseText);
+            var spentAction = ((payment.action=="payOff") ? " hat Geld bekommen" : " hat Geld auf die Bank eingezahlt");
+
             addBasicCapitalToRegion(payment);
+
+            var regionTitle = searchNameOfRegion(payment.activeRegion);
+
+            displayAIinfo(regionTitle + spentAction , false);
 
             if(payment.numberOfHumanPayoffs == 0){
                 sendNextPlayerRequest();
@@ -402,6 +408,15 @@ $(document).ready(function(){
         if((settings.url.indexOf("region")!= -1 && settings.url.indexOf("enemy")!= -1 )){ //|| settings.url.indexOf("nextPlayer")!= -1
             var regionInfo = $.parseJSON(xhr.responseText);
             updateMap(regionInfo);
+
+            var regionTitle = searchNameOfRegion(regionInfo.enemyRegion.regionId);
+
+            showCalculationBox(regionInfo);
+
+            var hasBought = ((!regionInfo.activeRegion.hasWon) ? " nicht kaufen" : " kaufen");
+
+            displayAIinfo(regionInfo.playerCountry + ' konnte ' + regionTitle + hasBought,  false);
+           // message_box.show_message('Kaufvertrag ', regionInfo.playerCountry + ' konnte ' + regionTitle + hasBought,  false);
         }
 
 
@@ -411,40 +426,17 @@ $(document).ready(function(){
                 /*message_box.show_message('KI ' + regionInfo.playerId + ': ', regionInfo.activeRegion.regionId + ' attacked '
                     + regionInfo.enemyRegion.regionId + " and has won: " + regionInfo.activeRegion.hasWon,  true);*/
                 var hasBought = ((!regionInfo.activeRegion.hasWon) ? " nicht kaufen" : " kaufen");
-                var regionTitle;
+                var regionTitle = searchNameOfRegion(regionInfo.enemyRegion.regionId);
 
-                // Search name of region
-                paper.forEach(function(el){
-
-                   if(el.type == "path"){
-
-                       if(el.data('region') == regionInfo.enemyRegion.regionId){
-                          regionTitle = el.attr('title');
-                       }
-
-                   }
-                });
-
+                showCalculationBox(regionInfo);
 
                 displayAIinfo(regionInfo.playerCountry + ' konnte ' + regionTitle + hasBought,  true);
                 updateMap(regionInfo);
             }
             else if($.parseJSON(xhr.responseText).spendMoney){
                 var payment = $.parseJSON(xhr.responseText);
-                var spentAction = ((payment.action=="payOff") ? " hat Geld bekommen" : " hat Geld auf die Bank eingezahlt")
-                var regionTitle;
-
-                // Search name of region
-                paper.forEach(function(el){
-
-                   if(el.type == "path"){
-
-                       if(el.data('region') == payment.activeRegion){
-                          regionTitle = el.attr('title');
-                       }
-
-                   }
-                });
+                var spentAction = ((payment.action=="payOff") ? " hat Geld bekommen" : " hat Geld auf die Bank eingezahlt");
+                var regionTitle = searchNameOfRegion(payment.activeRegion);
 
                 displayAIinfo(regionTitle + spentAction , true);
                 //message_box.show_message('KI ' + payment.playerId + ': ', payment.activeRegion + ' spent money '+ payment.action , true);
@@ -479,6 +471,34 @@ $(document).ready(function(){
         }
 
     });
+
+    function searchNameOfRegion(regionId){
+        var regionTitle;
+        paper.forEach(function(el){
+
+           if(el.type == "path"){
+               if(el.data('region') == regionId){
+                   regionTitle = el.attr('title');
+               }
+           }
+        });
+
+        return regionTitle;
+    }
+
+    function showCalculationBox(regionInfo){
+        var hasBoughtTitle = ((!regionInfo.activeRegion.hasWon) ? "VERLOREN" : "GEWONNEN");
+
+
+        message_box.show_message(hasBoughtTitle, "( " + regionInfo.calculation.originalPayment + " - " + " 2 * "
+                 + regionInfo.calculation.basicCapital + " " + regionInfo.calculation.ownCurrency + " )"
+                 + " * "  + regionInfo.calculation.translation + " * " + regionInfo.activeRegion.ventureValue
+                 + " = " + regionInfo.calculation.calculation + " " + regionInfo.calculation.enemyCurrency,  false);
+
+        /*message_box.show_message(hasBoughtTitle, regionInfo.calculation.originalPayment + " * "
+            + regionInfo.calculation.translation + " * " + regionInfo.activeRegion.ventureValue
+            + " = " + regionInfo.calculation.calculation + " " + regionInfo.calculation.enemyCurrency,  false);*/
+    }
 
     $('.ajaxSuccess').ajaxError(function(e, xhr, settings, error) {
         alert("error: " + error);
@@ -515,43 +535,6 @@ function disableEnemyCountry($playerCountry){
 function jsonpcallback(data) {
     alert(data["message"]);
 }
-/*
-function displayAIinfo(title, body, request){
-
-    var listLength = $('#infoAI li').size();
-
-    if(listLength < 5){
-        $('#infoAI').append('<li></li>');
-        listLength++;
-    }
-
-    $('#infoAI li').each(function(index){
-
-        var pos = (listLength-1) - (index+1);
-
-        if(pos >= 0 && (pos+1) < listLength){
-
-            var text = $('#infoAI li').eq(pos).text();
-            $('#infoAI li').eq(pos).text("");
-            $('#infoAI li').eq(pos+1).text(text).fadeTo('fast', (1/(pos+1)));
-
-        }
-        else{
-
-            $('#infoAI li').first().fadeOut('fast', 'linear', function(){
-
-
-                $(this).text(body).fadeIn(2000, 'swing', function(){
-                    if(request){
-                        sendAjaxRequest("../states/PlayState.php", {handle: "PlayState", newAIRequest:"newAIRequest"}, false);
-                    }
-                });
-
-            });
-        }
-
-    });
-}*/
 
 function displayAIinfo(body, request){
 
@@ -589,19 +572,19 @@ var message_box = function() {
 				jQuery('#darkbg').css('height', jQuery(document).height());
 
 				jQuery('#message_box').css('top', 150);
-				jQuery('#message_box').show('slow');
+				jQuery('#message_box').show(100);
 			} else {
 				var message = '<h1>' + title + '</h1>' + body + '<br/>' + button;
 				jQuery('#darkbg').show();
 				jQuery('#darkbg').css('height', jQuery(document).height());
 
 				jQuery('#message_box').css('top', 150);
-				jQuery('#message_box').show('slow');
+				jQuery('#message_box').show(100);
 				jQuery('#message_box').html( message );
 			}
 		},
 		close_message: function() {
-			jQuery('#message_box').hide('fast');
+			jQuery('#message_box').hide(100);
 			jQuery('#darkbg').hide();
 		}
 	}

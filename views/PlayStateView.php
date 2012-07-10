@@ -28,9 +28,9 @@
             <h2>Aktionen</h2>
             <div>
                 <ol id="actionContainer">
-                    <li class="activeAction">Payoff</li>
+                    <li class="activeAction">Geld verteilen</li>
                     <li>Shoppen</li>
-                    <li>Deposit</li>
+                    <li>Auf Bank einzahlen</li>
                     <li>Nächster Spieler</li>
                 </ol>
                 <input type="button" name="actionButton" value="Aktion weiter" id="actionButton"/>

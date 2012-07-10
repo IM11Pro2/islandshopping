@@ -26,7 +26,7 @@
                 $enemyBankCapital = $playersArray[$i]->getCountry()->getPayment();
                 $enemyCurrency[$i] = $playersArray[$i]->getCountry()->getPayment()->getCurrency();
                 $enemyTranslation[$i] = $playersArray[$i]->getCountry()->getPayment()->getCurrencyTranslation();
-                $enemyColor[$i] = $playersArray[$i]->getCountry()->getCOlor();
+                $enemyColor[$i] = $playersArray[$i]->getCountry()->getColor();
 
                 echo "<font color='".$enemyColor[$i]."'>". $enemyName . "</font>:  <span id=\"".$enemyName."Bank\" >" . $enemyBankCapital . "</span> <br />";
             }
