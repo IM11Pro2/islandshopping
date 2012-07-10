@@ -21,7 +21,7 @@ body{
 
 #container {
   width: 986px;
-  margin: 20px auto 50px auto;
+  margin: 0px auto 50px auto;
   /*padding: 15px;*/
   background-color: #FFFFFF;
     border: 1px solid lightgray;
@@ -113,9 +113,15 @@ body{
 
 #actionContainer{
     color: #dcdcdc;
+
+}
+#actionContainer > li{
+    padding: 2px 2px 2px 2px;
 }
 
 .activeAction{
     color: #000000;
-    background-color: #b0e0e6;
+    background-color: #bbeeff;
+    border: #000000 solid 1px;
+
 }

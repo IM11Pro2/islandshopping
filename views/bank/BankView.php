@@ -53,6 +53,7 @@
             ?>
         </div>
         <div class="clear"></div>
+        <!--
         <br/>
         <form>
             <label>
@@ -70,7 +71,7 @@
                 Bank einzahlen</input>
             </label>
 
-        </form>
+        </form>-->
         <?php
         }
     }
