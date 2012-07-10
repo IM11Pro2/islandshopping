@@ -111,7 +111,7 @@
 
                             array_push($possibleAttackDecisions, array("attack" => $enemyRegionId, "actualRegionId" => $actualRegionId, "nextPhase" => false));
 
-                            if($nextPhaseCounter == 3){
+                            if($nextPhaseCounter == 5){
                                 array_push($possibleAttackDecisions, array("attack" => $enemyRegionId, "actualRegionId" => $actualRegionId, "nextPhase" => true));
                                 $nextPhaseCounter = 0;
                             }

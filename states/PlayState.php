@@ -267,7 +267,19 @@
 
                $map = $_SESSION['map'];
 
-               //$allAiPlayerRegions = array();
+                /*
+                 * Look if Human Player has lost
+                 */
+                $allHumanPlayerRegions = $map->getRegionsForPlayerId(0);
+
+                if(count($allHumanPlayerRegions) == 0){
+                    $this->playerList[0]->setPlayerState(IPlayer::GAME_OVER);
+                    $this->handleResponse(array("humanLost" => true),false);
+                    return;
+                }
+                /*
+                 *
+                 */
 
                $aiPlayer = $_SESSION['activePlayers'][$aiPlayerId];
 
