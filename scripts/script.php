@@ -427,6 +427,11 @@ $(document).ready(function(){
 
 
         if(settings.url.indexOf("nextPlayer")!= -1 || settings.url.indexOf("newAIRequest")!= -1){
+            //checks if the Human Player hast Lost
+            if($.parseJSON(xhr.responseText).humanLost){
+                message_box.show_message('Leider Verloren', "Alle Regionen wurden dir abgekauft!", true, true);
+            }
+
             if($.parseJSON(xhr.responseText).attackCountry){
                 var regionInfo = $.parseJSON(xhr.responseText);
                 /*message_box.show_message('KI ' + regionInfo.playerId + ': ', regionInfo.activeRegion.regionId + ' attacked '
@@ -434,7 +439,7 @@ $(document).ready(function(){
                 var hasBought = ((!regionInfo.activeRegion.hasWon) ? " nicht kaufen" : " kaufen");
                 var regionTitle = searchNameOfRegion(regionInfo.enemyRegion.regionId);
 
-                showCalculationBox(regionInfo);
+                //showCalculationBox(regionInfo);
 
                 displayAIinfo(regionInfo.playerCountry + ' konnte ' + regionTitle + hasBought,  true);
                 updateMap(regionInfo);
@@ -582,11 +587,15 @@ var message_box = function() {
 	var button_request = '<input type="button" onclick="sendNewAIRequest();" value="Ok" />';
     var button_close = '<input type="button" onclick="message_box.close_message();" value="Ok" />'; //onclick="message_box.close_message();"
 	return {
-		show_message: function(title, body, request) {
+		show_message: function(title, body, request, menu) {
 
             //if request needed --> button sends request, else only close window
             var button = request ? button_request : button_close;
 
+            if(menu){
+                // Check if game is over
+                button = '<input type="button" onclick="window.location.reload()" value="Zum Menü" />';
+            }
 			if(jQuery('#message_box').html() === null) {
 				var message = '<div id="message_box"><h1>' + title + '</h1>' + body + '<br/>' + button + '</div>';
 				jQuery(document.body).append( message );
