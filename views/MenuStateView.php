@@ -12,9 +12,10 @@
             ?>
         <div id="container">
             <div id="content">
-                <h1> Islandshopping</h1>
+                <h1 class="menu">Island (s)hopping</h1>
                 <form name="menuForm1" method="POST">
-                    <h2>Welches Land m&ouml;chtest du sein ?</h2>
+                    <h2 class="menu">Welches Land m&ouml;chtest du sein?</h2>
+                    <fieldset>
                     <?php
 
                     $status = "";
@@ -34,9 +35,9 @@
                         $status = "";
                     }
                     ?>
-
-                    <h2>W&auml;hle deine Gegner</h2>
-
+                    </fieldset>
+                    <h2 class="menu">W&auml;hle deine Gegner:</h2>
+                    <fieldset>
                     <?php
 
                     $status = "";
@@ -56,9 +57,8 @@
                         $status = "";
                     }
                     ?>
-                    <br/><br/>
-
-                    <input type="button" name="MenuSubmit" value="Start">
+                    </fieldset>
+                    <input type="button" name="MenuSubmit" value="Zur Mapauswahl" id="menuSubmit">
                 </form>
             </div>
             <!--end #content -->

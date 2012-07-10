@@ -7,9 +7,30 @@ body{
     font-family: QlassikBold;
 }
 
+h1.menu{
+    font-size: 48pt;
+    padding: 0px 0px 10px 300px;
+    margin: 50px 20px 40px 20px;
+    border-bottom: solid 4px #bbeeff;
+}
+h2.menu{
+    margin: 20px auto 0px 20px;
+}
+
 h3{
     font-size: 14pt;
-    margin: 18px 0px 6px 0px;
+    margin: 14px 0px 3px 0px;
+}
+
+h2.bank{
+    margin: 19px 0px 0px 0px;
+}
+
+fieldset{
+    font-size: 14pt;
+    border: none;
+    /*border-bottom: solid #bbeeff 1px;*/
+    margin: 10px;
 }
 
 .right{
@@ -29,6 +50,9 @@ h3{
 
 .interests{
     text-align: right;
+}
+#menuSubmit{
+    margin: 0px auto 10px 260px;
 }
 
 #container {

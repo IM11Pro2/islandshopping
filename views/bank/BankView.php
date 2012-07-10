@@ -46,7 +46,7 @@
             for($i = 1; $i < count($playersArray); $i++) {
                 $enemyName = $playersArray[$i]->getCountry()->getName();
                 $enemyCurrency[$i] = $playersArray[$i]->getCountry()->getPayment()->getCurrency();
-                echo "<span id=\"".$enemyName."Interest\">0 ".$enemyCurrency[$i]."</span>";
+                echo "<span id=\"".$enemyName."Interest\">0 ".$enemyCurrency[$i]."</span><br />";
             }
             ?>
         </div>
