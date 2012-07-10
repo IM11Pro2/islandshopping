@@ -63,6 +63,11 @@ $(document).ready(function(){
         sendAjaxRequest("../states/MapState.php", {handle: "MapState", randomizeMap: "randomizeMap"}, false);
     });
 
+    $('body').on('click','#incidentView',function (event) {
+        $(this).hide();
+        $(this).text("");
+    });
+
    /* $('body').on('click',':button[name="NextPlayerSubmit"]',function (event) {
         $('input:radio[name="bankstate"][value="<?php //echo Bank::PAY_OFF ?>"]').attr('checked','checked');
         resetElements(event);
@@ -318,24 +323,24 @@ $(document).ready(function(){
                 }
 
                 if(el.data('text') == incident.region.regionId){
-                    el.attr('text', incident.region.paymentValue * incident.region.currencyTranslation);
+                    el.attr('text', incident.region.payment);
+                    //el.attr('text', incident.region.paymentValue * incident.region.currencyTranslation);
                 }
             });
-            alert(incident.message + " region: " + incident.region.regionId);
+            $('#incidentView').text(incident.message + " region: " + incident.region.regionId);
         }
         else if(incident.type == "<?php echo GlobalBankEvent::TYPE ?>"){
 
             $('#'+incident.bankName).text(incident.bankCapital);
-
-            alert(incident.message + " bank: " + incident.bankName);
+            $('#incidentView').text(incident.message + " bank: " + incident.bankName);
         }
         else if(incident.type == "<?php echo LocalIncidentEvent::TYPE ?>"){
 
             $('#'+incident.bankName).text(incident.bankCapital);
-
-            alert(incident.message + " " + incident.value + " "+ incident.currency);
+            $('#incidentView').text(incident.message + " " + incident.value + " "+ incident.currency);
         }
-    };
+        $('#incidentView').show();
+    }
 
     function updateInterests(interests){
         var text = "";

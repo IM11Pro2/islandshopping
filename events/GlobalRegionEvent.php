@@ -26,8 +26,10 @@ class GlobalRegionEvent extends IncidentEvent
         $payment->setValue(BASIC_CAPITAL_REGION);
         return array("message" => $this->message, "region" => array(
                                                                             "regionId" => $this->region->getRegionId(),
+                                                                                "payment" => $payment->__toString(),
+            /*
                                                                             "paymentValue" => $payment->getValue(),
-                                                                            "currencyTranslation" => $payment->getCurrencyTranslation()),
+                                                                            "currencyTranslation" => $payment->getCurrencyTranslation()*/),
                     "type" => self::TYPE);
     }
 }

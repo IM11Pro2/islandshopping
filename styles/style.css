@@ -13,6 +13,8 @@ body{
 
 .left{
     float: left;
+    position:relative;
+    left:0px;
 }
 
 .clear{
@@ -67,10 +69,14 @@ body{
 /* AI-info*/
 #infoAI{
     list-style-type: none;
+    padding: 0px 0px 0px 10px;
     overflow: auto;
     height: 150px;
 }
 
+#infoAI > li{
+    padding: 2px 0px 2px 0px;
+}
 
 /*Message Box */
 #darkbg {
@@ -123,5 +129,21 @@ body{
     color: #000000;
     background-color: #bbeeff;
     border: #000000 solid 1px;
+
+}
+
+#incidentView{
+    position: absolute;
+    display: none;
+    left: 0px;
+    top: 0px;
+    background-color: #fffacd;
+    padding: 4px 2px 4px 2px;
+    margin: 5px;
+    width: 682px;
+    border: solid 2px #000000;
+    cursor: pointer;
+    text-align: center;
+
 
 }
