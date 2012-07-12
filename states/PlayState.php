@@ -122,12 +122,22 @@
 
                         $enemyBankCapital = $this->bankList[$enemyPlayerId]->getCapital();
 
-                        $blaText = $originalPayment->__toString();
+                        $humanWon = false;
+
+                        if($playerId == 0){
+                            $allHumanPlayerRegions = $map->getRegionsForPlayerId(0);
+
+                            // Check if human player owns all regions/won
+                            if(count($allHumanPlayerRegions) == NUM_OF_REGIONS){
+                                $humanWon = true;
+                            }
+                        }
 
                         $this->handleResponse(array("attackCountry" => true,
                                                     "spendMoney" => false,
                                                     "nextPlayer" => false,
                                                     "playerId" => $playerId,
+                                                    "humanWon" => $humanWon,
                                                     "playerCountry" => $this->playerList[$playerId]->getCountry()->getName(),
                                                     "calculation" => array("originalPayment" => $originalPayment->__toString(),
                                                                             "translation" => $specificTranslation,
@@ -153,7 +163,6 @@
                     else{
                         //echo json_encode( array("activeRegion" => array("hasWon"=> $hasPlayerWon)));
                         $activePayment->setValue(BASIC_CAPITAL_REGION);
-                        $blaText = $originalPayment->__toString();
                         $this->handleResponse(array("attackCountry" => true,
                                                     "spendMoney" => false,
                                                     "nextPlayer" => false,

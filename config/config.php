@@ -48,13 +48,13 @@
     }
 
     define("PAYOFF_ROUNDS", 1);
-    define("PAYOFF_REGIONS_PER_ROUND", 2);
+    define("PAYOFF_REGIONS_PER_ROUND", 3);
 
     define("INTEREST_RATE", 0.10);
 
     //Defines the interval after how many moves an incident occurs
-    define("MIN_MOVES_FOR_INCIDENT", 2);
-    define("MAX_MOVES_FOR_INCIDENT", 6);
+    define("MIN_MOVES_FOR_INCIDENT", 20);
+    define("MAX_MOVES_FOR_INCIDENT", 30);
 
     define("BANK_ROBBERY", 0.5); // p/100 of lost bankcapital
 

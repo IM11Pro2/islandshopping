@@ -393,6 +393,7 @@ $(document).ready(function(){
             $('#content').html(xhr.responseText);
         }
         if(settings.url.indexOf("getNeighbours")!= -1){
+
             var regions = $.parseJSON(xhr.responseText);
             highlightNeighbourRegions(regions);
         }
@@ -418,11 +419,19 @@ $(document).ready(function(){
 
             var regionTitle = searchNameOfRegion(regionInfo.enemyRegion.regionId);
 
-            showCalculationBox(regionInfo);
+
 
             var hasBought = ((!regionInfo.activeRegion.hasWon) ? " nicht kaufen" : " kaufen");
 
             displayAIinfo(regionInfo.playerCountry + ' konnte ' + regionTitle + hasBought,  false);
+
+            //checks if the Human Player has WON
+            if(regionInfo.humanWon){
+                message_box.show_message('DU HAST GEWONNEN', "Gratuliere! Alle Regionen gehören Dir!", true, true);
+            }
+            else {
+                showCalculationBox(regionInfo);
+            }
            // message_box.show_message('Kaufvertrag ', regionInfo.playerCountry + ' konnte ' + regionTitle + hasBought,  false);
         }
 
