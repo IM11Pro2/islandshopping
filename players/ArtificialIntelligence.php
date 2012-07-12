@@ -60,17 +60,17 @@
                         // if neighbour region has more/equal money --> payoff
                         if($regions[$neighbours[$j]]->getPayment()->getValue() > $actualRegion->getPayment()->getUsableValue()){
                             //if there is enough money left on the bank
-                            if($bankList[$this->playerId]->getPlainCapital() > 2*BASIC_CAPITAL_REGION){
+                            if($bankList[$this->playerId]->getPlainCapital() >= 2*BASIC_CAPITAL_REGION){
                                 array_push($possiblePayOffDecisions, array("payOff" => $actualRegionId, "nextPhase" => false));
                             }
-                            else {
+                            else if($bankList[$this->playerId]->getPlainCapital() >= BASIC_CAPITAL_REGION) {
                                 array_push($possiblePayOffDecisions, array("payOff" => $actualRegionId, "nextPhase" => true));
                             }
                         }
                     }
                 }
 
-                if($nextPhaseCounter == 3){
+                if($nextPhaseCounter == 3 && ($bankList[$this->playerId]->getPlainCapital() >= BASIC_CAPITAL_REGION)){
                     array_push($possiblePayOffDecisions, array("payOff" => $actualRegionId, "nextPhase" => true));
                     $nextPhaseCounter = 0;
                 }

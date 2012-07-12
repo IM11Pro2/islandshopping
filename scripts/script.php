@@ -327,12 +327,14 @@ $(document).ready(function(){
                     //el.attr('text', incident.region.paymentValue * incident.region.currencyTranslation);
                 }
             });
-            $('#incidentView').text(incident.message + " region: " + incident.region.regionId);
+
+            var regionTitle = searchNameOfRegion(incident.region.regionId);
+            $('#incidentView').text(incident.message + " Region: " + regionTitle);
         }
         else if(incident.type == "<?php echo GlobalBankEvent::TYPE ?>"){
 
             $('#'+incident.bankName).text(incident.bankCapital);
-            $('#incidentView').text(incident.message + " bank: " + incident.bankName);
+            $('#incidentView').text(incident.message + " Bank: " + incident.bankName);
         }
         else if(incident.type == "<?php echo LocalIncidentEvent::TYPE ?>"){
 
@@ -405,7 +407,9 @@ $(document).ready(function(){
 
             var regionTitle = searchNameOfRegion(payment.activeRegion);
 
-            displayAIinfo(regionTitle + spentAction , false);
+            if(payment.updateInfo){
+                displayAIinfo(regionTitle + spentAction , false);
+            }
 
             if(payment.numberOfHumanPayoffs == 0){
                 sendNextPlayerRequest();
@@ -419,13 +423,11 @@ $(document).ready(function(){
 
             var regionTitle = searchNameOfRegion(regionInfo.enemyRegion.regionId);
 
-
-
             var hasBought = ((!regionInfo.activeRegion.hasWon) ? " nicht kaufen" : " kaufen");
 
             displayAIinfo(regionInfo.playerCountry + ' konnte ' + regionTitle + hasBought,  false);
 
-            //checks if the Human Player has WON
+            //prints if the Human Player has WON
             if(regionInfo.humanWon){
                 message_box.show_message('DU HAST GEWONNEN', "Gratuliere! Alle Regionen gehören Dir!", true, true);
             }
@@ -437,7 +439,7 @@ $(document).ready(function(){
 
 
         if(settings.url.indexOf("nextPlayer")!= -1 || settings.url.indexOf("newAIRequest")!= -1){
-            //checks if the Human Player hast Lost
+            //prints if the Human Player hast Lost
             if($.parseJSON(xhr.responseText).humanLost){
                 message_box.show_message('Leider Verloren', "Alle Regionen wurden dir abgekauft!", true, true);
             }
@@ -459,7 +461,13 @@ $(document).ready(function(){
                 var spentAction = ((payment.action=="payOff") ? " hat Geld bekommen" : " hat Geld auf die Bank eingezahlt");
                 var regionTitle = searchNameOfRegion(payment.activeRegion);
 
-                displayAIinfo(regionTitle + spentAction , true);
+                if(payment.updateInfo){
+                    displayAIinfo(regionTitle + spentAction , true);
+                }
+                else {
+                    sendNewAIRequest();
+                }
+
                 //message_box.show_message('KI ' + payment.playerId + ': ', payment.activeRegion + ' spent money '+ payment.action , true);
                 addBasicCapitalToRegion(payment);
             }
@@ -528,10 +536,16 @@ $(document).ready(function(){
         var hasBoughtTitle = ((!regionInfo.activeRegion.hasWon) ? "VERLOREN" : "GEWONNEN");
 
 
-        message_box.show_message(hasBoughtTitle, "( " + regionInfo.calculation.originalPayment + " - " + " 2 * "
+        message_box.show_message(hasBoughtTitle, "( " + regionInfo.calculation.originalPayment
+            + " * " + regionInfo.activeRegion.ventureValue  + "  -  "
+            + " 2 * " + regionInfo.calculation.basicCapital + " " + regionInfo.calculation.ownCurrency + " )"
+            + " * " + regionInfo.calculation.translation
+            + " = " + regionInfo.calculation.calculation + " " + regionInfo.calculation.enemyCurrency,  false);
+
+/*        message_box.show_message(hasBoughtTitle, "( " + regionInfo.calculation.originalPayment + " - " + " 2 * "
                  + regionInfo.calculation.basicCapital + " " + regionInfo.calculation.ownCurrency + " )"
                  + " * "  + regionInfo.calculation.translation + " * " + regionInfo.activeRegion.ventureValue
-                 + " = " + regionInfo.calculation.calculation + " " + regionInfo.calculation.enemyCurrency,  false);
+                 + " = " + regionInfo.calculation.calculation + " " + regionInfo.calculation.enemyCurrency,  false);*/
 
         /*message_box.show_message(hasBoughtTitle, regionInfo.calculation.originalPayment + " * "
             + regionInfo.calculation.translation + " * " + regionInfo.activeRegion.ventureValue

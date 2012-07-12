@@ -104,7 +104,8 @@
 
                     $specificTranslation = 1/$playerTranslation * $enemyTranslation;
 
-                    $calculation = ($originalPayment->getValue() - 2*BASIC_CAPITAL_REGION) * $specificTranslation * $speculationValue;
+                    //$calculation = ($originalPayment->getValue() - 2*BASIC_CAPITAL_REGION) * $specificTranslation * $speculationValue;
+                    $calculation = ($originalPayment->getValue() * $speculationValue - 2*BASIC_CAPITAL_REGION )* $specificTranslation;
                     $enemyCurrency = $enemyPayment->getCurrency();
                     $playerCurrency = $originalPayment->getCurrency();
 
@@ -127,7 +128,7 @@
                         if($playerId == 0){
                             $allHumanPlayerRegions = $map->getRegionsForPlayerId(0);
 
-                            // Check if human player owns all regions/won
+                            // Checks if human player owns all regions/won
                             if(count($allHumanPlayerRegions) == NUM_OF_REGIONS){
                                 $humanWon = true;
                             }
@@ -190,12 +191,21 @@
 
                     $playerId = $regions[$regionId]->getPlayerId();
 
+                    $updateInfo = false;
+
                     if($action == "payOff" ||  (isset($_GET['bankstate']) && trim($_GET['bankstate']) == Bank::PAY_OFF)  ) {
+                        // if there is enough money on the bank
+                        if($this->bankList[$playerId]->getPlainCapital() >= BASIC_CAPITAL_REGION){
+                            $updateInfo = true;
+                        }
                         $this->bankList[$playerId]->payOff($regions[$regionId]->getPayment());
                         $action = "payOff";
 
                     }
                    else if($action == "deposit" ||  (isset($_GET['bankstate']) && trim($_GET['bankstate']) == Bank::DEPOSIT)  ) {
+                       if($regions[$regionId]->getPayment()->getValue() >= (2*BASIC_CAPITAL_REGION)){
+                           $updateInfo = true;
+                       }
                        $this->bankList[$playerId]->deposit($regions[$regionId]->getPayment(), false);
                        $action = "deposit";
                     }
@@ -226,6 +236,7 @@
                                                 "activeRegion"=> $regionId,
                                                 "action" => $action,
                                                 "numberOfHumanPayoffs" => $this->humanPayoffCounter,
+                                                "updateInfo" => $updateInfo,
                                                 "payment"     => array("value"    => $paymentValue,
                                                                       "currency" => $country->getPayment()->getCurrency()),
                                                 "bankCapital" => $bankCapital,
