@@ -29,7 +29,12 @@ $(document).ready(function(){
     activeRegion = false;
 
     $('input:checkbox[name="enemyCountries[]"]').click(function(event){
-        if($('input:checked').length > 0){
+        if($('input:checkbox[name="enemyCountries[]"]:checked').length > 0){
+            $('#menuSubmit').removeAttr('disabled');
+            sendAjaxRequest("../states/MenuState.php", {handle: "MenuState", enemycountry: $(this).parent().text()}, false);
+        }
+        else{
+            $('#menuSubmit').attr('disabled', 'disabled');
             sendAjaxRequest("../states/MenuState.php", {handle: "MenuState", enemycountry: $(this).parent().text()}, false);
         }
     });

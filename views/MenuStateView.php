@@ -56,7 +56,8 @@
                         </label>                  <?php
                         $status = "";
                     }
-                    ?>
+
+                   ?>
                     </fieldset>
                     <input type="button" name="MenuSubmit" value="Zur Mapauswahl" id="menuSubmit">
                 </form>
