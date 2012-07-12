@@ -60,7 +60,7 @@ $(document).ready(function(){
     });
 
     $('body').on('click',':button[name="MapRandom"]',function (event) {
-        sendAjaxRequest("../states/MapState.php", {handle: "MapState", randomizeMap: "randomizeMap"}, false);
+        sendAjaxRequest("../states/MapState.php", {handle: "MapState", randomizeMap: "randomizeMap"}, true);
     });
 
     $('body').on('click','#incidentView',function (event) {
@@ -291,6 +291,17 @@ $(document).ready(function(){
         }
     }
 
+    function updateRandomizedMap(regions){
+        regionSet.forEach(function(el){
+            var id = el.data('region');
+            el.data('regionOfPlayer', regions[id].playerId);
+            el.attr('fill', regions[id].regionColor);
+
+            var text = textSet[id];
+            text.attr('paymentValue', regions[id].payment);
+        });
+    }
+
     function checkPayoffRounds(actualRound){
         // first PAYOFF_ROUNDS "attack" and "deposit" are disabled
         if(actualRound <= <?php echo PAYOFF_ROUNDS ?>){
@@ -390,7 +401,8 @@ $(document).ready(function(){
             }
         }
         if(settings.url.indexOf("randomizeMap")!= -1){
-            $('#content').html(xhr.responseText);
+            //$('#content').html(xhr.responseText);
+            updateRandomizedMap($.parseJSON(xhr.responseText));
         }
         if(settings.url.indexOf("getNeighbours")!= -1){
             var regions = $.parseJSON(xhr.responseText);

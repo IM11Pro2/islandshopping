@@ -15,7 +15,7 @@
                 <div id="canvas">
                 <?php
                 $dummyView = new MapView();
-                $dummyView->printDummyMap();
+                $dummyView->printMap();
                 ?>
                 </div>
 

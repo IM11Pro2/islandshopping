@@ -5,17 +5,14 @@
     class MapView {
 
         private $regions;
-        private $xmlNodes;
-        private $style;
         private $svgIterator;
 
         public function __construct() {
             $this->svgIterator = simplexml_load_file("../views/islandViews/greece.svg");
-            $this->style = null;
         }
 
 
-        public function printDummyMap() {
+        public function printMap() {
             $this->regions = $_SESSION['map']->getRegions();
             ?>
         <script type="text/javascript">
@@ -23,10 +20,9 @@
 
             var regionSet = paper.set();
             var textSet = paper.set();
-           // var transformationMatrix;
             var path;
             var text;
-           // var group;
+
 
             function drawRegionPath(pathDescription, transformation, pathId, pathName, pathStyle, playerId){
                 path = paper.path(pathDescription);
@@ -34,7 +30,7 @@
                 path.attr('title', pathName);
                 path.attr(pathStyle);
                 //path.attr('fill', color);
-                path.data('region', pathName);
+                path.data('region', pathId);
                 path.data('regionOfPlayer', playerId);
 
                 regionSet.push(path);
@@ -42,13 +38,13 @@
 
             function drawText(path, paymentValue){
                 var bBox = path.getBBox();
-                text = paper.text(bBox.x + bBox.width/2, bBox.y + bBox.height/2 , 'bb');
+                text = paper.text(bBox.x + bBox.width/2, bBox.y + bBox.height/2 , '');
                 text.attr({'font-size' : 16,'font-family' : "QlassikBold"});
 
                 // before key 'text' and regionId, now pathId
                 text.data('pathId', path.id);
 
-                // before key 'value' hnow paymentValue
+                // before key 'value', now paymentValue
                 text.data('paymenValue', paymentValue);
                 textSet.push(path);
             }
@@ -142,9 +138,10 @@
 
                 return $inputTransformation;
             }
-            return ""; // einheitsmatrix
+            return ""; // identity matrix
 
         }
+
 
     }
 
