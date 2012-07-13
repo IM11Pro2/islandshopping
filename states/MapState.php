@@ -41,7 +41,20 @@
 
         function randomizeMap() {
             $this->map->randomizeRegions();
-            GameEventManager::getInstance()->dispatchEvent(new UpdateViewEvent());
+            //GameEventManager::getInstance()->dispatchEvent(new UpdateViewEvent());
+        }
+
+        public function updateMap(){
+            //player id, color, payment
+            $regions = array();
+            foreach($this->map->getRegions() as $index => $region){
+                array_push($regions, array(
+                                    "playerId" => $region->getPlayerId(),
+                                    "regionColor" => $region->getColor(),
+                                    "payment" => $region->getPayment()->__toString()
+                ));
+            }
+            echo json_encode($regions);
         }
 
         function endState() {
@@ -73,6 +86,7 @@
 
                 if(isset($_GET['randomizeMap'])) {
                     $_SESSION['state']->randomizeMap();
+                    $_SESSION['state']->updateMap();
                 }
 
 

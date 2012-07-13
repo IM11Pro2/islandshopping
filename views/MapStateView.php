@@ -24,7 +24,7 @@
                 <?php
                     //$dummyView = new DummyView();
                     $dummyView = new MapView();
-                    $dummyView->printDummyMap();
+                    $dummyView->printMap();
                 ?>
                 </div>
             </div><!--end .mapView-->
