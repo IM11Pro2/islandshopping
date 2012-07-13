@@ -20,7 +20,7 @@
 
             var regionSet = paper.set();
             var textSet = paper.set();
-            var path;
+            var path; // last path in hierachy
             var text;
 
 
@@ -45,6 +45,10 @@
                 // before key 'value', now paymentValue
                 text.data('paymentValue', paymentValue);
                 textSet.push(text);
+            }
+
+            function bringTextToFront(){
+                textSet.toFront();
             }
 
                 <?php
@@ -81,10 +85,7 @@
                     }
                 }
             ?>
-            console.log('setlength: ' + regionSet.length);
-
-
-
+            bringTextToFront();
         </script>
         <?php
         }

@@ -25,8 +25,8 @@ function sendAjaxRequest(url, data, getAsJSON){
 
 $(document).ready(function(){
 
-
-    activeRegion = false;
+    var activeNeighbours = undefined;
+    var activeRegion = false;
 
     $('input:checkbox[name="enemyCountries[]"]').click(function(event){
         if($('input:checkbox[name="enemyCountries[]"]:checked').length > 0){
@@ -99,6 +99,15 @@ $(document).ready(function(){
 
     });
 
+    function bringElementToFront(lastElement, element){
+
+        lastElement.node.parentNode.parentNode.insertBefore(element.node.parentNode, lastElement.node.parentNode.nextSibling);
+        if(element.type == "path"){
+            path = element;
+        }
+
+    }
+
     function activeElementHandler(){
 
         var activeElement = this;
@@ -124,9 +133,12 @@ $(document).ready(function(){
             });
 
             activeElement.attr('stroke-width', 3);
-            activeElement.toFront();
+            /*activeElement.toFront();
             path = activeElement;
-            paper.getById((activeElement.id+1)).toFront();
+            paper.getById((activeElement.id+1)).toFront();*/
+
+            bringElementToFront(path, activeElement);
+            textSet.items[activeElement.data('region')].toFront();
 
             var regionId = activeElement.data('region');
             activeRegionId = regionId;
@@ -165,6 +177,11 @@ $(document).ready(function(){
         }
     }
 
+    function resetTextElement(textElement){
+        textElement.unhover(hoverNeighbourElement, resetElement);
+        textElement.attr('cursor', 'default');
+    }
+
     function resetElements(event){
         event.stopPropagation();
         if(event.target == paper.canvas || event.target.nodeName == "INPUT"){ // input = radiobutton
@@ -189,26 +206,37 @@ $(document).ready(function(){
     }
 
 
-    function hoverElement(){
+    function hoverElement(el, text){
 
+
+
+            el.attr('cursor', 'pointer');
+            el.attr('stroke-width', 3);
+            //text.attr('cursor', 'pointer');
+            bringElementToFront(path, el);
+            textSet.items[el.data('region')].attr('cursor', 'pointer').toFront();
+
+
+    }
+
+    function hoverPlayerElement(event){
         var el = this;
         if(this.type == "text"){
             el = paper.getById(this.data('pathId'));
         }
         if(el.data('regionOfPlayer') == 0){
-            el.attr('cursor', 'pointer');
-            el.attr('stroke-width', 3);
-            this.attr('cursor', 'pointer');
+            hoverElement(el, this);
         }
-        if(activeRegion){
-            for(var i = 0; i < activeNeighbours.length; ++i){
-                el = regionSet.items[activeNeighbours[i]];
-                if(el.data('regionOfPlayer') != 0){
-                    el.attr('cursor', 'pointer');
-                    el.attr('stroke-width', 3);
-                    textSet.items[activeNeighbours[i]].attr('cursor', 'pointer');
-                }
-            }
+    }
+
+    function hoverNeighbourElement(event){
+        var el = this;
+        if(this.type == "text"){
+            el = paper.getById(this.data('pathId'));
+        }
+        if(el.data('regionOfPlayer') != 0){
+            hoverElement(el, this);
+
         }
     }
 
@@ -216,16 +244,16 @@ $(document).ready(function(){
         var el = this;
 
         if(el.type == "text"){
+            el.attr('cursor', 'default');
             el = paper.getById(el.data('pathId'));
         }
-        el.attr('stroke-width', 1);
+        el.attr({'stroke-width' : 1, 'cursor': 'default'});
     }
 
     function activateRegions(){
         paper.forEach(function (el) {
             el.click(activeElementHandler);
-            el.mouseover(hoverElement);
-            el.mouseout(resetElement);
+            el.hover(hoverPlayerElement, resetElement);
         });
 
         $(paper.canvas).on('click',resetElements);
@@ -235,8 +263,8 @@ $(document).ready(function(){
     function deactivateRegions(){
         paper.forEach(function (el) {
             el.unclick(activeElementHandler);
-            el.unmouseover(hoverElement);
-            el.unmouseout(resetElement);
+            el.unhover(hoverPlayerElement, resetElement);
+
         });
 
         $(paper.canvas).off('click',resetElements);
@@ -266,6 +294,14 @@ $(document).ready(function(){
 
     function highlightNeighbourRegions(regions){
 
+        if(activeNeighbours != undefined){
+            for(var i = 0; i < activeNeighbours.length; ++i){
+                var el = regionSet.items[activeNeighbours[i]];
+                el.unhover(hoverNeighbourElement, resetElement);
+                resetTextElement(textSet.items[activeNeighbours[i]])
+            }
+        }
+
         activeNeighbours = new Array();
         paper.forEach(function (el) {
 
@@ -280,6 +316,8 @@ $(document).ready(function(){
                     el.attr('fill-opacity', 1);
                     if(el.data("region") != regions.activeRegion){
                         activeNeighbours.push(el.data("region"));
+                        el.hover(hoverNeighbourElement, resetElement);
+                        textSet.items[activeNeighbours[i]].hover(hoverNeighbourElement, resetElement);
                     }
                 }
             }
@@ -599,12 +637,14 @@ $(document).ready(function(){
         paper.forEach(function(el){
 
            if(el.type == "path"){
+
                el.attr("stroke-width", 1);
+
                if(el.data('region') == regionId){
                    regionTitle = el.attr('title');
                    el.attr("stroke-width", 3);
-                 el.toFront();
-                 paper.getById(el.id+1).toFront();
+                   bringElementToFront(path, el);
+                   textSet.items[el.data('region')].toFront();
                }
            }
         });
