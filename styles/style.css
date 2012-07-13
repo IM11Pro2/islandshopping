@@ -138,7 +138,7 @@ fieldset{
 	filter: alpha(opacity=50);
 	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
 }
-#message_box {
+#message_box, #calculation_box {
 	width: 300px;
 	height: 150px;
 	background: #fff;
@@ -157,10 +157,28 @@ fieldset{
 	z-index: 1000;
 	display: none;
 }
-#message_box input[type=button] {
+#message_box input[type=button], #calculation_box input[type=button] {
 	float: right;
 	margin-right: 10px;
 }
+
+#calculation_box{
+    height: 320px;
+    top: 800px;
+}
+#calculation_box .body{
+    text-align: left;
+    margin: 0px 20px;
+}
+
+#calculation_box .right{
+    float: right;
+}
+
+#calculation_box .center{
+    text-align: center;
+}
+
 /* End Message Box */
 
 #actionContainer{

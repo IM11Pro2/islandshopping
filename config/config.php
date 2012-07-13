@@ -18,7 +18,7 @@
             "EU"           => array("Euro", 1.0, "€"), //&euro;  &#x20AC;
             "Schweiz"      => array("Franken", 1.20, "Fr."),
             "Tuerkei"      => array("Lira", 2.30, "₤"),      // &#8356;
-            "SaudiArabien" => array("Riyal", 4.88, "﷼"),
+            "SaudiArabien" => array("Riyal", 4.88, "Riy."),     // ﷼
             "USA"          => array("Dollar", 1.30, "$"));   // &#36;
     }
 
@@ -48,7 +48,7 @@
     }
 
     define("PAYOFF_ROUNDS", 1);
-    define("PAYOFF_REGIONS_PER_ROUND", 3);
+    define("PAYOFF_REGIONS_PER_ROUND", 2);
 
     define("INTEREST_RATE", 0.10);
 

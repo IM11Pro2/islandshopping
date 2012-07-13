@@ -475,7 +475,6 @@ $(document).ready(function(){
         }
 
 
-
         //$('#interestInfo').html(text).fadeIn('slow', function(){});
 
     };
@@ -552,7 +551,6 @@ $(document).ready(function(){
             else {
                 showCalculationBox(regionInfo);
             }
-           // message_box.show_message('Kaufvertrag ', regionInfo.playerCountry + ' konnte ' + regionTitle + hasBought,  false);
         }
 
 
@@ -564,8 +562,6 @@ $(document).ready(function(){
 
             if($.parseJSON(xhr.responseText).attackCountry){
                 var regionInfo = $.parseJSON(xhr.responseText);
-                /*message_box.show_message('KI ' + regionInfo.playerId + ': ', regionInfo.activeRegion.regionId + ' attacked '
-                    + regionInfo.enemyRegion.regionId + " and has won: " + regionInfo.activeRegion.hasWon,  true);*/
                 var hasBought = ((!regionInfo.activeRegion.hasWon) ? " nicht kaufen" : " kaufen");
                 var regionTitle = searchNameOfRegion(regionInfo.enemyRegion.regionId);
 
@@ -586,12 +582,10 @@ $(document).ready(function(){
                     sendNewAIRequest();
                 }
 
-                //message_box.show_message('KI ' + payment.playerId + ': ', payment.activeRegion + ' spent money '+ payment.action , true);
                 addBasicCapitalToRegion(payment);
             }
             else if($.parseJSON(xhr.responseText).nextPlayer){
                 var nextPlayer = $.parseJSON(xhr.responseText);
-                //message_box.show_message('KI: ', 'Swiched Player to PlayerId ' + nextPlayer.nextPlayerId , true);
                 paper.forEach(function(el){
 
                    if(el.type == "path"){
@@ -611,7 +605,7 @@ $(document).ready(function(){
                 });
                 message_box.show_message('Info: ', 'Du bist an der Reihe! ', false);
                 activateAllMouseClicks();
-                //displayAIinfo('Info: ', 'Your turn! ', false);
+                //displayAIinfo('Du bist an der Reihe!', false);
             }
 
             var incident =  $.parseJSON(xhr.responseText);
@@ -653,22 +647,23 @@ $(document).ready(function(){
     }
 
     function showCalculationBox(regionInfo){
-        var hasBoughtTitle = ((!regionInfo.activeRegion.hasWon) ? "VERLOREN" : "GEWONNEN");
+        var hasBoughtTitle = ((!regionInfo.activeRegion.hasWon) ? "Nicht gekauft" : "Gekauft");
+        var sign = ((!regionInfo.activeRegion.hasWon) ? "<=" : ">=");
+
+        message_box.show_message(hasBoughtTitle, "Kapital: <div class='right'>" + regionInfo.calculation.originalPayment + "</div>"
+            + "<br/>Spekulationswert: <div class='right'>" + " * " + regionInfo.activeRegion.ventureValue + "</div>"
+            + "<br/>Grundkapital:  <div class='right'>" + " - 2 * " + regionInfo.calculation.basicCapital + " " + regionInfo.calculation.ownCurrency + "</div>"
+            + "<br/><br/>Wechselkurs:  <div class='right'>" + " * " + regionInfo.calculation.translation + "</div>"
+            + "<br/>____________________________________"
+            + "<br/>Resultat:  <div class='right'>" + regionInfo.calculation.calculation + " " + regionInfo.calculation.enemyCurrency + "</div>"
+            + "<br/><br/> <div class='center'>" + regionInfo.calculation.calculation + " " + regionInfo.calculation.enemyCurrency
+            + "  "+ sign + "  " + regionInfo.enemyRegion.enemyOriginalPayment + "</div>",  false, false, true);
 
 
-        message_box.show_message(hasBoughtTitle, "( " + regionInfo.calculation.originalPayment
+/*        message_box.show_message(hasBoughtTitle, "( " + regionInfo.calculation.originalPayment
             + " * " + regionInfo.activeRegion.ventureValue  + "  -  "
             + " 2 * " + regionInfo.calculation.basicCapital + " " + regionInfo.calculation.ownCurrency + " )"
             + " * " + regionInfo.calculation.translation
-            + " = " + regionInfo.calculation.calculation + " " + regionInfo.calculation.enemyCurrency,  false);
-
-/*        message_box.show_message(hasBoughtTitle, "( " + regionInfo.calculation.originalPayment + " - " + " 2 * "
-                 + regionInfo.calculation.basicCapital + " " + regionInfo.calculation.ownCurrency + " )"
-                 + " * "  + regionInfo.calculation.translation + " * " + regionInfo.activeRegion.ventureValue
-                 + " = " + regionInfo.calculation.calculation + " " + regionInfo.calculation.enemyCurrency,  false);*/
-
-        /*message_box.show_message(hasBoughtTitle, regionInfo.calculation.originalPayment + " * "
-            + regionInfo.calculation.translation + " * " + regionInfo.activeRegion.ventureValue
             + " = " + regionInfo.calculation.calculation + " " + regionInfo.calculation.enemyCurrency,  false);*/
     }
 
@@ -730,37 +725,48 @@ function sendNewAIRequest(){
 var message_box = function() {
 	var button_request = '<input type="button" onclick="sendNewAIRequest();" value="Ok" />';
     var button_close = '<input type="button" onclick="message_box.close_message();" value="Ok" />'; //onclick="message_box.close_message();"
-	return {
-		show_message: function(title, body, request, menu) {
+
+    var messageBoxId;
+
+    return {
+		show_message: function(title, body, request, menu, calculation) {
 
             //if request needed --> button sends request, else only close window
             var button = request ? button_request : button_close;
 
             if(menu){
-                // Check if game is over
+                // Show if game is over
                 button = '<input type="button" onclick="window.location.reload()" value="Zum Menü" />';
             }
-			if(jQuery('#message_box').html() === null) {
-				var message = '<div id="message_box"><h1>' + title + '</h1>' + body + '<br/>' + button + '</div>';
+
+            if(calculation){
+                messageBoxId = 'calculation_box';
+            }
+            else {
+                messageBoxId = 'message_box';
+            }
+
+			if(jQuery('#'+messageBoxId).html() === null) {
+				var message = '<div id=' + messageBoxId + '><h1>' + title + '</h1><div class="body">' + body + '</div><br/>' + button + '</div>';
 				jQuery(document.body).append( message );
 				jQuery(document.body).append( '<div id="darkbg"></div>' );
 				jQuery('#darkbg').show();
 				jQuery('#darkbg').css('height', jQuery(document).height());
 
-				jQuery('#message_box').css('top', 150);
-				jQuery('#message_box').show(100);
+				jQuery('#'+messageBoxId).css('top', 150);
+				jQuery('#'+messageBoxId).show(100);
 			} else {
-				var message = '<h1>' + title + '</h1>' + body + '<br/>' + button;
+				var message = '<h1>' + title + '</h1>' + '</h1><div class="body">' + body + '</div><br/>' + button;
 				jQuery('#darkbg').show();
 				jQuery('#darkbg').css('height', jQuery(document).height());
 
-				jQuery('#message_box').css('top', 150);
-				jQuery('#message_box').show(100);
-				jQuery('#message_box').html( message );
+				jQuery('#'+messageBoxId).css('top', 150);
+				jQuery('#'+messageBoxId).show(100);
+				jQuery('#'+messageBoxId).html( message );
 			}
 		},
 		close_message: function() {
-			jQuery('#message_box').hide(100);
+			jQuery('#'+messageBoxId).hide(100);
 			jQuery('#darkbg').hide();
 		}
 	}
