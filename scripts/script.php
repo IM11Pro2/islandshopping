@@ -99,7 +99,7 @@ $(document).ready(function(){
         var activeElement = this;
 
         if(activeElement.type == "text"){
-            paper.forEach(function(el){
+            /*paper.forEach(function(el){
 
                if(el.type == "path"){
 
@@ -108,7 +108,8 @@ $(document).ready(function(){
                    }
 
                }
-            });
+            });*/
+            activeElement = paper.getById(activeElement.data('pathId'));
         }
 
         if(activeElement.data('regionOfPlayer') == 0){
@@ -174,18 +175,52 @@ $(document).ready(function(){
 
 
     function initTextValues(){
-        paper.forEach(function (el) {
-            var value =  el.data('value');
-            el.attr('text', value);
+        textSet.forEach(function (el) {
+            var paymentValue =  el.data('paymentValue');
+            el.attr('text', paymentValue);
 
         });
 
     }
 
+
+    function hoverElement(){
+
+        var el = this;
+        if(this.type == "text"){
+            el = paper.getById(this.data('pathId'));
+        }
+        if(el.data('regionOfPlayer') == 0){
+            el.attr('cursor', 'pointer');
+            el.attr('stroke-width', 3);
+            this.attr('cursor', 'pointer');
+        }
+        if(activeRegion){
+            for(var i = 0; i < activeNeighbours.length; ++i){
+                el = regionSet.items[activeNeighbours[i]];
+                if(el.data('regionOfPlayer') != 0){
+                    el.attr('cursor', 'pointer');
+                    el.attr('stroke-width', 3);
+                    textSet.items[activeNeighbours[i]].attr('cursor', 'pointer');
+                }
+            }
+        }
+    }
+
+    function resetElement(){
+        var el = this;
+
+        if(el.type == "text"){
+            el = paper.getById(el.data('pathId'));
+        }
+        el.attr('stroke-width', 1);
+    }
+
     function activateRegions(){
         paper.forEach(function (el) {
             el.click(activeElementHandler);
-
+            el.mouseover(hoverElement);
+            el.mouseout(resetElement);
         });
 
         $(paper.canvas).on('click',resetElements);
@@ -195,6 +230,8 @@ $(document).ready(function(){
     function deactivateRegions(){
         paper.forEach(function (el) {
             el.unclick(activeElementHandler);
+            el.unmouseover(hoverElement);
+            el.unmouseout(resetElement);
         });
 
         $(paper.canvas).off('click',resetElements);
@@ -245,13 +282,17 @@ $(document).ready(function(){
     }
 
     function addBasicCapitalToRegion(payment) {
-        paper.forEach(function (el) {
+        /*paper.forEach(function (el) {
             if(el.data("text") == payment.activeRegion){
                 var value = payment.payment.value;
                 el.attr('text', value);
                 $('#'+payment.bankName).text(payment.bankCapital);
             }
-        });
+        });*/
+        var textElement = textSet.items[payment.activeRegion];
+        var paymentValue = payment.payment.value;
+        textElement.attr('text', paymentValue);
+        $('#'+payment.bankName).text(payment.bankCapital);
     }
 
     function sendNextPlayerRequest(){
@@ -261,8 +302,21 @@ $(document).ready(function(){
     }
 
     function updateMap(regionInfo){
+
+        var textElement = textSet.items[regionInfo.activeRegion.regionId];
+        textElement.attr('text', regionInfo.activeRegion.payment);
         if(regionInfo.activeRegion.hasWon){
 
+            var region = regionSet.items[regionInfo.enemyRegion.regionId];
+            region.data('regionOfPlayer', regionInfo.enemyRegion.regionOfPlayer);
+            region.attr('fill', regionInfo.enemyRegion.countryColor);
+
+            textElement = textSet.items[regionInfo.enemyRegion.regionId];
+            textElement.attr('text', regionInfo.enemyRegion.payment);
+
+
+
+            /*
             paper.forEach(function(el){
 
                 if(el.data('region') == regionInfo.enemyRegion.regionId){
@@ -278,17 +332,20 @@ $(document).ready(function(){
                     el.attr('text', regionInfo.activeRegion.payment);
                 }
 
-            });
+            });*/
 
             $('#'+regionInfo.enemyBank.bankName).text(regionInfo.enemyBank.bankCapital);
         }
+
+        /*
         else{
             paper.forEach(function(el){
                 if(el.data('text') == regionInfo.activeRegion.regionId){
                     el.attr('text', regionInfo.activeRegion.payment)
                 }
             });
-        }
+
+        }*/
     }
 
     function updateRandomizedMap(regions){
@@ -297,7 +354,7 @@ $(document).ready(function(){
             el.data('regionOfPlayer', regions[id].playerId);
             el.attr('fill', regions[id].regionColor);
 
-            var text = textSet[id];
+            var text = textSet.items[id];
             text.attr('paymentValue', regions[id].payment);
         });
     }
@@ -326,7 +383,7 @@ $(document).ready(function(){
     
     function renderIncidentInfo(incident){
         if(incident.type == "<?php echo GlobalRegionEvent::TYPE ?>"){
-
+/*
             paper.forEach(function(el){
 
                 if(el.data('region') == incident.region.regionId){
@@ -337,7 +394,14 @@ $(document).ready(function(){
                     el.attr('text', incident.region.payment);
                     //el.attr('text', incident.region.paymentValue * incident.region.currencyTranslation);
                 }
-            });
+            });*/
+
+            var region = regionSet.items[incident.region.regionId];
+            region.attr('stroke', "#FF0000");
+
+            var textElement = textSet.items[incident.region.regionId];
+            textElement.attr('text', incident.region.payment);
+
             $('#incidentView').text(incident.message + " region: " + incident.region.regionId);
         }
         else if(incident.type == "<?php echo GlobalBankEvent::TYPE ?>"){

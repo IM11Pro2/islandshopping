@@ -24,7 +24,7 @@
 
     //Colors
     function getColorArray() {
-        return array("#c5ebaa", "#eba9a9", "#a9bceb", "#ebe8a9 ", "#cea9eb");
+        return array("#c5ebaa", "#eba9a9", "#6e91eb", "#ebe46e", "#cea9eb");
     }
 
     //Number of Regions

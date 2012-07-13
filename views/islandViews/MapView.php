@@ -29,10 +29,8 @@
                 path.transform(transformation);
                 path.attr('title', pathName);
                 path.attr(pathStyle);
-                //path.attr('fill', color);
                 path.data('region', pathId);
                 path.data('regionOfPlayer', playerId);
-
                 regionSet.push(path);
             }
 
@@ -45,8 +43,8 @@
                 text.data('pathId', path.id);
 
                 // before key 'value', now paymentValue
-                text.data('paymenValue', paymentValue);
-                textSet.push(path);
+                text.data('paymentValue', paymentValue);
+                textSet.push(text);
             }
 
                 <?php
@@ -83,7 +81,7 @@
                     }
                 }
             ?>
-
+            console.log('setlength: ' + regionSet.length);
 
 
 
