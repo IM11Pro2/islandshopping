@@ -16,12 +16,12 @@
             ?>
             <?php
 
-              echo "<span style='color:".$color.";'>" . $name . "</span>:  <span id=\"".$name."Bank\">" . $bankCapital . "</span>  ";
+              echo "<div style='background-color:".$color.";display:inline;'>&nbsp;&nbsp;" . $name . ":  <span id=\"".$name."Bank\">" . $bankCapital . "&nbsp;&nbsp;</span>  </div>";
 
 
             ?>
         </div>
-        <div class="right interests">
+        <div class="right"> <!-- interests -->
             <h3>Zinsen</h3>
             <?php echo "<span id=\"".$name."Interest\">0 ".$currency."</span>"; ?>
         </div>
@@ -36,11 +36,11 @@
                 $enemyTranslation[$i] = $playersArray[$i]->getCountry()->getPayment()->getCurrencyTranslation();
                 $enemyColor[$i] = $playersArray[$i]->getCountry()->getColor();
 
-                echo "<span style='color:".$enemyColor[$i].";'>". $enemyName . "</span>:  <span id=\"".$enemyName."Bank\" >" . $enemyBankCapital . "</span> <br />";
+                echo "<div style='background-color:".$enemyColor[$i].";display:inline;'>&nbsp;&nbsp;". $enemyName . ":  <span id=\"".$enemyName."Bank\" >" . $enemyBankCapital . "&nbsp;&nbsp;</span> </div><br />";
             }
             ?>
         </div>
-        <div class="right interests">
+        <div class="right"> <!-- interests -->
             <h3>Zinsen</h3>
             <?php
             for($i = 1; $i < count($playersArray); $i++) {
