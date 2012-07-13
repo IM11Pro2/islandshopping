@@ -83,12 +83,16 @@
                     $originalPayment->setValue($activePayment->getValue());
                     $originalPayment->setCurrency($activeRegion->getCountry()->getName());
                     $originalPayment->setCurrencyTranslation($activeRegion->getCountry()->getName());
-                    //$originalPayment->reduceValue(2*BASIC_CAPITAL_REGION); // oder 2mal oder gar nicht?!?!
 
                     $playerId = $activeRegion->getPlayerId();
 
                     $enemyRegion = $map->getRegion($enemyId);
                     $enemyPayment = $enemyRegion->getPayment();
+
+                    $enemyOriginalPayment = new Payment();
+                    $enemyOriginalPayment->setValue($enemyPayment->getValue());
+                    $enemyOriginalPayment->setCurrency($enemyRegion->getCountry()->getName());
+                    $enemyOriginalPayment->setCurrencyTranslation($enemyRegion->getCountry()->getName());
             
                     $enemyPlayerId = $enemyRegion->getPlayerId();
                     $enemyCountryName = $enemyRegion->getCountry()->getName();
@@ -105,7 +109,8 @@
                     $specificTranslation = 1/$playerTranslation * $enemyTranslation;
 
                     //$calculation = ($originalPayment->getValue() - 2*BASIC_CAPITAL_REGION) * $specificTranslation * $speculationValue;
-                    $calculation = ($originalPayment->getValue() * $speculationValue - 2*BASIC_CAPITAL_REGION )* $specificTranslation;
+                    $firstCalculation = ($originalPayment->getValue() * $speculationValue - 2*BASIC_CAPITAL_REGION );
+                    $calculation = $firstCalculation * $specificTranslation;
                     $enemyCurrency = $enemyPayment->getCurrency();
                     $playerCurrency = $originalPayment->getCurrency();
 
@@ -142,6 +147,7 @@
                                                     "playerCountry" => $this->playerList[$playerId]->getCountry()->getName(),
                                                     "calculation" => array("originalPayment" => $originalPayment->__toString(),
                                                                             "translation" => $specificTranslation,
+                                                                            "firstCalculation" => $firstCalculation,
                                                                             "calculation" => $calculation,
                                                                             "basicCapital" => $basicCapital,
                                                                             "ownCurrency" => $playerCurrency,
@@ -154,7 +160,8 @@
                                                                             "regionId" => $enemyId,
                                                                             "regionOfPlayer" => $enemyRegion->getPlayerId(),
                                                                             "countryColor" => $enemyRegion->getColor(),
-                                                                            "payment" => $enemyPayment->__toString()),
+                                                                            "payment" => $enemyPayment->__toString(),
+                                                                            "enemyOriginalPayment" => $enemyOriginalPayment->__toString()),
 
                                                     "enemyBank" => array("bankName" => $enemyCountryName."Bank",
                                                                         "bankCapital" => $enemyBankCapital)
@@ -169,9 +176,11 @@
                                                     "nextPlayer" => false,
                                                     "playerId" => $playerId,
                                                     "playerCountry" => $this->playerList[$playerId]->getCountry()->getName(),
-                                                    "enemyRegion" => array("regionId" => $enemyId),
+                                                    "enemyRegion" => array("regionId" => $enemyId,
+                                                                           "enemyOriginalPayment" => $enemyOriginalPayment->__toString()),
                                                     "calculation" => array("originalPayment" => $originalPayment->__toString(),
                                                                         "translation" => $specificTranslation,
+                                                                        "firstCalculation" => $firstCalculation,
                                                                         "calculation" => $calculation,
                                                                         "basicCapital" => $basicCapital,
                                                                         "ownCurrency" => $playerCurrency,
