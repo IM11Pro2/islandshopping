@@ -40,20 +40,22 @@ $(document).ready(function(){
     });
 
     $('input:radio[name="playerCountry"]').click(function(event) {
+
+        var clickedElementLabel = $.trim($(this).parent().text());
+
+        $.each($('input:checkbox[name="enemyCountries[]"]:checked'), function(index){
+
+            if($.trim($(this).parent().text()) == clickedElementLabel){
+                $('#menuSubmit').attr('disabled', 'disabled');
+            }
+        });
+
         if($('input:checked').length > 0){
+            console.log($('input:checked').length);
             sendAjaxRequest("../states/MenuState.php", {handle: "MenuState", playercountry: $(this).parent().text()}, false);
         }
     });
 
-    /*
-    $('body').on('click','input:radio[name="bankstate"]', changeBankState);
-
-    function changeBankState(event){
-        resetElements(event);
-        if($('input:checked').length > 0){
-            sendAjaxRequest("../bank/Bank.php", {handle: "bank", bankstate: $.trim($(this).val())}, false);
-        }
-    }*/
 
     $(':button[name="MenuSubmit"]').click(function (event) {
         sendAjaxRequest("../states/MenuState.php", {handle: "MenuState", endState: "Menu"}, false);
@@ -142,16 +144,7 @@ $(document).ready(function(){
 
             var regionId = activeElement.data('region');
             activeRegionId = regionId;
-            /*if($('input:radio[name="bankstate"]:checked').val() == "<?php //echo Bank::PAY_OFF ?>" ){
-                sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getCountry: regionId, bankstate: "<?php //echo Bank::PAY_OFF ?>"},true);
-            }
-            else if($('input:radio[name="bankstate"]:checked').val() == "<?php //echo Bank::DEPOSIT ?>"){
-                sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getCountry: regionId, bankstate: "<?php //echo Bank::DEPOSIT ?>"},true);
-            }
-            else if($('input:radio[name="bankstate"]:checked').val() == "<?php //echo Bank::ATTACK ?>"){
-                activeRegion = true;
-                sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getNeighbours: regionId},true);
-            }*/
+
             var actionItem = $('#actionContainer .activeAction');
             if($('#actionContainer li').index(actionItem) == 0){
                 sendAjaxRequest("../states/PlayState.php",{handle: "PlayState", getCountry: regionId, bankstate: "<?php echo Bank::PAY_OFF ?>"},true);
@@ -286,8 +279,7 @@ $(document).ready(function(){
         $('#actionButton').removeAttr('disabled');
         $('#actionContainer li.activeAction').removeClass('activeAction');
         $('#actionContainer li').first().addClass('activeAction');
-        //$('body').off('click','input:radio[name="bankstate"]');
-        //$('body').on('click','input:radio[name="bankstate"]', changeBankState);
+
 
     }
 
@@ -358,36 +350,11 @@ $(document).ready(function(){
 
 
 
-            /*
-            paper.forEach(function(el){
 
-                if(el.data('region') == regionInfo.enemyRegion.regionId){
-                    el.data('regionOfPlayer', regionInfo.enemyRegion.regionOfPlayer);
-                    el.attr('fill', regionInfo.enemyRegion.countryColor);
-                }
-
-                if(el.data('text') == regionInfo.enemyRegion.regionId){
-                    el.attr('text', regionInfo.enemyRegion.payment);
-                }
-
-                if(el.data('text') == regionInfo.activeRegion.regionId){
-                    el.attr('text', regionInfo.activeRegion.payment);
-                }
-
-            });*/
 
             $('#'+regionInfo.enemyBank.bankName).text(regionInfo.enemyBank.bankCapital);
         }
 
-        /*
-        else{
-            paper.forEach(function(el){
-                if(el.data('text') == regionInfo.activeRegion.regionId){
-                    el.attr('text', regionInfo.activeRegion.payment)
-                }
-            });
-
-        }*/
     }
 
     function updateRandomizedMap(regions){
@@ -425,18 +392,7 @@ $(document).ready(function(){
     
     function renderIncidentInfo(incident){
         if(incident.type == "<?php echo GlobalRegionEvent::TYPE ?>"){
-/*
-            paper.forEach(function(el){
 
-                if(el.data('region') == incident.region.regionId){
-                    el.attr('stroke', "#FF0000");
-                }
-
-                if(el.data('text') == incident.region.regionId){
-                    el.attr('text', incident.region.payment);
-                    //el.attr('text', incident.region.paymentValue * incident.region.currencyTranslation);
-                }
-            });*/
 
             var region = regionSet.items[incident.region.regionId];
             region.attr('stroke', "#FF0000");

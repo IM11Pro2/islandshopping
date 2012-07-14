@@ -39,7 +39,6 @@
                     <h2 class="menu">W&auml;hle deine Gegner:</h2>
                     <fieldset>
                     <?php
-
                     $status = "";
                     foreach($all_countries_array as $country => $value) {
                         if(ENEMY_VALUE == $value) {
@@ -59,7 +58,7 @@
 
                    ?>
                     </fieldset>
-                    <input type="button" name="MenuSubmit" value="Zur Mapauswahl" id="menuSubmit">
+                    <input type="button" name="MenuSubmit" value="Zur Mapauswahl" id="menuSubmit" />
                 </form>
             </div>
             <!--end #content -->

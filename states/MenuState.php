@@ -51,6 +51,8 @@
                 }
                 if($country == trim($playerCountry)) {
                     $this->countryArray[$country] = PLAYER_VALUE;
+                    $key = array_search($country, $this->enemyCountries);
+                    unset ($this->enemyCountries[$key]);
                 }
             }
             $this->playerCountry = trim($playerCountry);
