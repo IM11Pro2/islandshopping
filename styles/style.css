@@ -26,6 +26,10 @@ h2.bank{
     margin: 19px 0px 0px 0px;
 }
 
+h2.info{
+    margin: 0px;
+}
+
 fieldset{
     font-size: 14pt;
     border: none;
@@ -67,17 +71,18 @@ fieldset{
 }
 
 #canvas{
-    background-image: linear-gradient(bottom, rgb(218,245,255) 0%, rgb(187,238,255) 100%);
-    background-image: -o-linear-gradient(bottom, rgb(218,245,255) 0%, rgb(187,238,255) 100%);
-    background-image: -moz-linear-gradient(bottom, rgb(218,245,255) 0%, rgb(187,238,255) 100%);
-    background-image: -webkit-linear-gradient(bottom, rgb(218,245,255) 0%, rgb(187,238,255) 100%);
-    background-image: -ms-linear-gradient(bottom, rgb(218,245,255) 0%, rgb(187,238,255) 100%);
+    background-color: #bbeeff;
+    background-image: linear-gradient(bottom, rgb(86,184,216) 0%, rgb(187,238,255) 100%); /*56b8d8 rgb(218,245,255) 0%, rgb(187,238,255)*/
+    background-image: -o-linear-gradient(bottom, rgb(86,184,216) 0%, rgb(187,238,255) 100%);
+    background-image: -moz-linear-gradient(bottom, rgb(86,184,216) 0%, rgb(187,238,255) 100%);
+    background-image: -webkit-linear-gradient(bottom, rgb(86,184,216) 0%, rgb(187,238,255) 100%);
+    background-image: -ms-linear-gradient(bottom, rgb(86,184,216) 0%, rgb(187,238,255) 100%);
 
     background-image: -webkit-gradient(
     	linear,
     	left bottom,
     	left top,
-    	color-stop(0, rgb(218,245,255)),
+    	color-stop(0, rgb(86,184,216)),
     	color-stop(1, rgb(187,238,255))
     );
 }

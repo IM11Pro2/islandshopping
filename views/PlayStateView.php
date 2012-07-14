@@ -43,7 +43,7 @@
                 ?>
             </div>
             <br />
-            <h2>Info</h2>
+            <h2 class="info">Info</h2>
             <div class="infoBox last">
                 <ul id="infoAI">
                 </ul>
