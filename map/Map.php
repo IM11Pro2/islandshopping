@@ -49,7 +49,8 @@
                     $region = new Region($this->playerList[$playerId]);
                     $region->initNeighbourRegions($this->regionGraph->getNode($region->getRegionId()));
                     array_push($this->regions, $region);
-                    $playerId++;
+                    ++$playerId;
+                    $playerId %= ($numberOfPlayers-1);
                 }
             }
         }

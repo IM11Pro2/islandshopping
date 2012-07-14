@@ -13,7 +13,6 @@
 
             $this->createPlayer();
             $this->createEnemyPlayers();
-
             $this->playerList = $_SESSION['activePlayers'];
             $this->map = new Map($this->playerList);
             $this->map->randomizeRegions();

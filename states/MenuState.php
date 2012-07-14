@@ -29,13 +29,12 @@
 
             $_SESSION['playerCountryName'] = $this->playerCountry;
             $_SESSION['enemyCountryNames'] = $this->enemyCountries;
-            //$_SESSION['countryArray'] = $this->countryArray;
+
 
             $_SESSION['activePlayers'] = array();
 
             //next state übergeben
-            GameEventManager::getInstance()->dispatchEvent(new ChangeStateEvent(new MapState() /*,session_id()*/));
-            //$eventmanager = $_SESSION['IEventManager'];
+            GameEventManager::getInstance()->dispatchEvent(new ChangeStateEvent(new MapState()));
             GameEventManager::getInstance()->dispatchEvent(new ChangeViewEvent(new MapStateView()));
 
         }
@@ -55,6 +54,7 @@
                 }
             }
             $this->playerCountry = trim($playerCountry);
+            echo json_encode(array('numberEnemies' => count($this->enemyCountries), 'player' => $this->countryArray));
         }
 
         public function setEnemyCountries($enemycountry) {
@@ -73,6 +73,7 @@
                     }
                 }
             }
+            echo json_encode(array('numberEnemies' => count($this->enemyCountries), 'player' => $this->countryArray));
         }
 
         public function getPlayerCountry() {
@@ -91,9 +92,6 @@
 
                 if(isset($_SESSION['IEventManager'])) {
 
-                    // TODO change this to useable data
-                    $eventManager = $_SESSION['IEventManager'];
-                    //$eventManager->dispatchEvent(new UpdateViewEvent("bla"));
 
                     if(isset($_GET['playercountry'])) {
                         $_SESSION['state']->setPlayerCountry($_GET['playercountry']);
