@@ -45,7 +45,7 @@ $(document).ready(function(){
 
         $.each($('input:checkbox[name="enemyCountries[]"]:checked'), function(index){
 
-            if($.trim($(this).parent().text()) == clickedElementLabel){
+            if($.trim($(this).parent().text()) == clickedElementLabel && $('input:checkbox[name="enemyCountries[]"]:checked').length == 1){
                 $('#menuSubmit').attr('disabled', 'disabled');
             }
         });
@@ -131,10 +131,10 @@ $(document).ready(function(){
         if(activeElement.data('regionOfPlayer') == 0){
 
             paper.forEach(function (el) {
-                el.attr('stroke-width', 1);
+                el.attr('stroke-width', 2);
             });
 
-            activeElement.attr('stroke-width', 3);
+            activeElement.attr('stroke-width', 4);
             /*activeElement.toFront();
             path = activeElement;
             paper.getById((activeElement.id+1)).toFront();*/
@@ -180,7 +180,7 @@ $(document).ready(function(){
         if(event.target == paper.canvas || event.target.nodeName == "INPUT"){ // input = radiobutton
             paper.forEach(function(el){
                 if(el.type == "path"){
-                    el.attr('stroke', "#ffffff").attr('stroke-width',1).attr('fill-opacity', 1);
+                    el.attr('stroke', "#ffffff").attr('stroke-width',2).attr('fill-opacity', 1);
                 }
             });
 
@@ -204,7 +204,7 @@ $(document).ready(function(){
 
 
             el.attr('cursor', 'pointer');
-            el.attr('stroke-width', 3);
+            el.attr('stroke-width', 4);
             bringElementToFront(path, el);
             textSet.items[el.data('region')].attr('cursor', 'pointer').toFront();
 
@@ -239,7 +239,7 @@ $(document).ready(function(){
             el.attr('cursor', 'default');
             el = paper.getById(el.data('pathId'));
         }
-        el.attr({'stroke-width' : 1, 'cursor': 'default'});
+        el.attr({'stroke-width' : 2, 'cursor': 'default'});
     }
 
     function activateRegions(){
@@ -544,7 +544,7 @@ $(document).ready(function(){
                 paper.forEach(function(el){
 
                    if(el.type == "path"){
-                       el.attr("stroke-width", 1);
+                       el.attr("stroke-width", 2);
                    }
                 });
                 displayAIinfo(nextPlayer.playerCountry + ' ist dran' , true);
@@ -555,7 +555,7 @@ $(document).ready(function(){
                 paper.forEach(function(el){
 
                    if(el.type == "path"){
-                       el.attr("stroke-width", 1);
+                       el.attr("stroke-width", 2);
                    }
                 });
                 message_box.show_message('Info: ', 'Du bist an der Reihe! ', false);
@@ -587,11 +587,11 @@ $(document).ready(function(){
 
            if(el.type == "path"){
 
-               el.attr("stroke-width", 1);
+               el.attr("stroke-width", 2);
 
                if(el.data('region') == regionId){
                    regionTitle = el.attr('title');
-                   el.attr("stroke-width", 3);
+                   el.attr("stroke-width", 4);
                    bringElementToFront(path, el);
                    textSet.items[el.data('region')].toFront();
                }
