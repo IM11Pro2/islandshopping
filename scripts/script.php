@@ -24,17 +24,26 @@ function sendAjaxRequest(url, data, getAsJSON){
     }
 
 $(document).ready(function(){
-    $('#loading').ajaxStart(function(){
-       $(this).show();
-        $(':button').attr('disabled', 'disabled');
-     });
-    $('#loading').ajaxComplete(function(){
-           $(this).hide();
-            $(':button').removeAttr('disabled');
-    });
 
     var activeNeighbours = undefined;
     var activeRegion = false;
+
+    $('input:checkbox[name="enemyCountries[]"]').click(function(event){
+        if($('input:checkbox[name="enemyCountries[]"]:checked').length > 0){
+            $('#menuSubmit').removeAttr('disabled');
+            sendAjaxRequest("../states/MenuState.php", {handle: "MenuState", enemycountry: $(this).parent().text()}, false);
+        }
+        else{
+            $('#menuSubmit').attr('disabled', 'disabled');
+            sendAjaxRequest("../states/MenuState.php", {handle: "MenuState", enemycountry: $(this).parent().text()}, false);
+        }
+    });
+
+    $('input:radio[name="playerCountry"]').click(function(event) {
+        if($('input:checked').length > 0){
+            sendAjaxRequest("../states/MenuState.php", {handle: "MenuState", playercountry: $(this).parent().text()}, false);
+        }
+    });
 
     /*
     $('body').on('click','input:radio[name="bankstate"]', changeBankState);
