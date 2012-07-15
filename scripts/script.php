@@ -401,17 +401,17 @@ $(document).ready(function(){
             textElement.attr('text', incident.region.payment);
             
             var regionTitle = searchNameOfRegion(incident.region.regionId);
-            $('#incidentView').text(incident.message + " Region: " + regionTitle);
+            $('#incidentView').text(incident.message + regionTitle);
         }
         else if(incident.type == "<?php echo GlobalBankEvent::TYPE ?>"){
 
             $('#'+incident.bankName).text(incident.bankCapital);
-            $('#incidentView').text(incident.message + " Bank: " + incident.bankName);
+            $('#incidentView').text(incident.country + incident.message);
         }
         else if(incident.type == "<?php echo LocalIncidentEvent::TYPE ?>"){
 
             $('#'+incident.bankName).text(incident.bankCapital);
-            $('#incidentView').text(incident.message + " " + incident.value + " "+ incident.currency);
+            $('#incidentView').text(incident.message + " " + incident.payment);
         }
         $('#incidentView').show();
     }

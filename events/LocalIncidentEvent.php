@@ -47,8 +47,7 @@
 
             return array("message" => $this->message, "bankCapital" => $this->bank->getCapital(),
                                                                 "bankName" => $this->bank->getCountry()->getName()."Bank",
-                                                                "currency" => $payment->getCurrency(),
-                                                                "value" => $this->isPositive ? ($value*$payment->getCurrencyTranslation()) : (-$value*$payment->getCurrencyTranslation()),
+                                                                "payment" => $payment->__toString(),
                                 "type" => self::TYPE);
 
         }

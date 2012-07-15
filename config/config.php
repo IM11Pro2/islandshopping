@@ -74,10 +74,10 @@
             // 0 global
             array(
                 //0.0 bank
-                "Bank wurde ausgeraubt",
+                "-Bank wurde ausgeraubt.",
 
                 //0.1 region
-                "Region: Finanzmarkt ist eingebrochen :("
+                "Finanzmarkt ist eingebrochen. Die betroffene Region: "
             ),
             // 1 local
             array(
@@ -85,16 +85,16 @@
                $countryNames[0] => array(
                     // 1.0.0 positve
                     "positive" => array(
-                        "Die ".$countryNames[0]." hat die Steuern für Bier erhöht und erzielt damit Mehreinnahmen von:",
-                        "Durch Kürzungen im Bildungssystem spart die ".$countryNames[0].":",
-                        "Die ".$countryNames[0]."-Mitgliedsländer haben einen höheren Beitrag zu zahlen, dadurch steigt der Gewinn um:"
+                        "Die ".$countryNames[0]." hat die Steuern für Bier erhöht und erzielt damit Mehreinnahmen. Es landen auf dem Konto:",
+                        "Durch Kürzungen im Bildungssystem spart die ".$countryNames[0].". Es landen auf dem Konto:",
+                        "Die ".$countryNames[0]."-Mitgliedsländer haben einen höheren Beitrag zu zahlen. Es landen auf dem Konto:"
                     ),
 
                     // 1.0.1 negative
                     "negative" => array(
-                        "Der Verwaltungsaufwand in der ".$countryNames[0]." hat das Budget überschritten. Die Kosten belaufen sich bei:",
-                        "Der Fehler eines Dolmetschers kostet die ".$countryNames[0].":",
-                        "Die Spesen mehrerer ".$countryNames[0]."-Abgeordneten auf dem Ballermann betragen:"
+                        "Der Verwaltungsaufwand in der ".$countryNames[0]." hat das Budget überschritten. Der Kontostand vermindert sich um:",
+                        "Der Fehler eines Dolmetschers kostet die ".$countryNames[0]." Geld. Der Kontostand vermindert sich um:",
+                        "Die Spesen mehrerer ".$countryNames[0]."-Abgeordneten auf dem Ballermann werden mehr. Der Kontostand vermindert sich um:"
                     )
 
                 ),
@@ -102,16 +102,16 @@
                $countryNames[1] => array(
                     // 1.1.0 positve
                     "positive" => array(
-                        "Die Einzahlung von Schmiergeldern beschert der ".$countryNames[1]." Zinsen im Wert von",
-                        "Das internationale Käsefestival in der ".$countryNames[1]." lockt viele Besucher an. Der Gewinn beträgt:",
-                        "Die ".$countryNames[1]." mustert Teile der Lawinenhund-Staffel aus und erspart sich Kosten im Wert von:"
+                        "Die Einzahlung von Schmiergeldern beschert der ".$countryNames[1]." Gewinne. Es landen auf dem Konto:",
+                        "Das internationale Käsefestival in der ".$countryNames[1]." lockt viele Besucher an. Es landen auf dem Konto:",
+                        "Die ".$countryNames[1]." mustert Teile der Lawinenhund-Staffel aus. Es landen auf dem Konto:"
                     ),
 
                     // 1.1.1 negative
                     "negative" => array(
-                        "In der ".$countryNames[1]." hat die Schließung einer Schokoladenfabrik zum Streik der ganzen Bevölkerung geführt. Die Kosten belaufen sich bei:",
-                        "In der ".$countryNames[1]." kostet das Aufschütten der Alpen für die Vergrößerung von Skigebieten:",
-                        "Die verzögerte Entwicklung eines Hightech-Messers kostet die ".$countryNames[1].":"
+                        "In der ".$countryNames[1]." hat die Schließung einer Schokoladenfabrik zum Streik der ganzen Bevölkerung geführt. Der Kontostand vermindert sich um:",
+                        "In der ".$countryNames[1]." verursacht das Aufschütten der Alpen zur Vergrößerung von Skigebieten Kosten. Der Kontostand vermindert sich um:",
+                        "Die verzögerte Entwicklung eines Hightech-Offiziers-Messers kostet die ".$countryNames[1]." extra. Der Kontostand vermindert sich um:"
                     )
 
                 ),
@@ -119,16 +119,16 @@
                 $countryNames[2] => array(
                     // 1.2.0 positve
                     "positive" => array(
-                        "Der Verkauf von Burkinis in der ".$countryNames[2]." erwirtschaftet ein Plus von:",
-                        "Zahlreiche Maturaklassen feiern in der ".$countryNames[2]." und bescheren einen Gewinn von:",
-                        "Eine neue Kebapstand-Filiale in Wien bringt der".$countryNames[2]." ein Umsatzplus von:"
+                        "Der Verkauf von Burkinis in der ".$countryNames[2]." erwirtschaftet ein Plus. Es landen auf dem Konto:",
+                        "Zahlreiche Maturaklassen feiern in der ".$countryNames[2].". Es landen auf dem Konto:",
+                        "Eine neue Kebapstand-Filiale in Wien bringt der".$countryNames[2]." ein Umsatzplus. Es landen auf dem Konto:"
                     ),
 
                     // 1.2.1 negative
                     "negative" => array(
-                        "Die ".$countryNames[2]." investiert in die Bestrebungen der EU beizutreten - Verursachte Kosten:",
-                        "Schmerzensgeldzahlungen wegen Lebensmittelvergiftungen kosten die ".$countryNames[2].":",
-                        "Die ".$countryNames[2]." baut die Züchtung von Seidenraupen aus und rechnet mit Mehrkosten von:"
+                        "Die ".$countryNames[2]." investiert in die Bestrebungen der EU beizutreten. Der Kontostand vermindert sich um:",
+                        "Schmerzensgeldzahlungen wegen Lebensmittelvergiftungen kostet die ".$countryNames[2]." extra. Der Kontostand vermindert sich um:",
+                        "Die ".$countryNames[2]." baut die Züchtung von Seidenraupen aus und rechnet mit Mehrkosten. Der Kontostand vermindert sich um:"
                     )
 
                 ),
@@ -136,16 +136,16 @@
                 $countryNames[3] => array(
                     // 1.0.0 positve
                     "positive" => array(
-                        "Ein neuer Ölfund bringt ".$countryNames[3]." Einnahmen von:",
-                        $countryNames[3]." verkauft seine größte Sandburg und erzielt einen Preis von:",
-                        "Mekka-Pilger bringen ".$countryNames[3]." Einnahmen von:"
+                        "Ein neuer Ölfund bringt ".$countryNames[3]." Einnahmen. Es landen auf dem Konto:",
+                        $countryNames[3]." verkauft seine größte Sandburg. Es landen auf dem Konto:",
+                        "Mekka-Pilger bringen Geld nach ".$countryNames[3]." Es landen auf dem Konto:"
                     ),
 
                     // 1.0.1 negative
                     "negative" => array(
-                        "Die Veranstaltung eines Beachvolleyball-Turniers kostet ".$countryNames[3].":",
-                        "Ein neues Hochhaus wird errichtet und übersteigt das Budget. ".$countryNames[3]." zahlt die Mehrkosten von:",
-                        "Eine ausgelassene Party der reichsten Scheichs von ".$countryNames[3]." kostet:"
+                        "Die Veranstaltung eines Beachvolleyball-Turniers ".$countryNames[3]." verursacht Kosten. Der Kontostand vermindert sich um:",
+                        "Ein neues Hochhaus wird errichtet und übersteigt das Budget ".$countryNames[3]."s . Der Kontostand vermindert sich um:",
+                        "Eine ausgelassene Party der reichsten Scheichs von ".$countryNames[3]." verursacht Kosten. Der Kontostand vermindert sich um:"
                     )
 
                 ),
@@ -153,16 +153,16 @@
                 $countryNames[4] => array(
                     // 1.0.0 positve
                     "positive" => array(
-                        "Die Werbeinnahmen der Superbowl bescheren der ".$countryNames[4]." einen Gewinn von:",
-                        "Die Casinos in Las Vegas/".$countryNames[4]." erwirtschaften ein Plus von:",
-                        "Nach dem Einführen der Fettsteuer in den ".$countryNames[4]." steigen die Mehreinnahmen um:"
+                        "Die Werbeinnahmen der Superbowl bescheren der ".$countryNames[4]." einen Gewinn. Es landen auf dem Konto:",
+                        "Die Casinos in Las Vegas/".$countryNames[4]." erwirtschaften ein Plus. Es landen auf dem Konto:",
+                        "Nach dem Einführen der Fettsteuer in den ".$countryNames[4]." steigen die Mehreinnahmen. Es landen auf dem Konto:"
                     ),
 
                     // 1.0.1 negative
                     "negative" => array(
-                        "Die ".$countryNames[4]." verschärfen die Grenzkontrollen nach Mexico. Kostenpunkt:",
-                        "Die Finazierung von NASA-Projekten kostet die ". $countryNames[4].":",
-                        "Das neuerliche Aufrüsten von Atomwaffen belastet das Budget der ".$countryNames[4]." um:"
+                        "Die ".$countryNames[4]." verschärfen die Grenzkontrollen nach Mexico. Der Kontostand vermindert sich um:",
+                        "Die Finazierung von NASA-Projekten kostet die ". $countryNames[4]." mehr. Der Kontostand vermindert sich um:",
+                        "Das neuerliche Aufrüsten von Atomwaffen belastet das Budget der ".$countryNames[4].". Der Kontostand vermindert sich um:"
                     )
 
                 )
