@@ -58,7 +58,6 @@
                 }
             }
             $this->playerCountry = trim($playerCountry);
-            echo json_encode(array('numberEnemies' => count($this->enemyCountries), 'player' => $this->countryArray));
         }
 
         public function setEnemyCountries($enemycountry) {
@@ -77,7 +76,6 @@
                     }
                 }
             }
-            echo json_encode(array('numberEnemies' => count($this->enemyCountries), 'player' => $this->countryArray));
         }
 
         public function getPlayerCountry() {
