@@ -47,8 +47,8 @@
         );
     }
 
-    define("PAYOFF_ROUNDS", 1);
-    define("PAYOFF_REGIONS_PER_ROUND", 2);
+    define("PAYOFF_ROUNDS", 2);
+    define("PAYOFF_REGIONS_PER_ROUND", 3);
 
     define("INTEREST_RATE", 0.10);
 
@@ -74,10 +74,10 @@
             // 0 global
             array(
                 //0.0 bank
-                "-Bank wurde ausgeraubt.",
+                "-Bank wurde überfallen.",
 
                 //0.1 region
-                "Finanzmarkt ist eingebrochen. Die betroffene Region: "
+                "Finanzmarkt ist eingebrochen. Die betroffene Region ist: "
             ),
             // 1 local
             array(

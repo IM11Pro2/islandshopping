@@ -14,7 +14,7 @@
             <div id="content">
                 <h1 class="menu">Island (s)hopping</h1>
                 <form name="menuForm1" method="POST">
-                    <h2 class="menu">Welches Land m&ouml;chtest du sein?</h2>
+                    <h2 class="menu">Welcher Spieler m&ouml;chtest du sein?</h2>
                     <fieldset>
                     <?php
 
@@ -36,7 +36,7 @@
                     }
                     ?>
                     </fieldset>
-                    <h2 class="menu">W&auml;hle deine Gegner:</h2>
+                    <h2 class="menu">W&auml;hle deine Mitstreiter:</h2>
                     <fieldset>
                     <?php
                     $status = "";
