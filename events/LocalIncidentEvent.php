@@ -39,15 +39,20 @@
                     $payment->reduceValue($value);
                 }
                 else{
-                    $value = (INCIDENT_CAPITAL-$payment->getValue());
+                    //$value = (INCIDENT_CAPITAL-$payment->getValue());
+                    //$payment->reduceValue($value);
+                    $value = $payment->getValue();
                     $payment->reduceValue($value);
                 }
             }
+
+            $returnValue = number_format($value * $payment->getCurrencyTranslation());
 
 
             return array("message" => $this->message, "bankCapital" => $this->bank->getCapital(),
                                                                 "bankName" => $this->bank->getCountry()->getName()."Bank",
                                                                 "payment" => $payment->__toString(),
+                                                                "value" => $returnValue." ".$payment->getCurrency(),
                                 "type" => self::TYPE);
 
         }

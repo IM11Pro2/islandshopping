@@ -411,7 +411,7 @@ $(document).ready(function(){
         else if(incident.type == "<?php echo LocalIncidentEvent::TYPE ?>"){
 
             $('#'+incident.bankName).text(incident.bankCapital);
-            $('#incidentView').text(incident.message + " " + incident.payment);
+            $('#incidentView').text(incident.message + " " + incident.value);//incident.payment);
         }
         $('#incidentView').show();
     }

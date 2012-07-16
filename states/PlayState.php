@@ -109,8 +109,8 @@
                     $specificTranslation = 1/$playerTranslation * $enemyTranslation;
 
                     //$calculation = ($originalPayment->getValue() - 2*BASIC_CAPITAL_REGION) * $specificTranslation * $speculationValue;
-                    $firstCalculation = ($originalPayment->getValue() * $speculationValue - 2*BASIC_CAPITAL_REGION );
-                    $calculation = $firstCalculation * $specificTranslation;
+                    $firstCalculation = (($originalPayment->getValue() * $speculationValue) - (2*BASIC_CAPITAL_REGION) );
+                    $calculation = $firstCalculation * $playerTranslation * $specificTranslation;
                     $enemyCurrency = $enemyPayment->getCurrency();
                     $playerCurrency = $originalPayment->getCurrency();
 
