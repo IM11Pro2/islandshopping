@@ -58,7 +58,7 @@
                     // if neighbour region is of other country
                     if($regions[$neighbours[$j]]->getCountry() != $this->getCountry()){
                         // if neighbour region has more/equal money --> payoff
-                        if($regions[$neighbours[$j]]->getPayment()->getValue() > $actualRegion->getPayment()->getUsableValue()){
+                        if($regions[$neighbours[$j]]->getPayment()->getValue() >= $actualRegion->getPayment()->getUsableValue()){
                             //if there is enough money left on the bank
                             if($bankList[$this->playerId]->getPlainCapital() >= 2*BASIC_CAPITAL_REGION){
                                 array_push($possiblePayOffDecisions, array("payOff" => $actualRegionId, "nextPhase" => false));

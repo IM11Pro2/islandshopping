@@ -39,7 +39,7 @@
     function getSpeculationValues(){
         return array(
             0.5,
-            0.66,
+            0.75,
             1,
             1,
             1.5,
